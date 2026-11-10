@@ -1,0 +1,24 @@
+test_absent_prior_issue_in_nonempty_cohort_is_zero (test_review_contract.ReviewContractTests.test_absent_prior_issue_in_nonempty_cohort_is_zero) ... ok
+test_all_unknown_segment_or_peers_ineligible (test_review_contract.ReviewContractTests.test_all_unknown_segment_or_peers_ineligible) ... ok
+test_august_retained_but_no_longitudinal_boundary (test_review_contract.ReviewContractTests.test_august_retained_but_no_longitudinal_boundary) ... ok
+test_comparator_excludes_self_and_keeps_geography (test_review_contract.ReviewContractTests.test_comparator_excludes_self_and_keeps_geography) ... ok
+test_dense_rank_ties_labels_not_criteria (test_review_contract.ReviewContractTests.test_dense_rank_ties_labels_not_criteria) ... ok
+test_elevation_nonzero_comparator_and_just_below (test_review_contract.ReviewContractTests.test_elevation_nonzero_comparator_and_just_below) ... ok
+test_empty_population (test_review_contract.ReviewContractTests.test_empty_population) ... ok
+test_exact_one_pp_and_persistence (test_review_contract.ReviewContractTests.test_exact_one_pp_and_persistence) ... ok
+test_inclusive_minima_and_sensitivities (test_review_contract.ReviewContractTests.test_inclusive_minima_and_sensitivities) ... ok
+test_missing_keys_preserve_raw_empty_and_null (test_review_contract.ReviewContractTests.test_missing_keys_preserve_raw_empty_and_null) ... ok
+test_missing_month_is_zero_not_previous_available (test_review_contract.ReviewContractTests.test_missing_month_is_zero_not_previous_available) ... ok
+test_missing_peer_month_ineligible (test_review_contract.ReviewContractTests.test_missing_peer_month_ineligible) ... ok
+test_no_borrowing_peers_from_company_or_product (test_review_contract.ReviewContractTests.test_no_borrowing_peers_from_company_or_product) ... ok
+test_partial_selected_months_not_silently_trimmed (test_review_contract.ReviewContractTests.test_partial_selected_months_not_silently_trimmed) ... ok
+test_rank_final_complaint_count_criterion (test_review_contract.ReviewContractTests.test_rank_final_complaint_count_criterion) ... ok
+test_ranking_uses_full_tuple_in_order (test_review_contract.ReviewContractTests.test_ranking_uses_full_tuple_in_order) ... ok
+test_scope_filters_before_aggregation_two_scopes (test_review_contract.ReviewContractTests.test_scope_filters_before_aggregation_two_scopes) ... ok
+test_unknown_counts_but_not_rate_denominator (test_review_contract.ReviewContractTests.test_unknown_counts_but_not_rate_denominator) ... ok
+test_validation (test_review_contract.ReviewContractTests.test_validation) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 32.519s
+
+OK

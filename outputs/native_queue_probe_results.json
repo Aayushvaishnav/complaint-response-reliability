@@ -1,0 +1,536 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-23T16:43:55.909Z",
+  "operations": [
+    {
+      "id": "connect-live",
+      "tool": "connection_operations",
+      "operation": "Connect",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"Connection \\u0027PBIDesktop-F1-54498\\u0027 established successfully\",\"operation\":\"Connect\",\"data\":\"PBIDesktop-F1-54498\"}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "connection_operations.connect",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "Connection 'PBIDesktop-F1-54498' established successfully",
+          "operation": "Connect",
+          "data": "PBIDesktop-F1-54498"
+        }
+      ],
+      "duration_ms": 484.2123999999999
+    },
+    {
+      "id": "native-queue-probe",
+      "tool": "dax_query_operations",
+      "operation": "Execute",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"DAX query executed successfully, returned 36 rows in 20168ms\",\"operation\":\"Execute\",\"data\":{\"rowCount\":36,\"isTruncated\":false,\"columns\":[{\"name\":\"[selection_key]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":0},{\"name\":\"[rank]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":1},{\"name\":\"[window_no]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":2},{\"name\":\"[window_known]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":3},{\"name\":\"[window_peer_no]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":4},{\"name\":\"[window_peer_known]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":5},{\"name\":\"[elevated_months]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":6},{\"name\":\"[pooled_gap_pp]\",\"dataType\":\"Double\",\"isNullable\":true,\"ordinal\":7},{\"name\":\"[passing_minima]\",\"dataType\":\"String\",\"isNullable\":true,\"ordinal\":8}],\"rows\":[{\"[selection_key]\":24309,\"[rank]\":4,\"[window_no]\":6,\"[window_known]\":446,\"[window_peer_no]\":0,\"[window_peer_known]\":601,\"[elevated_months]\":2,\"[pooled_gap_pp]\":1.345291479820628,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":24311,\"[rank]\":2,\"[window_no]\":7,\"[window_known]\":399,\"[window_peer_no]\":2,\"[window_peer_known]\":622,\"[elevated_months]\":2,\"[pooled_gap_pp]\":1.432842556552152,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":24570,\"[rank]\":1,\"[window_no]\":25,\"[window_known]\":440,\"[window_peer_no]\":9,\"[window_peer_known]\":494,\"[elevated_months]\":3,\"[pooled_gap_pp]\":3.8599558336400444,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":24571,\"[rank]\":2,\"[window_no]\":26,\"[window_known]\":495,\"[window_peer_no]\":10,\"[window_peer_known]\":501,\"[elevated_months]\":2,\"[pooled_gap_pp]\":3.256517268493316,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":32893,\"[rank]\":1,\"[window_no]\":48,\"[window_known]\":1409,\"[window_peer_no]\":36,\"[window_peer_known]\":33853,\"[elevated_months]\":3,\"[pooled_gap_pp]\":3.3003292719029838,\"[passing_minima]\":\"50/100/200\"},{\"[selection_key]\":32894,\"[rank]\":2,\"[window_no]\":15,\"[window_known]\":782,\"[window_peer_no]\":29,\"[window_peer_known]\":4976,\"[elevated_months]\":2,\"[pooled_gap_pp]\":1.335361140122203,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":33160,\"[rank]\":3,\"[window_no]\":9,\"[window_known]\":345,\"[window_peer_no]\":26,\"[window_peer_known]\":1879,\"[elevated_months]\":2,\"[pooled_gap_pp]\":1.224980910289932,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":33193,\"[rank]\":2,\"[window_no]\":97,\"[window_known]\":495,\"[window_peer_no]\":262,\"[window_peer_known]\":2112,\"[elevated_months]\":2,\"[pooled_gap_pp]\":7.190656565656567,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":33194,\"[rank]\":2,\"[window_no]\":100,\"[window_known]\":487,\"[window_peer_no]\":271,\"[window_peer_known]\":1895,\"[elevated_months]\":2,\"[pooled_gap_pp]\":6.233089346762527,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":33195,\"[rank]\":3,\"[window_no]\":57,\"[window_known]\":496,\"[window_peer_no]\":125,\"[window_peer_known]\":1744,\"[elevated_months]\":2,\"[pooled_gap_pp]\":4.324504291210417,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":42669,\"[rank]\":1,\"[window_no]\":155,\"[window_known]\":501,\"[window_peer_no]\":120,\"[window_peer_known]\":493,\"[elevated_months]\":3,\"[pooled_gap_pp]\":6.597352961419961,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":42670,\"[rank]\":1,\"[window_no]\":116,\"[window_known]\":472,\"[window_peer_no]\":134,\"[window_peer_known]\":601,\"[elevated_months]\":2,\"[pooled_gap_pp]\":2.2800981415155546,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":42675,\"[rank]\":3,\"[window_no]\":515,\"[window_known]\":666,\"[window_peer_no]\":482,\"[window_peer_known]\":626,\"[elevated_months]\":2,\"[pooled_gap_pp]\":0.33052221550623484,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":42676,\"[rank]\":3,\"[window_no]\":508,\"[window_known]\":651,\"[window_peer_no]\":505,\"[window_peer_known]\":692,\"[elevated_months]\":3,\"[pooled_gap_pp]\":5.056915550109653,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":42677,\"[rank]\":2,\"[window_no]\":412,\"[window_known]\":650,\"[window_peer_no]\":407,\"[window_peer_known]\":646,\"[elevated_months]\":2,\"[pooled_gap_pp]\":0.38151940938319084,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":42843,\"[rank]\":2,\"[window_no]\":106,\"[window_known]\":345,\"[window_peer_no]\":293,\"[window_peer_known]\":1266,\"[elevated_months]\":3,\"[pooled_gap_pp]\":7.580877807541728,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":42844,\"[rank]\":2,\"[window_no]\":93,\"[window_known]\":414,\"[window_peer_no]\":258,\"[window_peer_known]\":1294,\"[elevated_months]\":3,\"[pooled_gap_pp]\":2.525591918105863,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":42845,\"[rank]\":3,\"[window_no]\":23,\"[window_known]\":498,\"[window_peer_no]\":48,\"[window_peer_known]\":1352,\"[elevated_months]\":2,\"[pooled_gap_pp]\":1.0681780375941634,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":122834,\"[rank]\":1,\"[window_no]\":8,\"[window_known]\":438,\"[window_peer_no]\":11,\"[window_peer_known]\":934,\"[elevated_months]\":2,\"[pooled_gap_pp]\":0.648753825545354,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":122835,\"[rank]\":1,\"[window_no]\":8,\"[window_known]\":530,\"[window_peer_no]\":16,\"[window_peer_known]\":1051,\"[elevated_months]\":2,\"[pooled_gap_pp]\":-0.012925695204926181,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":122836,\"[rank]\":1,\"[window_no]\":14,\"[window_known]\":671,\"[window_peer_no]\":25,\"[window_peer_known]\":1231,\"[elevated_months]\":2,\"[pooled_gap_pp]\":0.05556893998917706,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":122866,\"[rank]\":1,\"[window_no]\":45,\"[window_known]\":1155,\"[window_peer_no]\":30,\"[window_peer_known]\":1019,\"[elevated_months]\":2,\"[pooled_gap_pp]\":0.9520410894306868,\"[passing_minima]\":\"50/100/200\"},{\"[selection_key]\":130602,\"[rank]\":2,\"[window_no]\":323,\"[window_known]\":412,\"[window_peer_no]\":283,\"[window_peer_known]\":400,\"[elevated_months]\":3,\"[pooled_gap_pp]\":7.648058252427181,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":130872,\"[rank]\":2,\"[window_no]\":626,\"[window_known]\":1943,\"[window_peer_no]\":226,\"[window_peer_known]\":855,\"[elevated_months]\":2,\"[pooled_gap_pp]\":5.785470710572965,\"[passing_minima]\":\"50/100/200\"},{\"[selection_key]\":130873,\"[rank]\":1,\"[window_no]\":1065,\"[window_known]\":1772,\"[window_peer_no]\":436,\"[window_peer_known]\":819,\"[elevated_months]\":3,\"[pooled_gap_pp]\":6.865926899786945,\"[passing_minima]\":\"50/100/200\"},{\"[selection_key]\":130874,\"[rank]\":1,\"[window_no]\":1517,\"[window_known]\":1895,\"[window_peer_no]\":581,\"[window_peer_known]\":831,\"[elevated_months]\":3,\"[pooled_gap_pp]\":10.137006308957963,\"[passing_minima]\":\"50/100/200\"},{\"[selection_key]\":130875,\"[rank]\":1,\"[window_no]\":1294,\"[window_known]\":1522,\"[window_peer_no]\":501,\"[window_peer_known]\":644,\"[elevated_months]\":3,\"[pooled_gap_pp]\":7.224679850801086,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":130876,\"[rank]\":1,\"[window_no]\":1195,\"[window_known]\":1411,\"[window_peer_no]\":409,\"[window_peer_known]\":543,\"[elevated_months]\":3,\"[pooled_gap_pp]\":9.369424398928183,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":130877,\"[rank]\":1,\"[window_no]\":912,\"[window_known]\":1100,\"[window_peer_no]\":324,\"[window_peer_known]\":442,\"[elevated_months]\":3,\"[pooled_gap_pp]\":9.605923488276435,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":130878,\"[rank]\":1,\"[window_no]\":827,\"[window_known]\":1055,\"[window_peer_no]\":275,\"[window_peer_known]\":409,\"[elevated_months]\":3,\"[pooled_gap_pp]\":11.151461778236127,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":130879,\"[rank]\":1,\"[window_no]\":605,\"[window_known]\":988,\"[window_peer_no]\":189,\"[window_peer_known]\":377,\"[elevated_months]\":3,\"[pooled_gap_pp]\":11.102191819070228,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":130880,\"[rank]\":1,\"[window_no]\":520,\"[window_known]\":931,\"[window_peer_no]\":185,\"[window_peer_known]\":388,\"[elevated_months]\":3,\"[pooled_gap_pp]\":8.173508144440628,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":130881,\"[rank]\":1,\"[window_no]\":590,\"[window_known]\":972,\"[window_peer_no]\":253,\"[window_peer_known]\":452,\"[elevated_months]\":3,\"[pooled_gap_pp]\":4.726137149932619,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":164808,\"[rank]\":1,\"[window_no]\":17,\"[window_known]\":645,\"[window_peer_no]\":22,\"[window_peer_known]\":1530,\"[elevated_months]\":2,\"[pooled_gap_pp]\":1.197750417996656,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":164809,\"[rank]\":1,\"[window_no]\":18,\"[window_known]\":665,\"[window_peer_no]\":32,\"[window_peer_known]\":1735,\"[elevated_months]\":2,\"[pooled_gap_pp]\":0.8623865138350197,\"[passing_minima]\":\"50/100\"},{\"[selection_key]\":164886,\"[rank]\":3,\"[window_no]\":21,\"[window_known]\":399,\"[window_peer_no]\":103,\"[window_peer_known]\":2440,\"[elevated_months]\":2,\"[pooled_gap_pp]\":1.0418464193270056,\"[passing_minima]\":\"50/100\"}],\"executionTimeMs\":20168}}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "dax_query_operations.execute",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "DAX query executed successfully, returned 36 rows in 20168ms",
+          "operation": "Execute",
+          "data": {
+            "rowCount": 36,
+            "isTruncated": false,
+            "columns": [
+              {
+                "name": "[selection_key]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 0
+              },
+              {
+                "name": "[rank]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 1
+              },
+              {
+                "name": "[window_no]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 2
+              },
+              {
+                "name": "[window_known]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 3
+              },
+              {
+                "name": "[window_peer_no]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 4
+              },
+              {
+                "name": "[window_peer_known]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 5
+              },
+              {
+                "name": "[elevated_months]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 6
+              },
+              {
+                "name": "[pooled_gap_pp]",
+                "dataType": "Double",
+                "isNullable": true,
+                "ordinal": 7
+              },
+              {
+                "name": "[passing_minima]",
+                "dataType": "String",
+                "isNullable": true,
+                "ordinal": 8
+              }
+            ],
+            "rows": [
+              {
+                "[selection_key]": 24309,
+                "[rank]": 4,
+                "[window_no]": 6,
+                "[window_known]": 446,
+                "[window_peer_no]": 0,
+                "[window_peer_known]": 601,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 1.345291479820628,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 24311,
+                "[rank]": 2,
+                "[window_no]": 7,
+                "[window_known]": 399,
+                "[window_peer_no]": 2,
+                "[window_peer_known]": 622,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 1.432842556552152,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 24570,
+                "[rank]": 1,
+                "[window_no]": 25,
+                "[window_known]": 440,
+                "[window_peer_no]": 9,
+                "[window_peer_known]": 494,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 3.8599558336400444,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 24571,
+                "[rank]": 2,
+                "[window_no]": 26,
+                "[window_known]": 495,
+                "[window_peer_no]": 10,
+                "[window_peer_known]": 501,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 3.256517268493316,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 32893,
+                "[rank]": 1,
+                "[window_no]": 48,
+                "[window_known]": 1409,
+                "[window_peer_no]": 36,
+                "[window_peer_known]": 33853,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 3.3003292719029838,
+                "[passing_minima]": "50/100/200"
+              },
+              {
+                "[selection_key]": 32894,
+                "[rank]": 2,
+                "[window_no]": 15,
+                "[window_known]": 782,
+                "[window_peer_no]": 29,
+                "[window_peer_known]": 4976,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 1.335361140122203,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 33160,
+                "[rank]": 3,
+                "[window_no]": 9,
+                "[window_known]": 345,
+                "[window_peer_no]": 26,
+                "[window_peer_known]": 1879,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 1.224980910289932,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 33193,
+                "[rank]": 2,
+                "[window_no]": 97,
+                "[window_known]": 495,
+                "[window_peer_no]": 262,
+                "[window_peer_known]": 2112,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 7.190656565656567,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 33194,
+                "[rank]": 2,
+                "[window_no]": 100,
+                "[window_known]": 487,
+                "[window_peer_no]": 271,
+                "[window_peer_known]": 1895,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 6.233089346762527,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 33195,
+                "[rank]": 3,
+                "[window_no]": 57,
+                "[window_known]": 496,
+                "[window_peer_no]": 125,
+                "[window_peer_known]": 1744,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 4.324504291210417,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 42669,
+                "[rank]": 1,
+                "[window_no]": 155,
+                "[window_known]": 501,
+                "[window_peer_no]": 120,
+                "[window_peer_known]": 493,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 6.597352961419961,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 42670,
+                "[rank]": 1,
+                "[window_no]": 116,
+                "[window_known]": 472,
+                "[window_peer_no]": 134,
+                "[window_peer_known]": 601,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 2.2800981415155546,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 42675,
+                "[rank]": 3,
+                "[window_no]": 515,
+                "[window_known]": 666,
+                "[window_peer_no]": 482,
+                "[window_peer_known]": 626,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 0.33052221550623484,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 42676,
+                "[rank]": 3,
+                "[window_no]": 508,
+                "[window_known]": 651,
+                "[window_peer_no]": 505,
+                "[window_peer_known]": 692,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 5.056915550109653,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 42677,
+                "[rank]": 2,
+                "[window_no]": 412,
+                "[window_known]": 650,
+                "[window_peer_no]": 407,
+                "[window_peer_known]": 646,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 0.38151940938319084,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 42843,
+                "[rank]": 2,
+                "[window_no]": 106,
+                "[window_known]": 345,
+                "[window_peer_no]": 293,
+                "[window_peer_known]": 1266,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 7.580877807541728,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 42844,
+                "[rank]": 2,
+                "[window_no]": 93,
+                "[window_known]": 414,
+                "[window_peer_no]": 258,
+                "[window_peer_known]": 1294,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 2.525591918105863,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 42845,
+                "[rank]": 3,
+                "[window_no]": 23,
+                "[window_known]": 498,
+                "[window_peer_no]": 48,
+                "[window_peer_known]": 1352,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 1.0681780375941634,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 122834,
+                "[rank]": 1,
+                "[window_no]": 8,
+                "[window_known]": 438,
+                "[window_peer_no]": 11,
+                "[window_peer_known]": 934,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 0.648753825545354,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 122835,
+                "[rank]": 1,
+                "[window_no]": 8,
+                "[window_known]": 530,
+                "[window_peer_no]": 16,
+                "[window_peer_known]": 1051,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": -0.012925695204926181,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 122836,
+                "[rank]": 1,
+                "[window_no]": 14,
+                "[window_known]": 671,
+                "[window_peer_no]": 25,
+                "[window_peer_known]": 1231,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 0.05556893998917706,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 122866,
+                "[rank]": 1,
+                "[window_no]": 45,
+                "[window_known]": 1155,
+                "[window_peer_no]": 30,
+                "[window_peer_known]": 1019,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 0.9520410894306868,
+                "[passing_minima]": "50/100/200"
+              },
+              {
+                "[selection_key]": 130602,
+                "[rank]": 2,
+                "[window_no]": 323,
+                "[window_known]": 412,
+                "[window_peer_no]": 283,
+                "[window_peer_known]": 400,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 7.648058252427181,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 130872,
+                "[rank]": 2,
+                "[window_no]": 626,
+                "[window_known]": 1943,
+                "[window_peer_no]": 226,
+                "[window_peer_known]": 855,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 5.785470710572965,
+                "[passing_minima]": "50/100/200"
+              },
+              {
+                "[selection_key]": 130873,
+                "[rank]": 1,
+                "[window_no]": 1065,
+                "[window_known]": 1772,
+                "[window_peer_no]": 436,
+                "[window_peer_known]": 819,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 6.865926899786945,
+                "[passing_minima]": "50/100/200"
+              },
+              {
+                "[selection_key]": 130874,
+                "[rank]": 1,
+                "[window_no]": 1517,
+                "[window_known]": 1895,
+                "[window_peer_no]": 581,
+                "[window_peer_known]": 831,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 10.137006308957963,
+                "[passing_minima]": "50/100/200"
+              },
+              {
+                "[selection_key]": 130875,
+                "[rank]": 1,
+                "[window_no]": 1294,
+                "[window_known]": 1522,
+                "[window_peer_no]": 501,
+                "[window_peer_known]": 644,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 7.224679850801086,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 130876,
+                "[rank]": 1,
+                "[window_no]": 1195,
+                "[window_known]": 1411,
+                "[window_peer_no]": 409,
+                "[window_peer_known]": 543,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 9.369424398928183,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 130877,
+                "[rank]": 1,
+                "[window_no]": 912,
+                "[window_known]": 1100,
+                "[window_peer_no]": 324,
+                "[window_peer_known]": 442,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 9.605923488276435,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 130878,
+                "[rank]": 1,
+                "[window_no]": 827,
+                "[window_known]": 1055,
+                "[window_peer_no]": 275,
+                "[window_peer_known]": 409,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 11.151461778236127,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 130879,
+                "[rank]": 1,
+                "[window_no]": 605,
+                "[window_known]": 988,
+                "[window_peer_no]": 189,
+                "[window_peer_known]": 377,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 11.102191819070228,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 130880,
+                "[rank]": 1,
+                "[window_no]": 520,
+                "[window_known]": 931,
+                "[window_peer_no]": 185,
+                "[window_peer_known]": 388,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 8.173508144440628,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 130881,
+                "[rank]": 1,
+                "[window_no]": 590,
+                "[window_known]": 972,
+                "[window_peer_no]": 253,
+                "[window_peer_known]": 452,
+                "[elevated_months]": 3,
+                "[pooled_gap_pp]": 4.726137149932619,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 164808,
+                "[rank]": 1,
+                "[window_no]": 17,
+                "[window_known]": 645,
+                "[window_peer_no]": 22,
+                "[window_peer_known]": 1530,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 1.197750417996656,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 164809,
+                "[rank]": 1,
+                "[window_no]": 18,
+                "[window_known]": 665,
+                "[window_peer_no]": 32,
+                "[window_peer_known]": 1735,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 0.8623865138350197,
+                "[passing_minima]": "50/100"
+              },
+              {
+                "[selection_key]": 164886,
+                "[rank]": 3,
+                "[window_no]": 21,
+                "[window_known]": 399,
+                "[window_peer_no]": 103,
+                "[window_peer_known]": 2440,
+                "[elevated_months]": 2,
+                "[pooled_gap_pp]": 1.0418464193270056,
+                "[passing_minima]": "50/100"
+              }
+            ],
+            "executionTimeMs": 20168
+          }
+        }
+      ],
+      "duration_ms": 20236.280300000002,
+      "reconciliation": {
+        "rows": 36,
+        "fields": 324,
+        "keyColumns": [
+          "selection_key"
+        ]
+      }
+    }
+  ],
+  "server": {
+    "name": "powerbi-authoring-local",
+    "title": "Power BI Authoring MCP Server (Local)",
+    "version": "1.0.0",
+    "description": "Author Power BI semantic models in Power BI Desktop, Microsoft Fabric workspaces, and local PBIP and TMDL files."
+  },
+  "finished_at_utc": "2026-10-23T16:44:17.543Z"
+}

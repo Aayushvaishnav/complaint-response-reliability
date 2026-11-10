@@ -1,0 +1,108 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-10-23T10:59:07.225736+00:00",
+  "scoped_csv_sha256": "15680a5a1a8f8eaed17fe9b9f5ce0c1297e21e69fd2088a7cdb860a7037cb9f8",
+  "products": {
+    "Credit reporting or other personal consumer reports": {
+      "complaints": 7577932,
+      "timely": 7569528,
+      "untimely": 8404,
+      "known": 7577932,
+      "unknown": 0
+    },
+    "Debt collection": {
+      "complaints": 507204,
+      "timely": 494729,
+      "untimely": 12475,
+      "known": 507204,
+      "unknown": 0
+    },
+    "Debt or credit management": {
+      "complaints": 7163,
+      "timely": 6547,
+      "untimely": 616,
+      "known": 7163,
+      "unknown": 0
+    },
+    "Credit card": {
+      "complaints": 187839,
+      "timely": 187327,
+      "untimely": 512,
+      "known": 187839,
+      "unknown": 0
+    },
+    "Student loan": {
+      "complaints": 46573,
+      "timely": 38387,
+      "untimely": 8186,
+      "known": 46573,
+      "unknown": 0
+    },
+    "Checking or savings account": {
+      "complaints": 186889,
+      "timely": 185516,
+      "untimely": 1373,
+      "known": 186889,
+      "unknown": 0
+    },
+    "Credit reporting, credit repair services, or other personal consumer reports": {
+      "complaints": 644814,
+      "timely": 644050,
+      "untimely": 764,
+      "known": 644814,
+      "unknown": 0
+    },
+    "Mortgage": {
+      "complaints": 68988,
+      "timely": 68138,
+      "untimely": 850,
+      "known": 68988,
+      "unknown": 0
+    },
+    "Money transfer, virtual currency, or money service": {
+      "complaints": 115119,
+      "timely": 113452,
+      "untimely": 1667,
+      "known": 115119,
+      "unknown": 0
+    },
+    "Credit card or prepaid card": {
+      "complaints": 35310,
+      "timely": 35064,
+      "untimely": 246,
+      "known": 35310,
+      "unknown": 0
+    },
+    "Vehicle loan or lease": {
+      "complaints": 46923,
+      "timely": 46239,
+      "untimely": 684,
+      "known": 46923,
+      "unknown": 0
+    },
+    "Payday loan, title loan, or personal loan": {
+      "complaints": 4684,
+      "timely": 4505,
+      "untimely": 179,
+      "known": 4684,
+      "unknown": 0
+    },
+    "Prepaid card": {
+      "complaints": 15087,
+      "timely": 14269,
+      "untimely": 818,
+      "known": 15087,
+      "unknown": 0
+    },
+    "Payday loan, title loan, personal loan, or advance loan": {
+      "complaints": 24732,
+      "timely": 23723,
+      "untimely": 1009,
+      "known": 24732,
+      "unknown": 0
+    }
+  },
+  "rows": 9469257,
+  "product_overview_sha256": "447dd7fcb1a87a19de20454bb692194dcd139acfa98b7f9da1f7224b77eadcd2",
+  "implementation_sha256": "d680a5b45d4802611140c0ff6e7a858aec4e225212ac50dd3a5a62a269708824"
+}

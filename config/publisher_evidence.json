@@ -1,0 +1,24 @@
+{
+  "public_reuse": {
+    "evidence_type": "reviewed_official_domain_search_excerpt",
+    "reviewed_on": "2026-10-23",
+    "source_url": "https://files.consumerfinance.gov/f/documents/cfpb_finex-consumer-complaints-webinar_slides_2022-11.pdf",
+    "source_title": "Webinar: Using the CFPB Consumer Complaint Database, November 2022",
+    "location": "Slide 18",
+    "retrieval_method": "Official-domain web search excerpt; direct PDF retrieval returned HTTP 403",
+    "quote": "All complaint data we publish is freely available for anyone to use, analyze, and build on.",
+    "full_document_review_state": "not_read; HTTP 403",
+    "limitation": "This is an explicit publisher statement supporting public analytical reuse, not a current named dataset-wide licence or a review of the complete PDF"
+  },
+  "taxonomy_boundary": {
+    "evidence_type": "reviewed_official_domain_search_excerpt",
+    "reviewed_on": "2026-10-23",
+    "source_url": "https://files.consumerfinance.gov/f/documents/cfpb_consumer_complaint_form_product_issue_options_August_2023_FINAL.pdf",
+    "source_title": "Consumer complaint form product and issue options, August 2023",
+    "location": "Opening/effective-date statement",
+    "retrieval_method": "Official-domain web search excerpt; direct PDF retrieval returned HTTP 403",
+    "quote": "This document lists the products, sub-products, issues, and sub-issues available on the consumer complaint form beginning August 24, 2023.",
+    "full_document_review_state": "not_read; HTTP 403",
+    "limitation": "Establishes the stated effective date, not a complete historical taxonomy crosswalk or equivalence of similarly named labels"
+  }
+}

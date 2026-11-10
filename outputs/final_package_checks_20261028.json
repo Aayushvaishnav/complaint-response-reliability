@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-10-28T09:43:31.600464+00:00",
+  "local_path_links_checked": 539,
+  "broken": [],
+  "anchor_validation": "not_performed",
+  "independent_delegated_review": {
+    "conclusion": "No blocking issues in reviewed code and retained Gate D evidence",
+    "tests": {
+      "live_plan_python": 10,
+      "staging_python": 6,
+      "report_builder_node": 11
+    },
+    "scope": "Code, staging, acceptance totals, screenshot hash identity; UI acceptance remains owner-reported"
+  },
+  "git_ignore_verified": [
+    "data/processed/refresh-20261028/F1.pbip",
+    "data/processed/model-input/complaint_cohorts.parquet",
+    "reports/powerbi/F1.SemanticModel/.pbi/cache.abf"
+  ],
+  "scope": "F1 Markdown and four root portfolio/status records; local target existence; anchors not automatically validated"
+}

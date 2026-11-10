@@ -1,0 +1,256 @@
+{
+  "status": "measured",
+  "started_at_utc": "2026-10-28T09:27:34.662580+00:00",
+  "gate_d_signed_at_utc": "2026-10-28T09:25:47.276378+00:00",
+  "gate_d_sha256": "01ccff76717c2893f5f820e3f5f72fa5d386a7ed1502ca7f428ddebf63781f70",
+  "frozen_artifacts_checked_before": 138,
+  "population": {
+    "complaints": 9469257,
+    "distinct_ids": 9469257,
+    "raw_product_labels": 14,
+    "received_months": 36,
+    "first_received": "2023-01-01",
+    "last_received": "2025-12-31",
+    "yes": 9431474,
+    "no": 37783,
+    "unknown": 0
+  },
+  "screening": [
+    {
+      "minimum": 50,
+      "eligible_windows": 4185,
+      "qualifying_windows": 112,
+      "qualifying_segments": 30,
+      "independent_reference": {
+        "rows": 1566288,
+        "segments": 43508,
+        "months": 36,
+        "persistent_rows": 112,
+        "comparisons": 61085120
+      }
+    },
+    {
+      "minimum": 100,
+      "eligible_windows": 1873,
+      "qualifying_windows": 36,
+      "qualifying_segments": 13,
+      "independent_reference": {
+        "rows": 1566288,
+        "segments": 43508,
+        "months": 36,
+        "persistent_rows": 36,
+        "comparisons": 61085196
+      }
+    },
+    {
+      "minimum": 200,
+      "eligible_windows": 815,
+      "qualifying_windows": 5,
+      "qualifying_segments": 3,
+      "independent_reference": {
+        "rows": 1566288,
+        "segments": 43508,
+        "months": 36,
+        "persistent_rows": 5,
+        "comparisons": 61085227
+      }
+    }
+  ],
+  "stable_windows": 5,
+  "mohela_december_2025": [
+    {
+      "minimum": 50,
+      "month": "2025-12-01",
+      "complaints": 387,
+      "known": 387,
+      "untimely": 301,
+      "peer_complaints": 192,
+      "peer_known": 192,
+      "peer_untimely": 136,
+      "window_eligible": true,
+      "persistent": true,
+      "elevated_months": 3,
+      "window_no": 590,
+      "window_known": 972,
+      "window_peer_no": 253,
+      "window_peer_known": 452,
+      "pooled_excess_pp": 4.726137149932619,
+      "priority_rank": 1
+    },
+    {
+      "minimum": 100,
+      "month": "2025-12-01",
+      "complaints": 387,
+      "known": 387,
+      "untimely": 301,
+      "peer_complaints": 192,
+      "peer_known": 192,
+      "peer_untimely": 136,
+      "window_eligible": true,
+      "persistent": true,
+      "elevated_months": 3,
+      "window_no": 590,
+      "window_known": 972,
+      "window_peer_no": 253,
+      "window_peer_known": 452,
+      "pooled_excess_pp": 4.726137149932619,
+      "priority_rank": 1
+    },
+    {
+      "minimum": 200,
+      "month": "2025-12-01",
+      "complaints": 387,
+      "known": 387,
+      "untimely": 301,
+      "peer_complaints": 192,
+      "peer_known": 192,
+      "peer_untimely": 136,
+      "window_eligible": false,
+      "persistent": false,
+      "elevated_months": 0,
+      "window_no": 590,
+      "window_known": 972,
+      "window_peer_no": 253,
+      "window_peer_known": 452,
+      "pooled_excess_pp": 4.726137149932619,
+      "priority_rank": null
+    }
+  ],
+  "independent_csv": {
+    "products": {
+      "Credit reporting or other personal consumer reports": {
+        "complaints": 7577932,
+        "timely": 7569528,
+        "untimely": 8404,
+        "known": 7577932,
+        "unknown": 0
+      },
+      "Debt collection": {
+        "complaints": 507204,
+        "timely": 494729,
+        "untimely": 12475,
+        "known": 507204,
+        "unknown": 0
+      },
+      "Debt or credit management": {
+        "complaints": 7163,
+        "timely": 6547,
+        "untimely": 616,
+        "known": 7163,
+        "unknown": 0
+      },
+      "Credit card": {
+        "complaints": 187839,
+        "timely": 187327,
+        "untimely": 512,
+        "known": 187839,
+        "unknown": 0
+      },
+      "Student loan": {
+        "complaints": 46573,
+        "timely": 38387,
+        "untimely": 8186,
+        "known": 46573,
+        "unknown": 0
+      },
+      "Checking or savings account": {
+        "complaints": 186889,
+        "timely": 185516,
+        "untimely": 1373,
+        "known": 186889,
+        "unknown": 0
+      },
+      "Credit reporting, credit repair services, or other personal consumer reports": {
+        "complaints": 644814,
+        "timely": 644050,
+        "untimely": 764,
+        "known": 644814,
+        "unknown": 0
+      },
+      "Mortgage": {
+        "complaints": 68988,
+        "timely": 68138,
+        "untimely": 850,
+        "known": 68988,
+        "unknown": 0
+      },
+      "Money transfer, virtual currency, or money service": {
+        "complaints": 115119,
+        "timely": 113452,
+        "untimely": 1667,
+        "known": 115119,
+        "unknown": 0
+      },
+      "Credit card or prepaid card": {
+        "complaints": 35310,
+        "timely": 35064,
+        "untimely": 246,
+        "known": 35310,
+        "unknown": 0
+      },
+      "Vehicle loan or lease": {
+        "complaints": 46923,
+        "timely": 46239,
+        "untimely": 684,
+        "known": 46923,
+        "unknown": 0
+      },
+      "Payday loan, title loan, or personal loan": {
+        "complaints": 4684,
+        "timely": 4505,
+        "untimely": 179,
+        "known": 4684,
+        "unknown": 0
+      },
+      "Prepaid card": {
+        "complaints": 15087,
+        "timely": 14269,
+        "untimely": 818,
+        "known": 15087,
+        "unknown": 0
+      },
+      "Payday loan, title loan, personal loan, or advance loan": {
+        "complaints": 24732,
+        "timely": 23723,
+        "untimely": 1009,
+        "known": 24732,
+        "unknown": 0
+      }
+    },
+    "complaints": 9469257,
+    "yes": 9431474,
+    "no": 37783,
+    "unknown": 0
+  },
+  "live_reconciliation": {
+    "operations": 45,
+    "field_comparisons": 2194,
+    "evidence_sha256": "ef7d67519f63bfa187a236af7dfc1caa02af690b7ffb0049c8fe39118f6bb4c2"
+  },
+  "report_pages": 2,
+  "model_inventory": {
+    "status": "verified_live_readback",
+    "checked_at_utc": "2026-10-28",
+    "operation": "model_operations.GetStats",
+    "target": "isolated F1 refresh copy, identified by CLI launch path and live Source Folder parameter",
+    "model_name": "F1",
+    "compatibility_level": 1702,
+    "tables": 10,
+    "measures": 53,
+    "columns": 68,
+    "partitions": 10,
+    "relationships": 5,
+    "roles": 0,
+    "limits": "Local Import model only; no cloud deployment or scheduled refresh certification"
+  },
+  "frozen_artifacts_checked_after": 138,
+  "scope": "Frozen received-date cohorts 2023-01-01 through 2025-12-31; original raw product/issue labels; three complete same-era months; 1pp elevation in at least two months; monthly volume minima 50/100/200",
+  "limits": [
+    "Windows overlap; counts are not independent events or distinct complaints",
+    "Analyst screening thresholds, not regulatory standards or significance tests",
+    "Original download date and current official-export identity unverified; no fresh full raw-source hash",
+    "Routing lag is not resolution time; no exposure denominator or achieved service improvement",
+    "Model inventory is live MCP readback; UI interactions are separately owner-reported"
+  ],
+  "finished_at_utc": "2026-10-28T09:33:47.845443+00:00"
+}

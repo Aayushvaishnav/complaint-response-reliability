@@ -1,0 +1,26 @@
+{
+  "operations": [
+    {
+      "id": "connect-live",
+      "tool": "connection_operations",
+      "captureConnection": true,
+      "request": {
+        "operation": "Connect",
+        "connectionString": "data source=localhost:64458;Application Name=MCP-PBIModeling"
+      }
+    },
+    {
+      "id": "optimized-eligible",
+      "tool": "dax_query_operations",
+      "useConnection": true,
+      "request": {
+        "operation": "Execute",
+        "query": "DEFINE MEASURE 'Complaint Cohorts'[Eligible Window Count] = VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))\nVAR _ends = VALUES('Review Window'[Window End])\nVAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,\n    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))\nVAR _companies = VALUES('Company'[Company Key])\nVAR _products = VALUES('Product'[Product Key])\nVAR _issues = VALUES('Issue'[Issue Key])\nVAR _identities = SELECTCOLUMNS(ALL('Review Selection'),\n    \"__key\", 'Review Selection'[Selection Key], \"__segment\", 'Review Selection'[Segment Key],\n    \"__company\", 'Review Selection'[Company Key] + 0,\n    \"__product\", 'Review Selection'[Product Key] + 0,\n    \"__issue\", 'Review Selection'[Issue Key] + 0,\n    \"__end\", EDATE('Review Selection'[Window End], 0))\nVAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&\n    [__product] IN _products && [__issue] IN _issues)\nVAR _grouped = CALCULATETABLE(\n    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],\n        'Issue'[Issue Key], 'Date'[Month Start],\n        \"__fc\", SUM('Complaint Cohorts'[Complaint Rows]),\n        \"__fk\", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),\n        \"__fn\", SUM('Complaint Cohorts'[No Rows]),\n        \"__tc\", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),\n        \"__tk\", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),\n        \"__tn\", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),\n    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),\n    TREATAS(_selectedDates, 'Date'[Date]))\nVAR _withPeers = ADDCOLUMNS(_grouped,\n    \"__pc\", [__tc] - [__fc], \"__pk\", [__tk] - [__fk], \"__pn\", [__tn] - [__fn])\nVAR _sparse = FILTER(_withPeers,\n    VAR _month = 'Date'[Month Start]\n    VAR _next = EDATE(_month, 1)\n    RETURN _month <> DATE(2023,8,1) &&\n        COUNTROWS(FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)) = DAY(EOMONTH(_month,0)) &&\n        [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)\nVAR _monthly = ADDCOLUMNS(_sparse, \"__elevated\",\n    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))\nVAR _shift0 = SELECTCOLUMNS(_monthly, \"__company\", 'Company'[Company Key] + 0,\n    \"__product\", 'Product'[Product Key] + 0,\n    \"__issue\", 'Issue'[Issue Key] + 0,\n    \"__end\", EDATE('Date'[Month Start], 0),\n    \"__m0fc\", [__fc],\n    \"__m0fk\", [__fk],\n    \"__m0fn\", [__fn],\n    \"__m0pc\", [__pc],\n    \"__m0pk\", [__pk],\n    \"__m0pn\", [__pn],\n    \"__m0elevated\", [__elevated])\nVAR _shift1 = SELECTCOLUMNS(_monthly, \"__company\", 'Company'[Company Key] + 0,\n    \"__product\", 'Product'[Product Key] + 0,\n    \"__issue\", 'Issue'[Issue Key] + 0,\n    \"__end\", EDATE('Date'[Month Start], 1),\n    \"__m1fc\", [__fc],\n    \"__m1fk\", [__fk],\n    \"__m1fn\", [__fn],\n    \"__m1pc\", [__pc],\n    \"__m1pk\", [__pk],\n    \"__m1pn\", [__pn],\n    \"__m1elevated\", [__elevated])\nVAR _shift2 = SELECTCOLUMNS(_monthly, \"__company\", 'Company'[Company Key] + 0,\n    \"__product\", 'Product'[Product Key] + 0,\n    \"__issue\", 'Issue'[Issue Key] + 0,\n    \"__end\", EDATE('Date'[Month Start], 2),\n    \"__m2fc\", [__fc],\n    \"__m2fk\", [__fk],\n    \"__m2fn\", [__fn],\n    \"__m2pc\", [__pc],\n    \"__m2pk\", [__pk],\n    \"__m2pn\", [__pn],\n    \"__m2elevated\", [__elevated])\nVAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)\nVAR _joined = NATURALINNERJOIN(_candidates, _windows)\nVAR _statistics = ADDCOLUMNS(_joined,\n    \"__complete\", TRUE(), \"__era\", TRUE(), \"__known\", TRUE(),\n    \"__volume\", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), \"__elevated\", [__m0elevated] + [__m1elevated] + [__m2elevated],\n    \"__no\", [__m0fn] + [__m1fn] + [__m2fn], \"__knownCount\", [__m0fk] + [__m1fk] + [__m2fk],\n    \"__peerNo\", [__m0pn] + [__m1pn] + [__m2pn], \"__peerKnown\", [__m0pk] + [__m1pk] + [__m2pk],\n    \"__complaints\", [__m0fc] + [__m1fc] + [__m2fc])\nVAR _evaluated = ADDCOLUMNS(_statistics,\n    \"__eligible\", NOT ISBLANK(_minimum) && [__volume] >= _minimum,\n    \"__stable\", [__volume] >= 200 && [__elevated] >= 2)\nVAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)\nRETURN IF(NOT ISBLANK(_minimum), COALESCE(COUNTROWS(FILTER(_evaluated, [__eligible])),0),BLANK())\nEVALUATE ROW(\"eligible\", [Eligible Window Count])",
+        "resultMode": "Inline",
+        "getExecutionMetrics": true,
+        "timeoutSeconds": 30,
+        "maxRows": 10
+      }
+    }
+  ]
+}

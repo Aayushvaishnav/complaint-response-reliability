@@ -1,0 +1,657 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-23T15:49:30.076Z",
+  "operations": [
+    {
+      "id": "connect-live",
+      "tool": "connection_operations",
+      "operation": "Connect",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"Connection \\u0027PBIDesktop-F1-64458\\u0027 established successfully\",\"operation\":\"Connect\",\"data\":\"PBIDesktop-F1-64458\"}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "connection_operations.connect",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "Connection 'PBIDesktop-F1-64458' established successfully",
+          "operation": "Connect",
+          "data": "PBIDesktop-F1-64458"
+        }
+      ],
+      "duration_ms": 517.8096
+    },
+    {
+      "id": "keyed-focused-probe",
+      "tool": "dax_query_operations",
+      "operation": "Execute",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"DAX query executed successfully, returned 112 rows in 5054ms\",\"operation\":\"Execute\",\"data\":{\"rowCount\":112,\"isTruncated\":false,\"columns\":[{\"name\":\"Review Selection[Selection Key]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":0},{\"name\":\"[rank]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":1},{\"name\":\"[no]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":2}],\"rows\":[{\"Review Selection[Selection Key]\":23755,\"[rank]\":2,\"[no]\":4},{\"Review Selection[Selection Key]\":23756,\"[rank]\":4,\"[no]\":4},{\"Review Selection[Selection Key]\":23760,\"[rank]\":4,\"[no]\":6},{\"Review Selection[Selection Key]\":23965,\"[rank]\":2,\"[no]\":25},{\"Review Selection[Selection Key]\":23973,\"[rank]\":1,\"[no]\":4},{\"Review Selection[Selection Key]\":24288,\"[rank]\":1,\"[no]\":4},{\"Review Selection[Selection Key]\":24289,\"[rank]\":1,\"[no]\":4},{\"Review Selection[Selection Key]\":24292,\"[rank]\":3,\"[no]\":4},{\"Review Selection[Selection Key]\":24293,\"[rank]\":1,\"[no]\":6},{\"Review Selection[Selection Key]\":24294,\"[rank]\":1,\"[no]\":4},{\"Review Selection[Selection Key]\":24295,\"[rank]\":1,\"[no]\":6},{\"Review Selection[Selection Key]\":24296,\"[rank]\":2,\"[no]\":8},{\"Review Selection[Selection Key]\":24297,\"[rank]\":2,\"[no]\":16},{\"Review Selection[Selection Key]\":24298,\"[rank]\":3,\"[no]\":12},{\"Review Selection[Selection Key]\":24309,\"[rank]\":8,\"[no]\":6},{\"Review Selection[Selection Key]\":24311,\"[rank]\":2,\"[no]\":7},{\"Review Selection[Selection Key]\":24568,\"[rank]\":2,\"[no]\":6},{\"Review Selection[Selection Key]\":24569,\"[rank]\":3,\"[no]\":10},{\"Review Selection[Selection Key]\":24570,\"[rank]\":3,\"[no]\":25},{\"Review Selection[Selection Key]\":24571,\"[rank]\":2,\"[no]\":26},{\"Review Selection[Selection Key]\":24582,\"[rank]\":7,\"[no]\":9},{\"Review Selection[Selection Key]\":24583,\"[rank]\":4,\"[no]\":8},{\"Review Selection[Selection Key]\":24593,\"[rank]\":1,\"[no]\":7},{\"Review Selection[Selection Key]\":24594,\"[rank]\":2,\"[no]\":7},{\"Review Selection[Selection Key]\":24727,\"[rank]\":1,\"[no]\":24},{\"Review Selection[Selection Key]\":24728,\"[rank]\":1,\"[no]\":23},{\"Review Selection[Selection Key]\":32268,\"[rank]\":7,\"[no]\":13},{\"Review Selection[Selection Key]\":32269,\"[rank]\":8,\"[no]\":9},{\"Review Selection[Selection Key]\":32270,\"[rank]\":6,\"[no]\":59},{\"Review Selection[Selection Key]\":32892,\"[rank]\":1,\"[no]\":41},{\"Review Selection[Selection Key]\":32893,\"[rank]\":2,\"[no]\":48},{\"Review Selection[Selection Key]\":32894,\"[rank]\":6,\"[no]\":15},{\"Review Selection[Selection Key]\":32944,\"[rank]\":3,\"[no]\":45},{\"Review Selection[Selection Key]\":33155,\"[rank]\":5,\"[no]\":9},{\"Review Selection[Selection Key]\":33156,\"[rank]\":1,\"[no]\":33},{\"Review Selection[Selection Key]\":33157,\"[rank]\":2,\"[no]\":51},{\"Review Selection[Selection Key]\":33158,\"[rank]\":4,\"[no]\":52},{\"Review Selection[Selection Key]\":33159,\"[rank]\":4,\"[no]\":30},{\"Review Selection[Selection Key]\":33160,\"[rank]\":5,\"[no]\":9},{\"Review Selection[Selection Key]\":33193,\"[rank]\":3,\"[no]\":97},{\"Review Selection[Selection Key]\":33194,\"[rank]\":6,\"[no]\":100},{\"Review Selection[Selection Key]\":33195,\"[rank]\":6,\"[no]\":57},{\"Review Selection[Selection Key]\":42575,\"[rank]\":8,\"[no]\":78},{\"Review Selection[Selection Key]\":42579,\"[rank]\":4,\"[no]\":12},{\"Review Selection[Selection Key]\":42667,\"[rank]\":1,\"[no]\":128},{\"Review Selection[Selection Key]\":42668,\"[rank]\":1,\"[no]\":181},{\"Review Selection[Selection Key]\":42669,\"[rank]\":1,\"[no]\":155},{\"Review Selection[Selection Key]\":42670,\"[rank]\":1,\"[no]\":116},{\"Review Selection[Selection Key]\":42675,\"[rank]\":9,\"[no]\":515},{\"Review Selection[Selection Key]\":42676,\"[rank]\":3,\"[no]\":508},{\"Review Selection[Selection Key]\":42677,\"[rank]\":7,\"[no]\":412},{\"Review Selection[Selection Key]\":42768,\"[rank]\":3,\"[no]\":61},{\"Review Selection[Selection Key]\":42769,\"[rank]\":2,\"[no]\":51},{\"Review Selection[Selection Key]\":42773,\"[rank]\":8,\"[no]\":174},{\"Review Selection[Selection Key]\":42775,\"[rank]\":8,\"[no]\":140},{\"Review Selection[Selection Key]\":42776,\"[rank]\":5,\"[no]\":97},{\"Review Selection[Selection Key]\":42777,\"[rank]\":7,\"[no]\":94},{\"Review Selection[Selection Key]\":42841,\"[rank]\":6,\"[no]\":80},{\"Review Selection[Selection Key]\":42842,\"[rank]\":1,\"[no]\":126},{\"Review Selection[Selection Key]\":42843,\"[rank]\":3,\"[no]\":106},{\"Review Selection[Selection Key]\":42844,\"[rank]\":2,\"[no]\":93},{\"Review Selection[Selection Key]\":42845,\"[rank]\":3,\"[no]\":23},{\"Review Selection[Selection Key]\":42864,\"[rank]\":2,\"[no]\":27},{\"Review Selection[Selection Key]\":42865,\"[rank]\":3,\"[no]\":43},{\"Review Selection[Selection Key]\":42874,\"[rank]\":4,\"[no]\":168},{\"Review Selection[Selection Key]\":42875,\"[rank]\":6,\"[no]\":177},{\"Review Selection[Selection Key]\":42879,\"[rank]\":5,\"[no]\":64},{\"Review Selection[Selection Key]\":42880,\"[rank]\":3,\"[no]\":57},{\"Review Selection[Selection Key]\":80594,\"[rank]\":1,\"[no]\":88},{\"Review Selection[Selection Key]\":80595,\"[rank]\":1,\"[no]\":89},{\"Review Selection[Selection Key]\":80596,\"[rank]\":4,\"[no]\":81},{\"Review Selection[Selection Key]\":122834,\"[rank]\":2,\"[no]\":8},{\"Review Selection[Selection Key]\":122835,\"[rank]\":2,\"[no]\":8},{\"Review Selection[Selection Key]\":122836,\"[rank]\":1,\"[no]\":14},{\"Review Selection[Selection Key]\":122866,\"[rank]\":3,\"[no]\":45},{\"Review Selection[Selection Key]\":122925,\"[rank]\":1,\"[no]\":12},{\"Review Selection[Selection Key]\":122926,\"[rank]\":2,\"[no]\":11},{\"Review Selection[Selection Key]\":130601,\"[rank]\":2,\"[no]\":238},{\"Review Selection[Selection Key]\":130602,\"[rank]\":2,\"[no]\":323},{\"Review Selection[Selection Key]\":130603,\"[rank]\":5,\"[no]\":339},{\"Review Selection[Selection Key]\":130604,\"[rank]\":4,\"[no]\":269},{\"Review Selection[Selection Key]\":130605,\"[rank]\":5,\"[no]\":251},{\"Review Selection[Selection Key]\":130606,\"[rank]\":1,\"[no]\":220},{\"Review Selection[Selection Key]\":130872,\"[rank]\":3,\"[no]\":626},{\"Review Selection[Selection Key]\":130873,\"[rank]\":3,\"[no]\":1065},{\"Review Selection[Selection Key]\":130874,\"[rank]\":1,\"[no]\":1517},{\"Review Selection[Selection Key]\":130875,\"[rank]\":2,\"[no]\":1294},{\"Review Selection[Selection Key]\":130876,\"[rank]\":1,\"[no]\":1195},{\"Review Selection[Selection Key]\":130877,\"[rank]\":2,\"[no]\":912},{\"Review Selection[Selection Key]\":130878,\"[rank]\":2,\"[no]\":827},{\"Review Selection[Selection Key]\":130879,\"[rank]\":1,\"[no]\":605},{\"Review Selection[Selection Key]\":130880,\"[rank]\":1,\"[no]\":520},{\"Review Selection[Selection Key]\":130881,\"[rank]\":1,\"[no]\":590},{\"Review Selection[Selection Key]\":164560,\"[rank]\":4,\"[no]\":4},{\"Review Selection[Selection Key]\":164561,\"[rank]\":2,\"[no]\":4},{\"Review Selection[Selection Key]\":164562,\"[rank]\":1,\"[no]\":7},{\"Review Selection[Selection Key]\":164563,\"[rank]\":1,\"[no]\":8},{\"Review Selection[Selection Key]\":164564,\"[rank]\":2,\"[no]\":10},{\"Review Selection[Selection Key]\":164565,\"[rank]\":4,\"[no]\":17},{\"Review Selection[Selection Key]\":164632,\"[rank]\":4,\"[no]\":26},{\"Review Selection[Selection Key]\":164633,\"[rank]\":7,\"[no]\":14},{\"Review Selection[Selection Key]\":164638,\"[rank]\":2,\"[no]\":6},{\"Review Selection[Selection Key]\":164745,\"[rank]\":2,\"[no]\":6},{\"Review Selection[Selection Key]\":164808,\"[rank]\":3,\"[no]\":17},{\"Review Selection[Selection Key]\":164809,\"[rank]\":3,\"[no]\":18},{\"Review Selection[Selection Key]\":164883,\"[rank]\":5,\"[no]\":29},{\"Review Selection[Selection Key]\":164884,\"[rank]\":7,\"[no]\":38},{\"Review Selection[Selection Key]\":164885,\"[rank]\":3,\"[no]\":39},{\"Review Selection[Selection Key]\":164886,\"[rank]\":9,\"[no]\":21},{\"Review Selection[Selection Key]\":185771,\"[rank]\":3,\"[no]\":3},{\"Review Selection[Selection Key]\":191438,\"[rank]\":5,\"[no]\":18},{\"Review Selection[Selection Key]\":193307,\"[rank]\":6,\"[no]\":2}],\"executionTimeMs\":5054}}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "dax_query_operations.execute",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "DAX query executed successfully, returned 112 rows in 5054ms",
+          "operation": "Execute",
+          "data": {
+            "rowCount": 112,
+            "isTruncated": false,
+            "columns": [
+              {
+                "name": "Review Selection[Selection Key]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 0
+              },
+              {
+                "name": "[rank]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 1
+              },
+              {
+                "name": "[no]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 2
+              }
+            ],
+            "rows": [
+              {
+                "Review Selection[Selection Key]": 23755,
+                "[rank]": 2,
+                "[no]": 4
+              },
+              {
+                "Review Selection[Selection Key]": 23756,
+                "[rank]": 4,
+                "[no]": 4
+              },
+              {
+                "Review Selection[Selection Key]": 23760,
+                "[rank]": 4,
+                "[no]": 6
+              },
+              {
+                "Review Selection[Selection Key]": 23965,
+                "[rank]": 2,
+                "[no]": 25
+              },
+              {
+                "Review Selection[Selection Key]": 23973,
+                "[rank]": 1,
+                "[no]": 4
+              },
+              {
+                "Review Selection[Selection Key]": 24288,
+                "[rank]": 1,
+                "[no]": 4
+              },
+              {
+                "Review Selection[Selection Key]": 24289,
+                "[rank]": 1,
+                "[no]": 4
+              },
+              {
+                "Review Selection[Selection Key]": 24292,
+                "[rank]": 3,
+                "[no]": 4
+              },
+              {
+                "Review Selection[Selection Key]": 24293,
+                "[rank]": 1,
+                "[no]": 6
+              },
+              {
+                "Review Selection[Selection Key]": 24294,
+                "[rank]": 1,
+                "[no]": 4
+              },
+              {
+                "Review Selection[Selection Key]": 24295,
+                "[rank]": 1,
+                "[no]": 6
+              },
+              {
+                "Review Selection[Selection Key]": 24296,
+                "[rank]": 2,
+                "[no]": 8
+              },
+              {
+                "Review Selection[Selection Key]": 24297,
+                "[rank]": 2,
+                "[no]": 16
+              },
+              {
+                "Review Selection[Selection Key]": 24298,
+                "[rank]": 3,
+                "[no]": 12
+              },
+              {
+                "Review Selection[Selection Key]": 24309,
+                "[rank]": 8,
+                "[no]": 6
+              },
+              {
+                "Review Selection[Selection Key]": 24311,
+                "[rank]": 2,
+                "[no]": 7
+              },
+              {
+                "Review Selection[Selection Key]": 24568,
+                "[rank]": 2,
+                "[no]": 6
+              },
+              {
+                "Review Selection[Selection Key]": 24569,
+                "[rank]": 3,
+                "[no]": 10
+              },
+              {
+                "Review Selection[Selection Key]": 24570,
+                "[rank]": 3,
+                "[no]": 25
+              },
+              {
+                "Review Selection[Selection Key]": 24571,
+                "[rank]": 2,
+                "[no]": 26
+              },
+              {
+                "Review Selection[Selection Key]": 24582,
+                "[rank]": 7,
+                "[no]": 9
+              },
+              {
+                "Review Selection[Selection Key]": 24583,
+                "[rank]": 4,
+                "[no]": 8
+              },
+              {
+                "Review Selection[Selection Key]": 24593,
+                "[rank]": 1,
+                "[no]": 7
+              },
+              {
+                "Review Selection[Selection Key]": 24594,
+                "[rank]": 2,
+                "[no]": 7
+              },
+              {
+                "Review Selection[Selection Key]": 24727,
+                "[rank]": 1,
+                "[no]": 24
+              },
+              {
+                "Review Selection[Selection Key]": 24728,
+                "[rank]": 1,
+                "[no]": 23
+              },
+              {
+                "Review Selection[Selection Key]": 32268,
+                "[rank]": 7,
+                "[no]": 13
+              },
+              {
+                "Review Selection[Selection Key]": 32269,
+                "[rank]": 8,
+                "[no]": 9
+              },
+              {
+                "Review Selection[Selection Key]": 32270,
+                "[rank]": 6,
+                "[no]": 59
+              },
+              {
+                "Review Selection[Selection Key]": 32892,
+                "[rank]": 1,
+                "[no]": 41
+              },
+              {
+                "Review Selection[Selection Key]": 32893,
+                "[rank]": 2,
+                "[no]": 48
+              },
+              {
+                "Review Selection[Selection Key]": 32894,
+                "[rank]": 6,
+                "[no]": 15
+              },
+              {
+                "Review Selection[Selection Key]": 32944,
+                "[rank]": 3,
+                "[no]": 45
+              },
+              {
+                "Review Selection[Selection Key]": 33155,
+                "[rank]": 5,
+                "[no]": 9
+              },
+              {
+                "Review Selection[Selection Key]": 33156,
+                "[rank]": 1,
+                "[no]": 33
+              },
+              {
+                "Review Selection[Selection Key]": 33157,
+                "[rank]": 2,
+                "[no]": 51
+              },
+              {
+                "Review Selection[Selection Key]": 33158,
+                "[rank]": 4,
+                "[no]": 52
+              },
+              {
+                "Review Selection[Selection Key]": 33159,
+                "[rank]": 4,
+                "[no]": 30
+              },
+              {
+                "Review Selection[Selection Key]": 33160,
+                "[rank]": 5,
+                "[no]": 9
+              },
+              {
+                "Review Selection[Selection Key]": 33193,
+                "[rank]": 3,
+                "[no]": 97
+              },
+              {
+                "Review Selection[Selection Key]": 33194,
+                "[rank]": 6,
+                "[no]": 100
+              },
+              {
+                "Review Selection[Selection Key]": 33195,
+                "[rank]": 6,
+                "[no]": 57
+              },
+              {
+                "Review Selection[Selection Key]": 42575,
+                "[rank]": 8,
+                "[no]": 78
+              },
+              {
+                "Review Selection[Selection Key]": 42579,
+                "[rank]": 4,
+                "[no]": 12
+              },
+              {
+                "Review Selection[Selection Key]": 42667,
+                "[rank]": 1,
+                "[no]": 128
+              },
+              {
+                "Review Selection[Selection Key]": 42668,
+                "[rank]": 1,
+                "[no]": 181
+              },
+              {
+                "Review Selection[Selection Key]": 42669,
+                "[rank]": 1,
+                "[no]": 155
+              },
+              {
+                "Review Selection[Selection Key]": 42670,
+                "[rank]": 1,
+                "[no]": 116
+              },
+              {
+                "Review Selection[Selection Key]": 42675,
+                "[rank]": 9,
+                "[no]": 515
+              },
+              {
+                "Review Selection[Selection Key]": 42676,
+                "[rank]": 3,
+                "[no]": 508
+              },
+              {
+                "Review Selection[Selection Key]": 42677,
+                "[rank]": 7,
+                "[no]": 412
+              },
+              {
+                "Review Selection[Selection Key]": 42768,
+                "[rank]": 3,
+                "[no]": 61
+              },
+              {
+                "Review Selection[Selection Key]": 42769,
+                "[rank]": 2,
+                "[no]": 51
+              },
+              {
+                "Review Selection[Selection Key]": 42773,
+                "[rank]": 8,
+                "[no]": 174
+              },
+              {
+                "Review Selection[Selection Key]": 42775,
+                "[rank]": 8,
+                "[no]": 140
+              },
+              {
+                "Review Selection[Selection Key]": 42776,
+                "[rank]": 5,
+                "[no]": 97
+              },
+              {
+                "Review Selection[Selection Key]": 42777,
+                "[rank]": 7,
+                "[no]": 94
+              },
+              {
+                "Review Selection[Selection Key]": 42841,
+                "[rank]": 6,
+                "[no]": 80
+              },
+              {
+                "Review Selection[Selection Key]": 42842,
+                "[rank]": 1,
+                "[no]": 126
+              },
+              {
+                "Review Selection[Selection Key]": 42843,
+                "[rank]": 3,
+                "[no]": 106
+              },
+              {
+                "Review Selection[Selection Key]": 42844,
+                "[rank]": 2,
+                "[no]": 93
+              },
+              {
+                "Review Selection[Selection Key]": 42845,
+                "[rank]": 3,
+                "[no]": 23
+              },
+              {
+                "Review Selection[Selection Key]": 42864,
+                "[rank]": 2,
+                "[no]": 27
+              },
+              {
+                "Review Selection[Selection Key]": 42865,
+                "[rank]": 3,
+                "[no]": 43
+              },
+              {
+                "Review Selection[Selection Key]": 42874,
+                "[rank]": 4,
+                "[no]": 168
+              },
+              {
+                "Review Selection[Selection Key]": 42875,
+                "[rank]": 6,
+                "[no]": 177
+              },
+              {
+                "Review Selection[Selection Key]": 42879,
+                "[rank]": 5,
+                "[no]": 64
+              },
+              {
+                "Review Selection[Selection Key]": 42880,
+                "[rank]": 3,
+                "[no]": 57
+              },
+              {
+                "Review Selection[Selection Key]": 80594,
+                "[rank]": 1,
+                "[no]": 88
+              },
+              {
+                "Review Selection[Selection Key]": 80595,
+                "[rank]": 1,
+                "[no]": 89
+              },
+              {
+                "Review Selection[Selection Key]": 80596,
+                "[rank]": 4,
+                "[no]": 81
+              },
+              {
+                "Review Selection[Selection Key]": 122834,
+                "[rank]": 2,
+                "[no]": 8
+              },
+              {
+                "Review Selection[Selection Key]": 122835,
+                "[rank]": 2,
+                "[no]": 8
+              },
+              {
+                "Review Selection[Selection Key]": 122836,
+                "[rank]": 1,
+                "[no]": 14
+              },
+              {
+                "Review Selection[Selection Key]": 122866,
+                "[rank]": 3,
+                "[no]": 45
+              },
+              {
+                "Review Selection[Selection Key]": 122925,
+                "[rank]": 1,
+                "[no]": 12
+              },
+              {
+                "Review Selection[Selection Key]": 122926,
+                "[rank]": 2,
+                "[no]": 11
+              },
+              {
+                "Review Selection[Selection Key]": 130601,
+                "[rank]": 2,
+                "[no]": 238
+              },
+              {
+                "Review Selection[Selection Key]": 130602,
+                "[rank]": 2,
+                "[no]": 323
+              },
+              {
+                "Review Selection[Selection Key]": 130603,
+                "[rank]": 5,
+                "[no]": 339
+              },
+              {
+                "Review Selection[Selection Key]": 130604,
+                "[rank]": 4,
+                "[no]": 269
+              },
+              {
+                "Review Selection[Selection Key]": 130605,
+                "[rank]": 5,
+                "[no]": 251
+              },
+              {
+                "Review Selection[Selection Key]": 130606,
+                "[rank]": 1,
+                "[no]": 220
+              },
+              {
+                "Review Selection[Selection Key]": 130872,
+                "[rank]": 3,
+                "[no]": 626
+              },
+              {
+                "Review Selection[Selection Key]": 130873,
+                "[rank]": 3,
+                "[no]": 1065
+              },
+              {
+                "Review Selection[Selection Key]": 130874,
+                "[rank]": 1,
+                "[no]": 1517
+              },
+              {
+                "Review Selection[Selection Key]": 130875,
+                "[rank]": 2,
+                "[no]": 1294
+              },
+              {
+                "Review Selection[Selection Key]": 130876,
+                "[rank]": 1,
+                "[no]": 1195
+              },
+              {
+                "Review Selection[Selection Key]": 130877,
+                "[rank]": 2,
+                "[no]": 912
+              },
+              {
+                "Review Selection[Selection Key]": 130878,
+                "[rank]": 2,
+                "[no]": 827
+              },
+              {
+                "Review Selection[Selection Key]": 130879,
+                "[rank]": 1,
+                "[no]": 605
+              },
+              {
+                "Review Selection[Selection Key]": 130880,
+                "[rank]": 1,
+                "[no]": 520
+              },
+              {
+                "Review Selection[Selection Key]": 130881,
+                "[rank]": 1,
+                "[no]": 590
+              },
+              {
+                "Review Selection[Selection Key]": 164560,
+                "[rank]": 4,
+                "[no]": 4
+              },
+              {
+                "Review Selection[Selection Key]": 164561,
+                "[rank]": 2,
+                "[no]": 4
+              },
+              {
+                "Review Selection[Selection Key]": 164562,
+                "[rank]": 1,
+                "[no]": 7
+              },
+              {
+                "Review Selection[Selection Key]": 164563,
+                "[rank]": 1,
+                "[no]": 8
+              },
+              {
+                "Review Selection[Selection Key]": 164564,
+                "[rank]": 2,
+                "[no]": 10
+              },
+              {
+                "Review Selection[Selection Key]": 164565,
+                "[rank]": 4,
+                "[no]": 17
+              },
+              {
+                "Review Selection[Selection Key]": 164632,
+                "[rank]": 4,
+                "[no]": 26
+              },
+              {
+                "Review Selection[Selection Key]": 164633,
+                "[rank]": 7,
+                "[no]": 14
+              },
+              {
+                "Review Selection[Selection Key]": 164638,
+                "[rank]": 2,
+                "[no]": 6
+              },
+              {
+                "Review Selection[Selection Key]": 164745,
+                "[rank]": 2,
+                "[no]": 6
+              },
+              {
+                "Review Selection[Selection Key]": 164808,
+                "[rank]": 3,
+                "[no]": 17
+              },
+              {
+                "Review Selection[Selection Key]": 164809,
+                "[rank]": 3,
+                "[no]": 18
+              },
+              {
+                "Review Selection[Selection Key]": 164883,
+                "[rank]": 5,
+                "[no]": 29
+              },
+              {
+                "Review Selection[Selection Key]": 164884,
+                "[rank]": 7,
+                "[no]": 38
+              },
+              {
+                "Review Selection[Selection Key]": 164885,
+                "[rank]": 3,
+                "[no]": 39
+              },
+              {
+                "Review Selection[Selection Key]": 164886,
+                "[rank]": 9,
+                "[no]": 21
+              },
+              {
+                "Review Selection[Selection Key]": 185771,
+                "[rank]": 3,
+                "[no]": 3
+              },
+              {
+                "Review Selection[Selection Key]": 191438,
+                "[rank]": 5,
+                "[no]": 18
+              },
+              {
+                "Review Selection[Selection Key]": 193307,
+                "[rank]": 6,
+                "[no]": 2
+              }
+            ],
+            "executionTimeMs": 5054
+          }
+        }
+      ],
+      "duration_ms": 5137.2838
+    }
+  ],
+  "server": {
+    "name": "powerbi-authoring-local",
+    "title": "Power BI Authoring MCP Server (Local)",
+    "version": "1.0.0",
+    "description": "Author Power BI semantic models in Power BI Desktop, Microsoft Fabric workspaces, and local PBIP and TMDL files."
+  },
+  "finished_at_utc": "2026-10-23T15:49:36.669Z"
+}

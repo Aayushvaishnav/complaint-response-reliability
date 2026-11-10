@@ -1,0 +1,45 @@
+{
+  "status": "released",
+  "released_at_utc": "2026-10-28T09:43:31.605974+00:00",
+  "project_state": "Complete",
+  "gate": "E",
+  "claims": {
+    "F1-01": "CV-ready",
+    "F1-02": "CV-ready",
+    "F1-03": "CV-ready"
+  },
+  "release_review_sha256": "02dd63dbb34f9680f23c92f9fe8944baaa472fb2a4d5ad99b148924f45234325",
+  "entry_point": "reports/powerbi/F1.pbip",
+  "documents_sha256": {
+    "analysis_method.md": "4177366992a6543a48a844a5cbd9f7d481268b9589229e9b00dc14529f936124",
+    "business_requirements.md": "234de86c0b04438aa0b63494788a6b1606086763c27b42796755029feb96aac6",
+    "completion.md": "95927699cdaccd1080a05253ebfdc6303c1187cbaf6a9c9f330dd705664fffb7",
+    "cv_bullets.md": "321ae28ab4180c22f08647310512c3cacc95cb882ff5d95249329865a0b19f2e",
+    "data_dictionary.md": "52f039bd74750475cc4df8f9e86e44b9a6a4ece9850a88d947ddb186291b3c13",
+    "data_manifest.md": "00a9ec025524ba69c32508d33d2f4423d7a68f15b13665c0df5172bf29c9920d",
+    "environment.md": "80a891e7af7ad6b5b874f04e30a49471ea74b086537c9ed938f210638b8b5694",
+    "evidence_register.md": "44f22d809634c807c5e71d10c5b6dc5c4aef8e9075414530938363d53994e617",
+    "findings.md": "c86ecb501a3201550be2778d529ad9037ab99d3b97ff9d28fe2901417adb7905",
+    "metric_dictionary.md": "374d7aebd81a5d68291ad1e56265355e564cfef31052cd35bc027bf532d713e9",
+    "model-rank-arithmetic.md": "f94dac15799d127be6424d76c481c2360c83e8b0b283c0e6fc5c710f9ebf4871",
+    "model.md": "f40d41f71be9ee3e2ed8b6d90a705102e1a8551e74909e739346f4aec10f61c4",
+    "README.md": "e63e9965582a5787ee7a703bf2ccc8c0b9a79a7f45ccc6b1cedd12fd45a34f3a",
+    "technical_evidence.md": "1f927c7ca19bc92ff79a62378ba3871c01ff7c6f690066978963b0eed64def54",
+    "validation.md": "37fb7d2b1671797ae5cd848f6e1738769187fd5226c441853d007a2a3a3d4394",
+    "walkthrough.md": "e948b395c7c90db4f70c6bc04ceb4ed8652af7663af04bdfa8d697ecbdde9ae7",
+    "outputs/import_projection_notes.md": "d8f4d0563de3fdcd3cbb3d55b3b86829cbed2956c50b259e80fb102cfd408640",
+    "outputs/live_repair_checkpoint.md": "9dc6840c926943ffa6ac2d9fdab2fb433b24513504a238db0e462270ba5a5daa",
+    "reports/owner_review.md": "e9df6621945dba9e442fb2b329333e93efcf917fb9eccf339d4315bb68730945",
+    "_brief/report-spec.md": "5731bb8b6320170b9f2de52fa087de45d6823f397bad37e933d7af94de09ffe8"
+  },
+  "root_status_sha256": {
+    "README.md": "5fa82a64489aa54af02762e827f5d7ee1e244cac5f5e8a7e565f3fc4cdb4a699",
+    "todo.md": "c434cd750a1cd95418b3bdd5800dadae7bee2ae77f7f8144fe4d975ab8bfd54f",
+    "implementation_plan.md": "0115be8ba3fbfac507b6e0ba42b956d7834fe9d9a572ea88c31ef52072a34016",
+    "evidence_register.md": "f849c205bb683c634136a26cfd475bc0e73fbe28bce07e352446f548f50895c3"
+  },
+  "local_links_checked": 539,
+  "known_limits_retained": true,
+  "active_project": "None",
+  "next_project_started": false
+}

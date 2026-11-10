@@ -1,0 +1,6 @@
+test_all_unknown_segment_or_peers_ineligible (test_review_contract.ReviewContractTests.test_all_unknown_segment_or_peers_ineligible) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 1.504s
+
+OK

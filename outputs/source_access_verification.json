@@ -1,0 +1,120 @@
+{
+  "checked_at_utc": "2026-10-23T05:34:43.748574+00:00",
+  "status": "passed_with_documented_limits",
+  "required_checks": {
+    "user_confirmed_official_origin": true,
+    "raw_hash_matches_frozen_identity": true,
+    "publisher_header_matches_supplied_schema": true,
+    "publisher_field_dictionary_accessible": true,
+    "publisher_public_reuse_statement_supported": true,
+    "historical_category_boundary_supported": true
+  },
+  "references": {
+    "publisher_headers": {
+      "url": "https://raw.githubusercontent.com/cfpb/ccdb5-api/9bf8c3e8b013d846394dd285bb49470a23ead628/complaint_search/defaults.py",
+      "status": "retrieved",
+      "http_status": 200,
+      "bytes": 2288,
+      "sha256": "fe8b449c4ec1cfcf0634d030856eac1cac3d0a40aa3caf8d3c5c8b34c110d2ea",
+      "saved_name": "publisher_headers.txt"
+    },
+    "publisher_readme": {
+      "url": "https://raw.githubusercontent.com/cfpb/ccdb5-api/9bf8c3e8b013d846394dd285bb49470a23ead628/README.md",
+      "status": "retrieved",
+      "http_status": 200,
+      "bytes": 3062,
+      "sha256": "57abc158b959bdea16546f4ecccefe183942dcc0f29e924066bd7b927985bdcf",
+      "saved_name": "publisher_readme.txt"
+    },
+    "field_dictionary": {
+      "url": "https://cfpb.github.io/api/ccdb/fields.html",
+      "status": "retrieved",
+      "http_status": 200,
+      "bytes": 9770,
+      "sha256": "99ad8aab6cbe7c8ebfb5909254492a9815b0fdf0d4cdf1356abbec51c8fdc2fe",
+      "saved_name": "field_dictionary.txt"
+    },
+    "database_overview": {
+      "url": "https://cfpb.github.io/api/ccdb/",
+      "status": "retrieved",
+      "http_status": 200,
+      "bytes": 4661,
+      "sha256": "16924754b0c924ec1b823edcfc5f1d5e7ada9b23072914d77cdc6e7a8a9c8605",
+      "saved_name": "database_overview.txt"
+    },
+    "publisher_release_notes": {
+      "url": "https://raw.githubusercontent.com/cfpb/api/gh-pages/ccdb/release-notes.md",
+      "status": "retrieved",
+      "http_status": 200,
+      "bytes": 33324,
+      "sha256": "3880da73724c6a1b6f82a92154d0147350f4270370463bc2179cdcf4a6463bf6",
+      "saved_name": "publisher_release_notes.txt"
+    },
+    "reuse_statement": {
+      "url": "https://files.consumerfinance.gov/f/documents/cfpb_finex-consumer-complaints-webinar_slides_2022-11.pdf",
+      "status": "http_error",
+      "http_status": 403
+    },
+    "category_options": {
+      "url": "https://files.consumerfinance.gov/f/documents/cfpb_consumer_complaint_form_product_issue_options_August_2023_FINAL.pdf",
+      "status": "http_error",
+      "http_status": 403
+    },
+    "database_landing": {
+      "url": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
+      "status": "http_error",
+      "http_status": 403
+    },
+    "live_record": {
+      "url": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/8317937",
+      "status": "http_error",
+      "http_status": 403
+    }
+  },
+  "publisher_statement_evidence": {
+    "reuse_statement": {
+      "method": "manually_reviewed_official_search_excerpt",
+      "evidence_type": "reviewed_official_domain_search_excerpt",
+      "reviewed_on": "2026-10-23",
+      "source_url": "https://files.consumerfinance.gov/f/documents/cfpb_finex-consumer-complaints-webinar_slides_2022-11.pdf",
+      "source_title": "Webinar: Using the CFPB Consumer Complaint Database, November 2022",
+      "location": "Slide 18",
+      "retrieval_method": "Official-domain web search excerpt; direct PDF retrieval returned HTTP 403",
+      "quote": "All complaint data we publish is freely available for anyone to use, analyze, and build on.",
+      "full_document_review_state": "not_read; HTTP 403",
+      "limitation": "This is an explicit publisher statement supporting public analytical reuse, not a current named dataset-wide licence or a review of the complete PDF"
+    },
+    "category_options": {
+      "method": "manually_reviewed_official_search_excerpt",
+      "evidence_type": "reviewed_official_domain_search_excerpt",
+      "reviewed_on": "2026-10-23",
+      "source_url": "https://files.consumerfinance.gov/f/documents/cfpb_consumer_complaint_form_product_issue_options_August_2023_FINAL.pdf",
+      "source_title": "Consumer complaint form product and issue options, August 2023",
+      "location": "Opening/effective-date statement",
+      "retrieval_method": "Official-domain web search excerpt; direct PDF retrieval returned HTTP 403",
+      "quote": "This document lists the products, sub-products, issues, and sub-issues available on the consumer complaint form beginning August 24, 2023.",
+      "full_document_review_state": "not_read; HTTP 403",
+      "limitation": "Establishes the stated effective date, not a complete historical taxonomy crosswalk or equivalence of similarly named labels"
+    }
+  },
+  "publisher_source_commit": "9bf8c3e8b013d846394dd285bb49470a23ead628",
+  "local_snapshot_sha256": "ef4494d4ea9787db5dc87e3de659e07ffaecb6e19ee3df97c7c15e14d54a74d9",
+  "provenance": {
+    "origin_state": "user_confirmed_official_cfpb_download",
+    "confirmed_on": "2026-10-23",
+    "confirmation": "Official CFPB download",
+    "original_download_url_state": "not_recorded",
+    "original_download_date_state": "not_recorded",
+    "fresh_official_file_comparison_state": "not_performed"
+  },
+  "acceptance_basis": "User-mediated official download, frozen local identity, publisher schema/dictionary and explicit public-reuse statement",
+  "live_record_comparison": "not_performed",
+  "limits": [
+    "Original download URL and date were not recorded; official origin is user-confirmed",
+    "No byte comparison with a newly downloaded complete official export",
+    "GitHub Pages field documentation is corroborated by pinned publisher CSV headers; API README warns older documentation is not updated",
+    "Published timely-response flag is used as recorded; no operational deadline or resolution duration is inferred",
+    "Public-reuse and August-2023 effective-date statements may use explicitly recorded official search excerpts; blocked PDFs are not claimed as downloaded or read",
+    "No current data-use-policy page was retrieved; API software CC0 terms are not asserted as a dataset-wide licence"
+  ]
+}

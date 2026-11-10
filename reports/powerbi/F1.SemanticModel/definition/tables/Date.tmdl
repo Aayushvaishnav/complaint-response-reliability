@@ -1,0 +1,72 @@
+/// Contiguous received-date calendar, 2023 through 2025.
+table Date
+	lineageTag: 10424613-5496-4c3c-9b59-c4536b72a7f3
+	dataCategory: Time
+
+	/// Imported date; preserves projection identity and meaning.
+	column Date
+		dataType: dateTime
+		isUnique
+		formatString: yyyy-MM-dd
+		lineageTag: 8197b9dd-e073-45e0-8ee6-107804f77076
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Imported year; preserves projection identity and meaning.
+	column Year
+		dataType: int64
+		lineageTag: 65bd92bc-5f5c-4056-9aac-c17d81dbebe0
+		summarizeBy: none
+		sourceColumn: year
+
+	/// Imported month_start; preserves projection identity and meaning.
+	column 'Month Start'
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		lineageTag: ea4d5773-d3ab-4ff6-a6b7-5342a58d3387
+		summarizeBy: none
+		sourceColumn: month_start
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Imported month_label; preserves projection identity and meaning.
+	column 'Month Label'
+		dataType: string
+		lineageTag: e048ea34-1d28-4343-a108-5f3e844866d9
+		summarizeBy: none
+		sourceColumn: month_label
+		sortByColumn: 'Month Order'
+
+	/// Imported month_order; preserves projection identity and meaning.
+	column 'Month Order'
+		dataType: int64
+		isHidden
+		lineageTag: f2ec8607-e2f7-4969-9e87-63f0fb64107e
+		summarizeBy: none
+		sourceColumn: month_order
+
+	/// Imported timing_era; preserves projection identity and meaning.
+	column 'Timing Era'
+		dataType: string
+		lineageTag: 0372a9aa-6016-473b-8a2d-882d826fcda9
+		summarizeBy: none
+		sourceColumn: timing_era
+
+	/// Imported boundary_month; preserves projection identity and meaning.
+	column 'Boundary Month'
+		dataType: boolean
+		lineageTag: 57bd7b5d-f1c2-46d6-9e8b-9022a34050c8
+		summarizeBy: none
+		sourceColumn: boundary_month
+
+	partition Date = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(#"Source Folder" & "/date.parquet")),
+				    Typed = Table.TransformColumnTypes(Source, {{"date", type date}, {"year", Int64.Type}, {"month_start", type date}, {"month_label", type text}, {"month_order", Int64.Type}, {"timing_era", type text}, {"boundary_month", type logical}})
+				in
+				    Typed
+

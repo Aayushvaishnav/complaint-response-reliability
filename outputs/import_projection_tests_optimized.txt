@@ -1,0 +1,10 @@
+test_calendar_and_independent_minima (test_import_projection.ImportProjectionTests.test_calendar_and_independent_minima) ... ok
+test_conservation_and_null_safe_join_with_literal_collisions (test_import_projection.ImportProjectionTests.test_conservation_and_null_safe_join_with_literal_collisions) ... ok
+test_observed_month_candidates_lossless_under_population_filters (test_import_projection.ImportProjectionTests.test_observed_month_candidates_lossless_under_population_filters) ... ok
+test_typed_routing_invalid_lags_excluded_not_replaced (test_import_projection.ImportProjectionTests.test_typed_routing_invalid_lags_excluded_not_replaced) ... ok
+test_weighted_even_odd_empty_matches_complaint_grain (test_import_projection.ImportProjectionTests.test_weighted_even_odd_empty_matches_complaint_grain) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.986s
+
+OK

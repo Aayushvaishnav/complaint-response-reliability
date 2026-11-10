@@ -1,0 +1,152 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 337.07720328395857,
+            "y": 202.92073102334371
+          },
+          "nodeIndex": "Complaint Cohorts",
+          "nodeLineageTag": "eeb231c0-c5af-4ed0-9cf1-5c02b643fa11",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 591.8861069216083,
+            "y": 556.10319338235365
+          },
+          "nodeIndex": "Company",
+          "nodeLineageTag": "73e1bc06-aa7a-4539-a11d-c602669727f5",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 99.7532181107639,
+            "y": 556.341358640948
+          },
+          "nodeIndex": "Date",
+          "nodeLineageTag": "10424613-5496-4c3c-9b59-c4536b72a7f3",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 337.08130125752643,
+            "y": -50
+          },
+          "nodeIndex": "Geography",
+          "nodeLineageTag": "4e18eb87-f150-48e5-82f0-056586562f89",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 139.83517893916462
+          },
+          "nodeIndex": "Issue",
+          "nodeLineageTag": "b9cc89b4-9155-49fa-a62a-0a1152bc09f2",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 624.15140181066386,
+            "y": 169.34115784860785
+          },
+          "nodeIndex": "Product",
+          "nodeLineageTag": "d3efaa28-7d24-4d31-a9d1-5ec558f87ae0",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 858.15140181066386,
+            "y": 375.17067932047394
+          },
+          "nodeIndex": "Review Minimum",
+          "nodeLineageTag": "5e99d42e-aea7-408e-a16c-3fb5c2790422",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1142.1514018106639,
+            "y": 277.17067932047394
+          },
+          "nodeIndex": "Review Selection",
+          "nodeLineageTag": "34f15010-bb58-40ea-8262-62e6f5449527",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1426.1514018106639,
+            "y": 351.17067932047394
+          },
+          "nodeIndex": "Review Window",
+          "nodeLineageTag": "55583e48-9feb-445b-8101-ec13bf3f3ec9",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1710.1514018106639,
+            "y": 375.17067932047394
+          },
+          "nodeIndex": "Sensitivity Minimum",
+          "nodeLineageTag": "4e1e8c34-e057-479d-85bf-826a8dcb0418",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

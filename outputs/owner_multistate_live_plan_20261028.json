@@ -1,0 +1,92 @@
+{
+  "operations": [
+    {
+      "id": "connect",
+      "tool": "connection_operations",
+      "request": {
+        "operation": "Connect",
+        "dataSource": "localhost:64562"
+      },
+      "captureConnection": true
+    },
+    {
+      "id": "CA_NY",
+      "tool": "dax_query_operations",
+      "useConnection": true,
+      "request": {
+        "operation": "Execute",
+        "query": "EVALUATE CALCULATETABLE(ROW(\"complaints\", [Complaint Count], \"yes\", [Timely Yes Count], \"no\", [Untimely No Count], \"unknown\", [Unknown Flag Count], \"known\", [Known Flag Count], \"timely_rate\", [Timely Response Rate], \"untimely_share\", [Untimely Share], \"unknown_rate\", [Unknown Flag Rate], \"valid_routing\", [Valid Routing Count], \"invalid_routing\", [Invalid Routing Count], \"median_routing_days\", [Median Routing Days]), FILTER(ALL('Geography'), 'Geography'[State] IN {\"CA\", \"NY\"}))",
+        "resultMode": "Inline",
+        "maxRows": 10,
+        "timeoutSeconds": 600
+      },
+      "expectedRow": {
+        "complaints": 1468258,
+        "yes": 1462855,
+        "no": 5403,
+        "unknown": 0,
+        "known": 1468258,
+        "valid_routing": 1468258,
+        "invalid_routing": 0,
+        "median_routing_days": 0.0,
+        "timely_rate": 0.9963201290236458,
+        "untimely_share": 0.003679870976354292,
+        "unknown_rate": 0.0
+      }
+    },
+    {
+      "id": "CA_NY_50",
+      "tool": "dax_query_operations",
+      "useConnection": true,
+      "request": {
+        "operation": "Execute",
+        "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 50, FILTER(ALL('Geography'), 'Geography'[State] IN {\"CA\", \"NY\"}))",
+        "resultMode": "Inline",
+        "maxRows": 10,
+        "timeoutSeconds": 600
+      },
+      "expectedRow": {
+        "eligible_windows": 542,
+        "qualifying_windows": 2,
+        "qualifying_segments": 2,
+        "stable_windows": 0
+      }
+    },
+    {
+      "id": "CA_NY_100",
+      "tool": "dax_query_operations",
+      "useConnection": true,
+      "request": {
+        "operation": "Execute",
+        "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 100, FILTER(ALL('Geography'), 'Geography'[State] IN {\"CA\", \"NY\"}))",
+        "resultMode": "Inline",
+        "maxRows": 10,
+        "timeoutSeconds": 600
+      },
+      "expectedRow": {
+        "eligible_windows": 291,
+        "qualifying_windows": 0,
+        "qualifying_segments": 0,
+        "stable_windows": 0
+      }
+    },
+    {
+      "id": "CA_NY_200",
+      "tool": "dax_query_operations",
+      "useConnection": true,
+      "request": {
+        "operation": "Execute",
+        "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 200, FILTER(ALL('Geography'), 'Geography'[State] IN {\"CA\", \"NY\"}))",
+        "resultMode": "Inline",
+        "maxRows": 10,
+        "timeoutSeconds": 600
+      },
+      "expectedRow": {
+        "eligible_windows": 279,
+        "qualifying_windows": 0,
+        "qualifying_segments": 0,
+        "stable_windows": 0
+      }
+    }
+  ]
+}

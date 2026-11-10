@@ -1,0 +1,561 @@
+{
+  "cases": [
+    {
+      "id": "exact_comparator",
+      "query": "EVALUATE SELECTCOLUMNS(ADDCOLUMNS(DATATABLE(\"id\", INTEGER, \"a\", INTEGER, \"n\", INTEGER, \"b\", INTEGER, \"m\", INTEGER, \"c\", INTEGER, \"p\", INTEGER, \"d\", INTEGER, \"q\", INTEGER, {{0, 1, 3, 0, 2, 2, 6, 0, 4}, {1, 1, 100, 0, 100, 2, 200, 0, 200}, {2, 0, 100, 10, 100, 0, 200, 20, 200}, {3, 1, 101, 0, 100, 1, 100, 0, 100}, {4, 897991, 1537131, 1838560, 5090986, 928065, 6060200, 341111, 913855}, {5, 68775, 135004, 67553, 933478, 3879420, 5101889, 1145703, 2079917}, {6, 1916778, 3378744, 793032, 1721723, 4696931, 8638416, 24227, 181562}, {7, 2760039, 3149884, 1360677, 3684544, 2628718, 8669902, 32106, 725366}, {8, 3954262, 8904371, 49892, 75578, 1140787, 3354727, 136430, 1734133}, {9, 3687519, 3816444, 1604922, 5646948, 825626, 899706, 4055537, 4648875}, {10, 788005, 2085132, 399765, 627727, 1604177, 8652559, 40897, 76468}, {11, 5619588, 5858940, 2430111, 2485351, 5198964, 6606035, 447520, 2219850}, {12, 2433520, 2828798, 1353582, 1939464, 8839259, 9153705, 37989, 50045}, {13, 4800643, 6824861, 296251, 1308941, 1041738, 8028600, 1045758, 1208583}, {14, 5427551, 8965163, 17192, 60289, 666403, 1046886, 450675, 4562174}, {15, 53658, 9230367, 82317, 146149, 4771863, 6122946, 1351909, 2614476}, {16, 6078784, 7126125, 1047658, 1610371, 3392949, 6053882, 2488406, 3040442}, {17, 5743677, 9104662, 20374, 31153, 3497215, 6652019, 838426, 1486680}, {18, 1688478, 4904751, 1075114, 1221333, 19544, 124894, 6343784, 8616889}, {19, 165988, 2255716, 2429243, 3360127, 4354200, 5706549, 841256, 1937448}, {20, 907577, 1440221, 2711633, 3950060, 265871, 1609819, 401068, 4794057}, {21, 1990805, 5788864, 1014176, 1503004, 1153146, 2086933, 550508, 1061477}, {22, 2049200, 3856564, 1141149, 1200060, 1859250, 2581745, 4911699, 5197585}, {23, 539032, 1140449, 1539544, 5438464, 1171166, 7450124, 151836, 353053}, {24, 1237548, 2732156, 2535399, 6365903, 3305051, 6277651, 72148, 162772}, {25, 1119919, 1774302, 1046256, 1293529, 6484117, 8764861, 234736, 391509}, {26, 636421, 1127672, 167750, 215612, 1707395, 2512230, 3044412, 4846448}, {27, 1970029, 8771019, 302848, 669840, 298578, 326759, 5911193, 6438777}, {28, 359541, 523589, 716683, 1896459, 2223687, 5213355, 2027385, 2331668}, {29, 3586404, 5585400, 724856, 3308137, 969274, 3249406, 1073259, 1949273}, {30, 2577648, 6196234, 9736, 468682, 2789596, 8775616, 506781, 610547}, {31, 150367, 2288750, 421531, 2586474, 2645071, 3862449, 2987463, 3286928}, {32, 5677004, 6680151, 58540, 89129, 476025, 5039019, 3633803, 4000776}, {33, 4519547, 4689235, 1181341, 3632626, 2095696, 3492211, 3602064, 5546519}, {34, 910394, 971626, 6945677, 7057784, 4001102, 8009698, 42099, 318762}, {35, 2757325, 3158777, 770390, 6167860, 3157519, 7314890, 261947, 400824}, {36, 4335162, 6298526, 170194, 184038, 1865588, 7600154, 681730, 1691637}, {37, 4344137, 7517134, 274192, 1797878, 21324, 583649, 294555, 1651413}, {38, 5878003, 7353475, 357899, 515112, 4932491, 8107044, 181358, 1331033}, {39, 658183, 1502694, 1252193, 2402695, 3017255, 8883729, 66853, 301223}, {40, 2901176, 7719152, 36451, 833425, 5565864, 5857046, 914005, 958163}, {41, 58146, 3157937, 671755, 4054270, 1355110, 7836623, 35098, 93457}, {42, 3061758, 6213090, 649609, 666983, 3843104, 9426375, 9578, 21040}, {43, 4044789, 6783638, 1026372, 1328559, 2723246, 3705963, 18443, 253707}, {44, 108103, 109065, 554884, 3166213, 1052255, 1782040, 3714704, 4663704}, {45, 3394062, 9014158, 14806, 26452, 46868, 1068464, 782483, 1054983}, {46, 3562867, 4338555, 2584717, 3424643, 917600, 1203254, 3112105, 3445019}, {47, 1550020, 4531977, 1564744, 3219045, 4644310, 8385225, 721864, 980403}, {48, 12925, 77214, 7205886, 8204453, 1379593, 3400678, 2273745, 2734894}, {49, 9025861, 9243012, 136365, 220991, 3566281, 3987681, 252660, 558655}, {50, 3153, 284118, 6641688, 8124037, 24369, 342104, 1724475, 8286477}, {51, 5293, 135120, 8344536, 8962606, 161572, 506449, 5637426, 8210887}, {52, 8668642, 9388001, 20043, 37103, 2152402, 2327707, 898548, 3441307}, {53, 3884744, 6805197, 489974, 1837587, 5977035, 7165812, 220307, 1285763}, {54, 3511954, 3970831, 677858, 839230, 217677, 240271, 4331252, 7867475}, {55, 376726, 1638237, 3162797, 3403156, 721495, 2614898, 2520406, 5427481}, {56, 1068007, 1290732, 2013228, 4552050, 765602, 1226227, 2945149, 5376577}, {57, 3542966, 6289420, 1397430, 2426003, 1188382, 3406872, 1059563, 2341648}, {58, 1238318, 3181182, 2528230, 3468010, 3615139, 5440779, 909756, 3792661}, {59, 251643, 281883, 684273, 6847338, 4747004, 7852103, 646379, 843731}, {60, 5819, 9582, 1247413, 2662310, 1496935, 9170420, 7830, 189299}, {61, 11452, 994498, 1220742, 2769380, 60419, 1215812, 386096, 7871524}, {62, 3376988, 4479129, 271470, 2335647, 6335773, 8085113, 725936, 1333068}, {63, 4094945, 8371760, 252970, 380255, 2885027, 6157581, 755102, 1258325}, {64, 59498, 604810, 1151572, 5996247, 3531060, 4864156, 2158323, 4184266}, {65, 5295015, 7191393, 527282, 1346977, 2042494, 3294496, 1233494, 2574597}, {66, 2250075, 6104729, 1250352, 1869101, 2448594, 4576921, 813245, 3189455}, {67, 1654256, 1881979, 16764, 132292, 591974, 927802, 433241, 2551811}, {68, 750286, 7826829, 906299, 1134597, 544266, 1714329, 2701570, 5712732}, {69, 459944, 645846, 1128898, 1732851, 16186, 1114014, 2512820, 7322584}, {70, 60620, 278603, 2266399, 4589959, 4493309, 8837980, 24774, 41106}, {71, 6953819, 7214642, 18188, 187764, 543073, 1281577, 796882, 1742969}, {72, 56274, 3186878, 198888, 2292826, 486216, 4573431, 1771223, 2213797}, {73, 658595, 801194, 3955411, 4821379, 3430501, 7607531, 95635, 1011114}, {74, 3752960, 4312108, 848471, 1400348, 538708, 1749586, 1351538, 6873389}, {75, 2538059, 2913250, 1956771, 4918769, 6194452, 7425326, 1502445, 1701125}, {76, 879187, 2568310, 1438337, 4050808, 777095, 4410047, 791630, 1092889}, {77, 2207847, 4137654, 1778065, 2934624, 1454976, 3393997, 22678, 101948}, {78, 5660040, 7869148, 356815, 367597, 161628, 1447100, 3806852, 7283899}, {79, 1595051, 1780147, 2923478, 5771759, 4345423, 6770386, 1091701, 1672265}, {80, 478052, 6947728, 87557, 238274, 569146, 571117, 364515, 2877018}, {81, 1158852, 3918380, 2803935, 3309543, 188756, 233657, 4054237, 7296801}, {82, 920167, 2358970, 4040240, 6985576, 4227005, 4941835, 1729800, 1947239}, {83, 1691495, 2122363, 211614, 357620, 3467962, 9099962, 45105, 279633}, {84, 19507, 1557098, 3201295, 5065473, 1440479, 5155211, 1388792, 2312298}, {85, 1344181, 6581750, 23568, 79724, 4193977, 5825682, 69461, 219157}, {86, 753515, 2751123, 4651276, 5831599, 751580, 5096491, 35803, 2843954}, {87, 3881848, 6458366, 917780, 2068698, 6635659, 9364297, 2153, 6192}, {88, 172538, 239942, 416272, 5348566, 1296292, 2024404, 570110, 5428325}, {89, 365492, 5324114, 1313574, 1451999, 1896010, 7370286, 450348, 732851}, {90, 304256, 599703, 601585, 4153848, 2938209, 3016195, 5063408, 5279084}, {91, 90147, 2342024, 3317670, 4944237, 4628134, 5312953, 1657065, 1981151}, {92, 4852347, 9382859, 3160, 8829, 2216537, 2615992, 1041862, 1956089}, {93, 1909514, 4341733, 114573, 368011, 1707338, 2924316, 2933830, 5460443}, {94, 344564, 590506, 3192814, 5810945, 2146049, 3387383, 646947, 2056704}, {95, 138404, 261897, 409831, 8210688, 3776003, 4949860, 1783710, 4287691}, {96, 293488, 2419071, 216200, 1508376, 3202984, 3838158, 2946618, 3331420}, {97, 973840, 1929798, 1276934, 2202668, 320402, 4356176, 87369, 731138}, {98, 4142413, 4414844, 1220057, 3062171, 6009580, 7422854, 65256, 834287}, {99, 83495, 2132050, 83201, 4380825, 2972428, 6605020, 149617, 1750793}, {100, 2114528, 6397700, 81397, 1143705, 5183949, 6380441, 2053085, 2738407}, {101, 135624, 3571787, 1920317, 4920378, 4401118, 7678510, 136142, 1093369}, {102, 746412, 3375840, 325280, 890985, 4632112, 5556476, 57294, 549029}, {103, 1168055, 1504807, 567715, 2557477, 999867, 1923227, 2752448, 2845197}}),\n        \"comparison\", (VAR _a = [a]\nVAR _n = [n]\nVAR _b = [b]\nVAR _m = [m]\nVAR _c = [c]\nVAR _p = [p]\nVAR _d = [d]\nVAR _q = [q]\nVAR _ra0 = _a * _m\nVAR _ra1 = _b * _n\nVAR _ra2 = _ra0 - _ra1\nVAR _ra3 = SIGN(_ra2)\nVAR _ra4 = ABS(_ra2)\nVAR _ra5 = _n * _m\nVAR _ra6 = _c * _q\nVAR _ra7 = _d * _p\nVAR _ra8 = _ra6 - _ra7\nVAR _ra9 = SIGN(_ra8)\nVAR _ra10 = ABS(_ra8)\nVAR _ra11 = _p * _q\nVAR _ra12 = INT(_ra4 / 32768)\nVAR _ra13 = _ra12 * 32768\nVAR _ra14 = _ra4 - _ra13\nVAR _ra15 = INT(_ra12 / 32768)\nVAR _ra16 = _ra15 * 32768\nVAR _ra17 = _ra12 - _ra16\nVAR _ra18 = INT(_ra11 / 32768)\nVAR _ra19 = _ra18 * 32768\nVAR _ra20 = _ra11 - _ra19\nVAR _ra21 = INT(_ra18 / 32768)\nVAR _ra22 = _ra21 * 32768\nVAR _ra23 = _ra18 - _ra22\nVAR _ra24 = _ra14 * _ra20\nVAR _ra25 = 0 + _ra24\nVAR _ra26 = INT(_ra25 / 32768)\nVAR _ra27 = _ra26 * 32768\nVAR _ra28 = _ra25 - _ra27\nVAR _ra29 = _ra14 * _ra23\nVAR _ra30 = _ra26 + _ra29\nVAR _ra31 = _ra17 * _ra20\nVAR _ra32 = _ra30 + _ra31\nVAR _ra33 = INT(_ra32 / 32768)\nVAR _ra34 = _ra33 * 32768\nVAR _ra35 = _ra32 - _ra34\nVAR _ra36 = _ra14 * _ra21\nVAR _ra37 = _ra33 + _ra36\nVAR _ra38 = _ra17 * _ra23\nVAR _ra39 = _ra37 + _ra38\nVAR _ra40 = _ra15 * _ra20\nVAR _ra41 = _ra39 + _ra40\nVAR _ra42 = INT(_ra41 / 32768)\nVAR _ra43 = _ra42 * 32768\nVAR _ra44 = _ra41 - _ra43\nVAR _ra45 = _ra17 * _ra21\nVAR _ra46 = _ra42 + _ra45\nVAR _ra47 = _ra15 * _ra23\nVAR _ra48 = _ra46 + _ra47\nVAR _ra49 = INT(_ra48 / 32768)\nVAR _ra50 = _ra49 * 32768\nVAR _ra51 = _ra48 - _ra50\nVAR _ra52 = _ra15 * _ra21\nVAR _ra53 = _ra49 + _ra52\nVAR _ra54 = INT(_ra53 / 32768)\nVAR _ra55 = _ra54 * 32768\nVAR _ra56 = _ra53 - _ra55\nVAR _ra57 = INT(_ra10 / 32768)\nVAR _ra58 = _ra57 * 32768\nVAR _ra59 = _ra10 - _ra58\nVAR _ra60 = INT(_ra57 / 32768)\nVAR _ra61 = _ra60 * 32768\nVAR _ra62 = _ra57 - _ra61\nVAR _ra63 = INT(_ra5 / 32768)\nVAR _ra64 = _ra63 * 32768\nVAR _ra65 = _ra5 - _ra64\nVAR _ra66 = INT(_ra63 / 32768)\nVAR _ra67 = _ra66 * 32768\nVAR _ra68 = _ra63 - _ra67\nVAR _ra69 = _ra59 * _ra65\nVAR _ra70 = 0 + _ra69\nVAR _ra71 = INT(_ra70 / 32768)\nVAR _ra72 = _ra71 * 32768\nVAR _ra73 = _ra70 - _ra72\nVAR _ra74 = _ra59 * _ra68\nVAR _ra75 = _ra71 + _ra74\nVAR _ra76 = _ra62 * _ra65\nVAR _ra77 = _ra75 + _ra76\nVAR _ra78 = INT(_ra77 / 32768)\nVAR _ra79 = _ra78 * 32768\nVAR _ra80 = _ra77 - _ra79\nVAR _ra81 = _ra59 * _ra66\nVAR _ra82 = _ra78 + _ra81\nVAR _ra83 = _ra62 * _ra68\nVAR _ra84 = _ra82 + _ra83\nVAR _ra85 = _ra60 * _ra65\nVAR _ra86 = _ra84 + _ra85\nVAR _ra87 = INT(_ra86 / 32768)\nVAR _ra88 = _ra87 * 32768\nVAR _ra89 = _ra86 - _ra88\nVAR _ra90 = _ra62 * _ra66\nVAR _ra91 = _ra87 + _ra90\nVAR _ra92 = _ra60 * _ra68\nVAR _ra93 = _ra91 + _ra92\nVAR _ra94 = INT(_ra93 / 32768)\nVAR _ra95 = _ra94 * 32768\nVAR _ra96 = _ra93 - _ra95\nVAR _ra97 = _ra60 * _ra66\nVAR _ra98 = _ra94 + _ra97\nVAR _ra99 = INT(_ra98 / 32768)\nVAR _ra100 = _ra99 * 32768\nVAR _ra101 = _ra98 - _ra100\nRETURN IF(_ra3 == _ra9, _ra3 * (IF(_ra54 == _ra99, IF(_ra56 == _ra101, IF(_ra51 == _ra96, IF(_ra44 == _ra89, IF(_ra35 == _ra80, IF(_ra28 == _ra73, 0, IF(_ra28 > _ra73, 1, -1)), IF(_ra35 > _ra80, 1, -1)), IF(_ra44 > _ra89, 1, -1)), IF(_ra51 > _ra96, 1, -1)), IF(_ra56 > _ra101, 1, -1)), IF(_ra54 > _ra99, 1, -1))), IF(_ra3 > _ra9, 1, -1)))), \"id\", [id], \"comparison\", [comparison])\n        ORDER BY [id]",
+      "expectedRows": [
+        {
+          "id": 0,
+          "comparison": 0
+        },
+        {
+          "id": 1,
+          "comparison": 0
+        },
+        {
+          "id": 2,
+          "comparison": 0
+        },
+        {
+          "id": 3,
+          "comparison": -1
+        },
+        {
+          "id": 4,
+          "comparison": 1
+        },
+        {
+          "id": 5,
+          "comparison": 1
+        },
+        {
+          "id": 6,
+          "comparison": -1
+        },
+        {
+          "id": 7,
+          "comparison": 1
+        },
+        {
+          "id": 8,
+          "comparison": -1
+        },
+        {
+          "id": 9,
+          "comparison": 1
+        },
+        {
+          "id": 10,
+          "comparison": 1
+        },
+        {
+          "id": 11,
+          "comparison": -1
+        },
+        {
+          "id": 12,
+          "comparison": -1
+        },
+        {
+          "id": 13,
+          "comparison": 1
+        },
+        {
+          "id": 14,
+          "comparison": -1
+        },
+        {
+          "id": 15,
+          "comparison": -1
+        },
+        {
+          "id": 16,
+          "comparison": 1
+        },
+        {
+          "id": 17,
+          "comparison": 1
+        },
+        {
+          "id": 18,
+          "comparison": 1
+        },
+        {
+          "id": 19,
+          "comparison": -1
+        },
+        {
+          "id": 20,
+          "comparison": -1
+        },
+        {
+          "id": 21,
+          "comparison": -1
+        },
+        {
+          "id": 22,
+          "comparison": -1
+        },
+        {
+          "id": 23,
+          "comparison": 1
+        },
+        {
+          "id": 24,
+          "comparison": -1
+        },
+        {
+          "id": 25,
+          "comparison": -1
+        },
+        {
+          "id": 26,
+          "comparison": -1
+        },
+        {
+          "id": 27,
+          "comparison": -1
+        },
+        {
+          "id": 28,
+          "comparison": 1
+        },
+        {
+          "id": 29,
+          "comparison": 1
+        },
+        {
+          "id": 30,
+          "comparison": 1
+        },
+        {
+          "id": 31,
+          "comparison": 1
+        },
+        {
+          "id": 32,
+          "comparison": 1
+        },
+        {
+          "id": 33,
+          "comparison": 1
+        },
+        {
+          "id": 34,
+          "comparison": -1
+        },
+        {
+          "id": 35,
+          "comparison": 1
+        },
+        {
+          "id": 36,
+          "comparison": -1
+        },
+        {
+          "id": 37,
+          "comparison": 1
+        },
+        {
+          "id": 38,
+          "comparison": -1
+        },
+        {
+          "id": 39,
+          "comparison": -1
+        },
+        {
+          "id": 40,
+          "comparison": 1
+        },
+        {
+          "id": 41,
+          "comparison": 1
+        },
+        {
+          "id": 42,
+          "comparison": -1
+        },
+        {
+          "id": 43,
+          "comparison": -1
+        },
+        {
+          "id": 44,
+          "comparison": 1
+        },
+        {
+          "id": 45,
+          "comparison": 1
+        },
+        {
+          "id": 46,
+          "comparison": 1
+        },
+        {
+          "id": 47,
+          "comparison": 1
+        },
+        {
+          "id": 48,
+          "comparison": -1
+        },
+        {
+          "id": 49,
+          "comparison": -1
+        },
+        {
+          "id": 50,
+          "comparison": -1
+        },
+        {
+          "id": 51,
+          "comparison": -1
+        },
+        {
+          "id": 52,
+          "comparison": -1
+        },
+        {
+          "id": 53,
+          "comparison": -1
+        },
+        {
+          "id": 54,
+          "comparison": -1
+        },
+        {
+          "id": 55,
+          "comparison": -1
+        },
+        {
+          "id": 56,
+          "comparison": 1
+        },
+        {
+          "id": 57,
+          "comparison": 1
+        },
+        {
+          "id": 58,
+          "comparison": -1
+        },
+        {
+          "id": 59,
+          "comparison": 1
+        },
+        {
+          "id": 60,
+          "comparison": 1
+        },
+        {
+          "id": 61,
+          "comparison": -1
+        },
+        {
+          "id": 62,
+          "comparison": 1
+        },
+        {
+          "id": 63,
+          "comparison": -1
+        },
+        {
+          "id": 64,
+          "comparison": -1
+        },
+        {
+          "id": 65,
+          "comparison": 1
+        },
+        {
+          "id": 66,
+          "comparison": -1
+        },
+        {
+          "id": 67,
+          "comparison": 1
+        },
+        {
+          "id": 68,
+          "comparison": -1
+        },
+        {
+          "id": 69,
+          "comparison": 1
+        },
+        {
+          "id": 70,
+          "comparison": -1
+        },
+        {
+          "id": 71,
+          "comparison": 1
+        },
+        {
+          "id": 72,
+          "comparison": 1
+        },
+        {
+          "id": 73,
+          "comparison": -1
+        },
+        {
+          "id": 74,
+          "comparison": 1
+        },
+        {
+          "id": 75,
+          "comparison": 1
+        },
+        {
+          "id": 76,
+          "comparison": 1
+        },
+        {
+          "id": 77,
+          "comparison": -1
+        },
+        {
+          "id": 78,
+          "comparison": 1
+        },
+        {
+          "id": 79,
+          "comparison": 1
+        },
+        {
+          "id": 80,
+          "comparison": -1
+        },
+        {
+          "id": 81,
+          "comparison": -1
+        },
+        {
+          "id": 82,
+          "comparison": -1
+        },
+        {
+          "id": 83,
+          "comparison": -1
+        },
+        {
+          "id": 84,
+          "comparison": -1
+        },
+        {
+          "id": 85,
+          "comparison": -1
+        },
+        {
+          "id": 86,
+          "comparison": -1
+        },
+        {
+          "id": 87,
+          "comparison": -1
+        },
+        {
+          "id": 88,
+          "comparison": 1
+        },
+        {
+          "id": 89,
+          "comparison": -1
+        },
+        {
+          "id": 90,
+          "comparison": 1
+        },
+        {
+          "id": 91,
+          "comparison": -1
+        },
+        {
+          "id": 92,
+          "comparison": -1
+        },
+        {
+          "id": 93,
+          "comparison": 1
+        },
+        {
+          "id": 94,
+          "comparison": -1
+        },
+        {
+          "id": 95,
+          "comparison": 1
+        },
+        {
+          "id": 96,
+          "comparison": 1
+        },
+        {
+          "id": 97,
+          "comparison": -1
+        },
+        {
+          "id": 98,
+          "comparison": -1
+        },
+        {
+          "id": 99,
+          "comparison": -1
+        },
+        {
+          "id": 100,
+          "comparison": 1
+        },
+        {
+          "id": 101,
+          "comparison": -1
+        },
+        {
+          "id": 102,
+          "comparison": -1
+        },
+        {
+          "id": 103,
+          "comparison": 1
+        }
+      ],
+      "keyColumns": [
+        "id"
+      ]
+    },
+    {
+      "id": "focal_window",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"rank\", [Priority Rank], \"qualifies\", [Window Qualifies], \"no\", [Window No Count], \"known\", [Window Known Count], \"peer_no\", [Window Peer No Count], \"peer_known\", [Window Peer Known Count], \"months\", [Elevated Months], \"gap_pp\", [Pooled Gap pp]), 'Review Selection'[Selection Key] = 130881)",
+      "expected": {
+        "rank": 1,
+        "qualifies": 1,
+        "no": 590,
+        "known": 972,
+        "peer_no": 253,
+        "peer_known": 452,
+        "months": 3,
+        "gap_pp": 4.726137149932619
+      }
+    },
+    {
+      "id": "focal_sensitivity_50",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"result\", [Sensitivity Result]),\n                'Review Selection'[Selection Key] = 130881, 'Sensitivity Minimum'[Minimum] = 50)",
+      "expected": {
+        "result": "Qualifies"
+      }
+    },
+    {
+      "id": "focal_sensitivity_100",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"result\", [Sensitivity Result]),\n                'Review Selection'[Selection Key] = 130881, 'Sensitivity Minimum'[Minimum] = 100)",
+      "expected": {
+        "result": "Qualifies"
+      }
+    },
+    {
+      "id": "focal_sensitivity_200",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"result\", [Sensitivity Result]),\n                'Review Selection'[Selection Key] = 130881, 'Sensitivity Minimum'[Minimum] = 200)",
+      "expected": {
+        "result": "Does not qualify"
+      }
+    },
+    {
+      "id": "focal_monthly",
+      "query": "EVALUATE CALCULATETABLE(SELECTCOLUMNS(SUMMARIZECOLUMNS('Date'[Month Start], \"complaints\", [Focused Monthly Complaint Count], \"no\", [Focused Monthly No Count], \"known\", [Focused Monthly Known Count], \"peer_no\", [Focused Monthly Peer No Count], \"peer_known\", [Focused Monthly Peer Known Count]), \"month\", FORMAT('Date'[Month Start], \"yyyy-MM-dd\"), \"complaints\", [complaints], \"no\", [no], \"known\", [known], \"peer_no\", [peer_no], \"peer_known\", [peer_known]), 'Review Selection'[Selection Key] = 130881) ORDER BY [month]",
+      "expectedRows": [
+        {
+          "month": "2025-10-01",
+          "complaints": 340,
+          "no": 121,
+          "known": 340,
+          "peer_no": 36,
+          "peer_known": 129
+        },
+        {
+          "month": "2025-11-01",
+          "complaints": 245,
+          "no": 168,
+          "known": 245,
+          "peer_no": 81,
+          "peer_known": 131
+        },
+        {
+          "month": "2025-12-01",
+          "complaints": 387,
+          "no": 301,
+          "known": 387,
+          "peer_no": 136,
+          "peer_known": 192
+        }
+      ],
+      "keyColumns": [
+        "month"
+      ]
+    },
+    {
+      "id": "focal_keeps_population_counts",
+      "query": "EVALUATE CALCULATETABLE(\n        ROW(\"eligible\", [Eligible Window Count], \"qualifying\", [Qualifying Window Count],\n            \"segments\", [Qualifying Segment Count], \"stable\", [Stable Window Count]),\n        'Review Selection'[Selection Key] = 130881)",
+      "expected": {
+        "eligible": 1873,
+        "qualifying": 36,
+        "segments": 13,
+        "stable": 5
+      }
+    },
+    {
+      "id": "partial_month_rejected",
+      "query": "EVALUATE CALCULATETABLE(\n        ROW(\"qualifies\", [Window Qualifies]), 'Review Selection'[Selection Key] = 130881,\n        'Date'[Date] >= DATE(2025,10,15))",
+      "expected": {
+        "qualifies": 0
+      }
+    },
+    {
+      "id": "missing_selected_day_rejected",
+      "query": "EVALUATE CALCULATETABLE(\n        ROW(\"qualifies\", [Window Qualifies]), 'Review Selection'[Selection Key] = 130881,\n        FILTER(ALL('Date'), 'Date'[Date] <> DATE(2025,11,15)))",
+      "expected": {
+        "qualifies": 0
+      }
+    },
+    {
+      "id": "ambiguous_minimum_unavailable",
+      "query": "EVALUATE CALCULATETABLE(\n        ROW(\"eligible\", [Eligible Window Count], \"qualifying\", [Qualifying Window Count]),\n        TREATAS({50,200}, 'Review Minimum'[Minimum]))",
+      "expected": {
+        "eligible": null,
+        "qualifying": null
+      }
+    },
+    {
+      "id": "august_boundary_rejected",
+      "query": "EVALUATE CALCULATETABLE(\n        ROW(\"eligible\", [Eligible Window Count], \"qualifying\", [Qualifying Window Count]),\n        TREATAS({DATE(2023,8,1),DATE(2023,9,1),DATE(2023,10,1)}, 'Review Window'[Window End]))",
+      "expected": {
+        "eligible": 0,
+        "qualifying": 0
+      }
+    },
+    {
+      "id": "no_focus_unavailable",
+      "query": "EVALUATE ROW(\"rate\", [Focused Monthly Untimely Share],\n        \"result\", [Sensitivity Result])",
+      "expected": {
+        "rate": null,
+        "result": "Unavailable"
+      }
+    },
+    {
+      "id": "global_partial_window_rejected",
+      "query": "EVALUATE CALCULATETABLE(\n            ROW(\"eligible\", [Eligible Window Count], \"qualifying\", [Qualifying Window Count]),\n            FILTER(ALL('Date'), 'Date'[Date] >= DATE(2025,10,15)))",
+      "expected": {
+        "eligible": 0,
+        "qualifying": 0
+      }
+    },
+    {
+      "id": "global_missing_day_rejected",
+      "query": "EVALUATE CALCULATETABLE(\n            ROW(\"eligible\", [Eligible Window Count], \"qualifying\", [Qualifying Window Count]),\n            FILTER(ALL('Date'), 'Date'[Date] >= DATE(2025,10,1) && 'Date'[Date] <> DATE(2025,11,15)))",
+      "expected": {
+        "eligible": 0,
+        "qualifying": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-10-28T09:34:12.798683+00:00",
+  "method": "WCAG sRGB relative luminance",
+  "checks": [
+    {
+      "color_role": "primary",
+      "foreground": "#1B365D",
+      "background": "#FFFFFF",
+      "ratio": 12.122389524532837,
+      "passes_3_to_1": true
+    },
+    {
+      "color_role": "primary",
+      "foreground": "#1B365D",
+      "background": "#F7F9FC",
+      "ratio": 11.493617961080364,
+      "passes_3_to_1": true
+    },
+    {
+      "color_role": "comparator",
+      "foreground": "#0F766E",
+      "background": "#FFFFFF",
+      "ratio": 5.473250081210842,
+      "passes_3_to_1": true
+    },
+    {
+      "color_role": "comparator",
+      "foreground": "#0F766E",
+      "background": "#F7F9FC",
+      "ratio": 5.189360176191316,
+      "passes_3_to_1": true
+    },
+    {
+      "color_role": "review",
+      "foreground": "#B45309",
+      "background": "#FFFFFF",
+      "ratio": 5.02163257594014,
+      "passes_3_to_1": true
+    },
+    {
+      "color_role": "review",
+      "foreground": "#B45309",
+      "background": "#F7F9FC",
+      "ratio": 4.761167445738887,
+      "passes_3_to_1": true
+    },
+    {
+      "color_role": "recorded_no",
+      "foreground": "#B42318",
+      "background": "#FFFFFF",
+      "ratio": 6.57428861557707,
+      "passes_3_to_1": true
+    },
+    {
+      "color_role": "recorded_no",
+      "foreground": "#B42318",
+      "background": "#F7F9FC",
+      "ratio": 6.233289365962256,
+      "passes_3_to_1": true
+    },
+    {
+      "color_role": "unknown",
+      "foreground": "#64748B",
+      "background": "#FFFFFF",
+      "ratio": 4.758842787868665,
+      "passes_3_to_1": true
+    },
+    {
+      "color_role": "unknown",
+      "foreground": "#64748B",
+      "background": "#F7F9FC",
+      "ratio": 4.512008200191281,
+      "passes_3_to_1": true
+    }
+  ],
+  "limits": "Calculated contrast plus separate screenshot/owner readability review; no color-vision simulation or screen-reader audit claimed"
+}

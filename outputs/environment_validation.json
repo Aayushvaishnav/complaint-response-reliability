@@ -1,0 +1,21 @@
+{
+  "checked_at_utc": "2026-10-23T05:33:26.037224+00:00",
+  "python": "3.14.7",
+  "platform": "Linux",
+  "duckdb": "2.0.0",
+  "packages": [
+    {
+      "name": "duckdb",
+      "version": "2.0.0"
+    },
+    {
+      "name": "pip",
+      "version": "26.0.1"
+    }
+  ],
+  "pip_check_passed": true,
+  "pip_check_output": "No broken requirements found.",
+  "dependency_review_url": "https://pypi.org/pypi/duckdb/2.0.0/json",
+  "optional_extras_installed": false,
+  "power_bi_load_tested": false
+}

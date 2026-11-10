@@ -1,0 +1,428 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-23T15:10:44.555Z",
+  "operations": [
+    {
+      "id": "connect-foundation",
+      "tool": "connection_operations",
+      "operation": "ConnectFolder",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"Successfully loaded database \\u0027F1\\u0027 from TMDL folder\",\"operation\":\"ConnectFolder\",\"data\":{\"connectionName\":\"TMDL-C:\\\\Users\\\\Aayush\\\\my_files\\\\da_projects\\\\projects\\\\f1-complaint-response-reliability\\\\reports\\\\powerbi\\\\F1.SemanticModel\\\\definition\",\"databaseName\":\"F1\",\"folderPath\":\"C:\\\\Users\\\\Aayush\\\\my_files\\\\da_projects\\\\projects\\\\f1-complaint-response-reliability\\\\reports\\\\powerbi\\\\F1.SemanticModel\\\\definition\",\"tablesLoaded\":10,\"measuresLoaded\":45,\"relationshipsLoaded\":5,\"loadedAt\":\"2026-10-23T15:10:45.7555975Z\"},\"warnings\":[\"Model loaded into memory from the TMDL folder. Changes made through MCP are not automatically written to disk. Run \\u0060ExportToTmdlFolder\\u0060 before disconnecting to persist them.\"]}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "connection_operations.connectfolder",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "Successfully loaded database 'F1' from TMDL folder",
+          "operation": "ConnectFolder",
+          "data": {
+            "connectionName": "TMDL-C:\\Users\\Aayush\\my_files\\da_projects\\projects\\f1-complaint-response-reliability\\reports\\powerbi\\F1.SemanticModel\\definition",
+            "databaseName": "F1",
+            "folderPath": "C:\\Users\\Aayush\\my_files\\da_projects\\projects\\f1-complaint-response-reliability\\reports\\powerbi\\F1.SemanticModel\\definition",
+            "tablesLoaded": 10,
+            "measuresLoaded": 45,
+            "relationshipsLoaded": 5,
+            "loadedAt": "2026-10-23T15:10:45.7555975Z"
+          },
+          "warnings": [
+            "Model loaded into memory from the TMDL folder. Changes made through MCP are not automatically written to disk. Run `ExportToTmdlFolder` before disconnecting to persist them."
+          ]
+        }
+      ],
+      "duration_ms": 316.08029999999997
+    },
+    {
+      "id": "add-priorities",
+      "tool": "measure_operations",
+      "operation": "Update",
+      "status": "passed",
+      "raw": {
+        "content": [],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "measure_operations.update",
+            "readOnlyHint": false
+          }
+        }
+      },
+      "payloads": [],
+      "duration_ms": 41.750299999999925
+    },
+    {
+      "id": "measure-readback",
+      "tool": "measure_operations",
+      "operation": "List",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"Found 45 measures across 1 tables\",\"operation\":\"List\",\"data\":[{\"tableName\":\"Complaint Cohorts\",\"measures\":[{\"displayFolder\":\"Counts\",\"formatString\":\"#,##0\",\"name\":\"Complaint Count\",\"description\":\"Sum imported complaint frequencies in current context; empty is zero.\"},{\"displayFolder\":\"Counts\",\"formatString\":\"#,##0\",\"name\":\"Timely Yes Count\",\"description\":\"Sum imported complaint frequencies in current context; empty is zero.\"},{\"displayFolder\":\"Counts\",\"formatString\":\"#,##0\",\"name\":\"Untimely No Count\",\"description\":\"Sum imported complaint frequencies in current context; empty is zero.\"},{\"displayFolder\":\"Counts\",\"formatString\":\"#,##0\",\"name\":\"Unknown Flag Count\",\"description\":\"Sum imported complaint frequencies in current context; empty is zero.\"},{\"displayFolder\":\"Counts\",\"formatString\":\"#,##0\",\"name\":\"Known Flag Count\",\"description\":\"Exact recorded Yes plus No flags; excludes unknown flags.\"},{\"displayFolder\":\"Rates\",\"formatString\":\"0.00%\",\"name\":\"Timely Response Rate\",\"description\":\"Timely Yes Count divided by Known Flag Count; undefined is BLANK.\"},{\"displayFolder\":\"Rates\",\"formatString\":\"0.00%\",\"name\":\"Untimely Share\",\"description\":\"Untimely No Count divided by Known Flag Count; undefined is BLANK.\"},{\"displayFolder\":\"Rates\",\"formatString\":\"0.00%\",\"name\":\"Unknown Flag Rate\",\"description\":\"Unknown Flag Count divided by Complaint Count; undefined is BLANK.\"},{\"displayFolder\":\"Routing\",\"formatString\":\"#,##0\",\"name\":\"Valid Routing Count\",\"description\":\"Frequency of nonnegative valid routing lags.\"},{\"displayFolder\":\"Routing\",\"formatString\":\"#,##0\",\"name\":\"Invalid Routing Count\",\"description\":\"All complaints minus valid routing frequencies; includes missing and negative lags.\"},{\"displayFolder\":\"Routing\",\"formatString\":\"#,##0.0\",\"name\":\"Median Routing Days\",\"description\":\"Frequency-weighted median of valid lags; averages both middle observations; empty is BLANK.\"},{\"displayFolder\":\"Issue Mix\",\"formatString\":\"0.00%\",\"name\":\"Monthly Issue Share\",\"description\":\"Issue frequency divided by all issues in current month context; all other filters retained; undefined is BLANK.\"},{\"displayFolder\":\"Peers\",\"formatString\":\"#,##0\",\"name\":\"Peer Complaint Count\",\"description\":\"Other issues: all-issue total minus current issue selection; company, product, date and geography retained.\"},{\"displayFolder\":\"Peers\",\"formatString\":\"#,##0\",\"name\":\"Peer Known Count\",\"description\":\"Other issues: all-issue total minus current issue selection; company, product, date and geography retained.\"},{\"displayFolder\":\"Peers\",\"formatString\":\"#,##0\",\"name\":\"Peer No Count\",\"description\":\"Other issues: all-issue total minus current issue selection; company, product, date and geography retained.\"},{\"displayFolder\":\"Peers\",\"formatString\":\"0.00%\",\"name\":\"Peer Untimely Share\",\"description\":\"Other-issue No flags divided by other-issue known flags; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Selected Review Minimum\",\"description\":\"Selected Review Minimum; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Eligible Window Count\",\"description\":\"Eligible Window Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Qualifying Window Count\",\"description\":\"Qualifying Window Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Qualifying Segment Count\",\"description\":\"Qualifying Segment Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Stable Window Count\",\"description\":\"Stable Window Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Elevated Months\",\"description\":\"Elevated Months; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Window No Count\",\"description\":\"Window No Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Window Known Count\",\"description\":\"Window Known Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Window Peer No Count\",\"description\":\"Window Peer No Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Window Peer Known Count\",\"description\":\"Window Peer Known Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Window Complaint Count\",\"description\":\"Window Complaint Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Window Eligible\",\"description\":\"Window Eligible; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Window Qualifies\",\"description\":\"Window Qualifies; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"0.00\",\"name\":\"Pooled Gap pp\",\"description\":\"Pooled Gap pp; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"@\",\"name\":\"Passing Minima\",\"description\":\"Passing Minima; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"@\",\"name\":\"Review Reason\",\"description\":\"Review Reason; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"#,##0\",\"name\":\"Priority Rank\",\"description\":\"Priority Rank; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Sensitivity\",\"formatString\":\"@\",\"name\":\"Sensitivity Reason\",\"description\":\"Sensitivity Reason; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Sensitivity\",\"formatString\":\"@\",\"name\":\"Sensitivity Result\",\"description\":\"Sensitivity Result; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Review Priorities\",\"formatString\":\"@\",\"name\":\"Review Context\",\"description\":\"Review Context; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Focused Evidence\",\"formatString\":\"#,##0\",\"name\":\"Focused Monthly Complaint Count\",\"description\":\"Focused Monthly Complaint Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Focused Evidence\",\"formatString\":\"#,##0\",\"name\":\"Focused Monthly No Count\",\"description\":\"Focused Monthly No Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Focused Evidence\",\"formatString\":\"#,##0\",\"name\":\"Focused Monthly Known Count\",\"description\":\"Focused Monthly Known Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Focused Evidence\",\"formatString\":\"#,##0\",\"name\":\"Focused Monthly Peer No Count\",\"description\":\"Focused Monthly Peer No Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Focused Evidence\",\"formatString\":\"#,##0\",\"name\":\"Focused Monthly Peer Known Count\",\"description\":\"Focused Monthly Peer Known Count; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Focused Evidence\",\"formatString\":\"0.00%\",\"name\":\"Focused Monthly Untimely Share\",\"description\":\"Focused Monthly Untimely Share; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Focused Evidence\",\"formatString\":\"0.00%\",\"name\":\"Focused Monthly Peer Untimely Share\",\"description\":\"Focused Monthly Peer Untimely Share; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Focused Evidence\",\"formatString\":\"0.00%\",\"name\":\"Focused Monthly Issue Share\",\"description\":\"Focused Monthly Issue Share; dynamic selected population; undefined is BLANK.\"},{\"displayFolder\":\"Focused Evidence\",\"formatString\":\"0.00\",\"name\":\"Issue Share Change pp\",\"description\":\"Issue Share Change pp; dynamic selected population; undefined is BLANK.\"}]}]}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "measure_operations.list",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "Found 45 measures across 1 tables",
+          "operation": "List",
+          "data": [
+            {
+              "tableName": "Complaint Cohorts",
+              "measures": [
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Complaint Count",
+                  "description": "Sum imported complaint frequencies in current context; empty is zero."
+                },
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Timely Yes Count",
+                  "description": "Sum imported complaint frequencies in current context; empty is zero."
+                },
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Untimely No Count",
+                  "description": "Sum imported complaint frequencies in current context; empty is zero."
+                },
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Unknown Flag Count",
+                  "description": "Sum imported complaint frequencies in current context; empty is zero."
+                },
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Known Flag Count",
+                  "description": "Exact recorded Yes plus No flags; excludes unknown flags."
+                },
+                {
+                  "displayFolder": "Rates",
+                  "formatString": "0.00%",
+                  "name": "Timely Response Rate",
+                  "description": "Timely Yes Count divided by Known Flag Count; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Rates",
+                  "formatString": "0.00%",
+                  "name": "Untimely Share",
+                  "description": "Untimely No Count divided by Known Flag Count; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Rates",
+                  "formatString": "0.00%",
+                  "name": "Unknown Flag Rate",
+                  "description": "Unknown Flag Count divided by Complaint Count; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Routing",
+                  "formatString": "#,##0",
+                  "name": "Valid Routing Count",
+                  "description": "Frequency of nonnegative valid routing lags."
+                },
+                {
+                  "displayFolder": "Routing",
+                  "formatString": "#,##0",
+                  "name": "Invalid Routing Count",
+                  "description": "All complaints minus valid routing frequencies; includes missing and negative lags."
+                },
+                {
+                  "displayFolder": "Routing",
+                  "formatString": "#,##0.0",
+                  "name": "Median Routing Days",
+                  "description": "Frequency-weighted median of valid lags; averages both middle observations; empty is BLANK."
+                },
+                {
+                  "displayFolder": "Issue Mix",
+                  "formatString": "0.00%",
+                  "name": "Monthly Issue Share",
+                  "description": "Issue frequency divided by all issues in current month context; all other filters retained; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Peers",
+                  "formatString": "#,##0",
+                  "name": "Peer Complaint Count",
+                  "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained."
+                },
+                {
+                  "displayFolder": "Peers",
+                  "formatString": "#,##0",
+                  "name": "Peer Known Count",
+                  "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained."
+                },
+                {
+                  "displayFolder": "Peers",
+                  "formatString": "#,##0",
+                  "name": "Peer No Count",
+                  "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained."
+                },
+                {
+                  "displayFolder": "Peers",
+                  "formatString": "0.00%",
+                  "name": "Peer Untimely Share",
+                  "description": "Other-issue No flags divided by other-issue known flags; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Selected Review Minimum",
+                  "description": "Selected Review Minimum; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Eligible Window Count",
+                  "description": "Eligible Window Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Qualifying Window Count",
+                  "description": "Qualifying Window Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Qualifying Segment Count",
+                  "description": "Qualifying Segment Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Stable Window Count",
+                  "description": "Stable Window Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Elevated Months",
+                  "description": "Elevated Months; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Window No Count",
+                  "description": "Window No Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Window Known Count",
+                  "description": "Window Known Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Window Peer No Count",
+                  "description": "Window Peer No Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Window Peer Known Count",
+                  "description": "Window Peer Known Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Window Complaint Count",
+                  "description": "Window Complaint Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Window Eligible",
+                  "description": "Window Eligible; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Window Qualifies",
+                  "description": "Window Qualifies; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "0.00",
+                  "name": "Pooled Gap pp",
+                  "description": "Pooled Gap pp; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "@",
+                  "name": "Passing Minima",
+                  "description": "Passing Minima; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "@",
+                  "name": "Review Reason",
+                  "description": "Review Reason; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "#,##0",
+                  "name": "Priority Rank",
+                  "description": "Priority Rank; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Sensitivity",
+                  "formatString": "@",
+                  "name": "Sensitivity Reason",
+                  "description": "Sensitivity Reason; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Sensitivity",
+                  "formatString": "@",
+                  "name": "Sensitivity Result",
+                  "description": "Sensitivity Result; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Review Priorities",
+                  "formatString": "@",
+                  "name": "Review Context",
+                  "description": "Review Context; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Focused Evidence",
+                  "formatString": "#,##0",
+                  "name": "Focused Monthly Complaint Count",
+                  "description": "Focused Monthly Complaint Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Focused Evidence",
+                  "formatString": "#,##0",
+                  "name": "Focused Monthly No Count",
+                  "description": "Focused Monthly No Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Focused Evidence",
+                  "formatString": "#,##0",
+                  "name": "Focused Monthly Known Count",
+                  "description": "Focused Monthly Known Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Focused Evidence",
+                  "formatString": "#,##0",
+                  "name": "Focused Monthly Peer No Count",
+                  "description": "Focused Monthly Peer No Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Focused Evidence",
+                  "formatString": "#,##0",
+                  "name": "Focused Monthly Peer Known Count",
+                  "description": "Focused Monthly Peer Known Count; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Focused Evidence",
+                  "formatString": "0.00%",
+                  "name": "Focused Monthly Untimely Share",
+                  "description": "Focused Monthly Untimely Share; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Focused Evidence",
+                  "formatString": "0.00%",
+                  "name": "Focused Monthly Peer Untimely Share",
+                  "description": "Focused Monthly Peer Untimely Share; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Focused Evidence",
+                  "formatString": "0.00%",
+                  "name": "Focused Monthly Issue Share",
+                  "description": "Focused Monthly Issue Share; dynamic selected population; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Focused Evidence",
+                  "formatString": "0.00",
+                  "name": "Issue Share Change pp",
+                  "description": "Issue Share Change pp; dynamic selected population; undefined is BLANK."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "duration_ms": 15.638999999999896
+    },
+    {
+      "id": "export-priorities",
+      "tool": "database_operations",
+      "operation": "ExportToTmdlFolder",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"databaseName\":\"F1\",\"message\":\"Successfully exported database \\u0027F1\\u0027 to TMDL folder \\u0027C:/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/reports/powerbi/F1.SemanticModel/definition\\u0027\",\"operation\":\"ExportToTmdlFolder\",\"data\":{\"folderPath\":\"C:/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/reports/powerbi/F1.SemanticModel/definition\",\"databaseName\":\"F1\",\"filesCreated\":[\"Company.tmdl\",\"Complaint Cohorts.tmdl\",\"database.tmdl\",\"Date.tmdl\",\"expressions.tmdl\",\"Geography.tmdl\",\"Issue.tmdl\",\"model.tmdl\",\"Product.tmdl\",\"relationships.tmdl\",\"Review Minimum.tmdl\",\"Review Selection.tmdl\",\"Review Window.tmdl\",\"Sensitivity Minimum.tmdl\"],\"fileCount\":14,\"serializedAt\":\"2026-10-23T15:10:45.9068395Z\",\"message\":\"Successfully exported database \\u0027F1\\u0027 to TMDL folder\"}}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "database_operations.exporttotmdlfolder",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "databaseName": "F1",
+          "message": "Successfully exported database 'F1' to TMDL folder 'C:/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/reports/powerbi/F1.SemanticModel/definition'",
+          "operation": "ExportToTmdlFolder",
+          "data": {
+            "folderPath": "C:/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/reports/powerbi/F1.SemanticModel/definition",
+            "databaseName": "F1",
+            "filesCreated": [
+              "Company.tmdl",
+              "Complaint Cohorts.tmdl",
+              "database.tmdl",
+              "Date.tmdl",
+              "expressions.tmdl",
+              "Geography.tmdl",
+              "Issue.tmdl",
+              "model.tmdl",
+              "Product.tmdl",
+              "relationships.tmdl",
+              "Review Minimum.tmdl",
+              "Review Selection.tmdl",
+              "Review Window.tmdl",
+              "Sensitivity Minimum.tmdl"
+            ],
+            "fileCount": 14,
+            "serializedAt": "2026-10-23T15:10:45.9068395Z",
+            "message": "Successfully exported database 'F1' to TMDL folder"
+          }
+        }
+      ],
+      "duration_ms": 69.55299999999988
+    }
+  ],
+  "server": {
+    "name": "powerbi-authoring-local",
+    "title": "Power BI Authoring MCP Server (Local)",
+    "version": "1.0.0",
+    "description": "Author Power BI semantic models in Power BI Desktop, Microsoft Fabric workspaces, and local PBIP and TMDL files."
+  },
+  "finished_at_utc": "2026-10-23T15:10:45.913Z"
+}

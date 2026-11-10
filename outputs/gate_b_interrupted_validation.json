@@ -1,0 +1,20 @@
+{
+  "observed_on": "2026-10-23",
+  "status": "interrupted_incomplete_validation",
+  "process": "project-local Python scripts/prepare_complaints.py; PID 131418",
+  "observed_elapsed": "16 minutes 44 seconds",
+  "observed_resources": {
+    "resident_memory_kib": 4218164,
+    "process_cpu_percent": 116,
+    "prepared_database_du_rounded": "295 MiB",
+    "spill_directory_du_rounded": "7.1 GiB",
+    "proc_io_rchar_bytes": 83271642728,
+    "proc_io_wchar_bytes": 108811567834
+  },
+  "last_progress": "Post-interrupt traceback identifies typed Parquet full-wide EXCEPT ALL equality at prepare_complaints.py line 167; independent CSV audit and raw projection checks had completed",
+  "diagnosis_scope": "Large spill and IO are observed; interruption location is known, but precise per-statement duration was not recorded",
+  "action": "Parent sent SIGINT only to the owned preparation validation process to permit a bounded exact field comparison and rerun",
+  "source_action": "No raw snapshot or source staging change requested; source staging attached read-only",
+  "acceptance": "No Gate B sign-off from this interrupted attempt; final current full checks remain required",
+  "optimization_basis": "Final implementation retains bidirectional EXCEPT ALL but partitions by received month; both relations require strict canonical scoped dates and partition coverage checks. An exact unique-key field join was considered as an alternative."
+}

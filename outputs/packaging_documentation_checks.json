@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-10-23T18:16:26.808753+00:00",
+  "scope": "Local Markdown link destinations and UTF-8 content only; no live external URL, anchor, schema or rendered interaction validation",
+  "files": {
+    "projects/f1-complaint-response-reliability/technical_evidence.md": "b638ea674d090de6c31d6e1ef33f128809f6a66d0c37322d75cbccf590b2be9e",
+    "projects/f1-complaint-response-reliability/walkthrough.md": "234435779693ea1a8ea8f8ee455cfaead0e5ce1572af63baec07fb6bee015715",
+    "projects/f1-complaint-response-reliability/reports/owner_review.md": "83c2349c6b108c77fa9449e0780e72814adf5e383204b0d35ecf5f5a4730ce13",
+    "projects/f1-complaint-response-reliability/README.md": "45a9735f546517789f9d848b736c7da573e26d2adc1b1b343f36aada6ed64354",
+    "projects/f1-complaint-response-reliability/completion.md": "bed514b1ba9d0e9c761624163efc2a2abbcb1cc45c55f25cc1b1a5d2ffa1ef0d",
+    "projects/f1-complaint-response-reliability/validation.md": "8719e39d378daf2e448db1fd9644ed335f623c0aa51e27384d8a09fdd155ef73",
+    "todo.md": "2cac645c385778d60f6992deb3ece3341b1f8fc8242018015ad26bbfe3636b25"
+  },
+  "local_links_checked": 331,
+  "errors": [],
+  "gate_d_signoff": "not_granted"
+}

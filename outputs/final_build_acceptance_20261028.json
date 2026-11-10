@@ -1,0 +1,106 @@
+{
+  "status": "passed",
+  "recorded_at_utc": "2026-10-28T09:21:59.840774+00:00",
+  "scope": "Gate D build acceptance; not final CV measurement",
+  "refresh": {
+    "copy": "data/processed/refresh-20261028/F1.pbip",
+    "staging_evidence": "outputs/clean_refresh_staging_20261028.json",
+    "cache_free_at_staging": true,
+    "target_verified_by": "CLI launched exact copied PBIP; live Source Folder Get and all ten M partition Get operations",
+    "source_folder": "data/processed/refresh-20261028/model-input",
+    "pre_refresh_partitions": "10 NoData",
+    "operation": "model_operations.RefreshWithXMLA Full",
+    "response": {
+      "content": [],
+      "isError": false,
+      "readOnlyHint": false
+    },
+    "outcome": "returned successfully without a timeout; subsequent live counts and full reconciliation pass",
+    "imported_counts": {
+      "Complaint Cohorts": 1883868,
+      "Date": 1096,
+      "Company": 5150,
+      "Product": 14,
+      "Issue": 94,
+      "Geography": 63,
+      "Review Minimum": 3,
+      "Sensitivity Minimum": 3,
+      "Review Window": 36,
+      "Review Selection": 233427
+    },
+    "complaints": 9469257,
+    "no": 37783,
+    "known": 9469257,
+    "unknown": 0,
+    "reconciliation": "outputs/clean_refresh_reconciliation_20261028.json",
+    "operations": 45,
+    "field_comparisons": 2194,
+    "limits": "MCP successful completion envelope contains no textual payload; no precise refresh-duration claim"
+  },
+  "interactions": {
+    "verifier": "owner-reported; separate from DAX and screenshot checks",
+    "confirmation": "All checks passed",
+    "zoom": "Fit to page",
+    "passed": [
+      "Debt collection counts 479/11/4/0 and cross-page navigation",
+      "CA+NY counts 1468258/5403 and 291/0/0/0; cross-page sync",
+      "2025-10-15 through 2025-12-15 descriptive data and no complete three-month window",
+      "Two-row focus requests one row",
+      "Keyboard slicer selection/clear and scrolling/readability",
+      "Restore full dates, clear selections and minimum 100"
+    ],
+    "prior_focused_and_CA_render_evidence": "outputs/interaction_acceptance_checkpoint.json",
+    "independent_multistate_sql": "outputs/owner_multistate_expectations_20261028.json",
+    "independent_multistate_live": "outputs/owner_multistate_live_results_20261028.json"
+  },
+  "render": {
+    "status": "passed",
+    "host": "desktop",
+    "manual_latest_layout_confirmation": "Latest layout loaded",
+    "screenshot_operation": "warm all-pages capture immediately after owner confirmation; no intervening status/reload",
+    "images": [
+      {
+        "page": "Response Overview",
+        "retained_path": "reports/previews/f1-response-overview-2026-10-28.png",
+        "sha256": "28690a5fbf71d286a30f66f75b274497155555c07015f40019722e35f09a1f5a",
+        "review": "passed; populated baseline, complete headline values, no visible errors; overview bars now navy"
+      },
+      {
+        "page": "Review Priorities",
+        "retained_path": "reports/previews/f1-review-priorities-2026-10-28.png",
+        "sha256": "198347837e6e83345867b134208b38498312a1f3b053a0b6e9ba19e422deb6d4",
+        "review": "passed; populated baseline, complete headline values, no visible errors; overview bars now navy"
+      }
+    ],
+    "original_and_test_report_definitions_identical": true,
+    "limits": [
+      "Long raw product labels truncate on chart; full identities remain available in selection/tooltip/source",
+      "Supporting queue fields require horizontal scrolling; owner accepted at Fit to page",
+      "Baseline no-focus evidence is deliberately blank; sensitivity requests one row"
+    ],
+    "temporary_child": "C:/Users/Aayush/AppData/Local/Power BI Report Authoring/Screenshots/validation-F1-refresh-20261028T091106Z-e79ce172-657e-4c0b-9711-e6cb9d4b9ade",
+    "temporary_cleanup": "complete"
+  },
+  "preservation": {
+    "original_and_copied_inputs_match_accepted_hashes": true,
+    "original_model_definitions_unchanged": true,
+    "original_definition_changes": [
+      "F1.Report/build-manifest.json",
+      "F1.Report/definition/pages/review_priorities/visuals/review_priorities_monthly_comparison/visual.json",
+      "F1.Report/definition/pages/3fdbdd37cd544c29bebf/visuals/3fdbdd37cd544c29bebf_monthly_timely/visual.json",
+      "F1.Report/definition/pages/3fdbdd37cd544c29bebf/visuals/3fdbdd37cd544c29bebf_product_volume/visual.json"
+    ],
+    "explanation": "Three authored chart color definitions plus build manifest only; no original model/source edits"
+  },
+  "schema": [
+    "outputs/final_report_schema_20261028.json",
+    "outputs/refresh_report_schema_20261028.json"
+  ],
+  "gate_d_signoff": "granted",
+  "cloud_publication": "not_performed",
+  "final_tests": {
+    "normal": 117,
+    "optimized": 117,
+    "node": 22
+  }
+}

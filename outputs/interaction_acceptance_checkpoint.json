@@ -1,0 +1,264 @@
+{
+  "status": "partial_interaction_acceptance",
+  "recorded_at_utc": "2026-10-23T18:05:02.768343+00:00",
+  "scope": "Gate D development checkpoint; documentation, current-window capture and existing test suites; not final CV measurement",
+  "owner_save_confirmation": "saved",
+  "desktop": {
+    "host_instance_id": "17424",
+    "status_after_owner_confirmation": "ready",
+    "has_unsaved_changes": true,
+    "automatic_open_or_reload": "not_performed",
+    "report_or_model_edits_by_agent": "not_performed"
+  },
+  "report_manifest": {
+    "status": "matches",
+    "files_checked": 36,
+    "differences": [],
+    "sha256": "771d7229764ccb8f9f71455dd0eb0caba6fc3de26e452dea71134ab7239eedfb"
+  },
+  "capture": {
+    "host": "desktop",
+    "operation": "all_pages_screenshot",
+    "status": "ok",
+    "failures": [],
+    "freshness": "Warm capture only; not reloaded from disk; cannot independently certify latest on-disk state is loaded",
+    "reviewed_images": [
+      {
+        "page": "Response Overview",
+        "sha256": "6a97858931e37984a1f3eb5fb0a80f93dc67dcba7413527c229597e96ccc2f48",
+        "review": "reviewed_current_window_baseline",
+        "retention": "temporary_validation_only"
+      },
+      {
+        "page": "Review Priorities",
+        "sha256": "198347837e6e83345867b134208b38498312a1f3b053a0b6e9ba19e422deb6d4",
+        "review": "reviewed_current_window_baseline",
+        "retention": "temporary_validation_only"
+      }
+    ],
+    "checks": {
+      "overview_populated": true,
+      "overview_complaints": 9469257,
+      "overview_no": 37783,
+      "overview_known": 9469257,
+      "overview_unknown": 0,
+      "priority_cards": {
+        "eligible": 1873,
+        "qualifying": 36,
+        "segments": 13,
+        "stable": 5
+      },
+      "queue_has_identity_and_count_rows": true,
+      "no_focus_instruction_and_unavailable_sensitivity_expected": true,
+      "no_visible_baseline_loading_or_error": true
+    },
+    "presentation_limits": [
+      "Long product labels truncate and product bars scroll vertically",
+      "Supporting queue fields require horizontal scrolling",
+      "Overview product bars use Desktop blue fallback instead of intended navy",
+      "Current screenshot scale does not establish owner working zoom"
+    ],
+    "temporary_child": "C:\\Users\\Aayush\\AppData\\Local\\Power BI Report Authoring\\Screenshots\\validation-F1-20261023T175904Z-f9546acc-b04c-431f-9403-c46660850142",
+    "temporary_cleanup": "complete"
+  },
+  "packaging": {
+    "technical_evidence": "technical_evidence.md",
+    "walkthroughs": "walkthrough.md",
+    "owner_and_refresh_checklist": "reports/owner_review.md",
+    "status": "documents_delivered_acceptance_pending",
+    "local_link_check": "outputs/packaging_documentation_checks.json"
+  },
+  "tests": {
+    "python": {
+      "status": "passed",
+      "tests": 110,
+      "path": "outputs/packaging_python_tests.txt",
+      "sha256": "06d6d8b56bac95cd777edb7f107871f48f9ce423956b540477991c3e86638aa1"
+    },
+    "python_optimized": {
+      "status": "passed",
+      "tests": 110,
+      "path": "outputs/packaging_python_tests_optimized.txt",
+      "sha256": "349b43d76c2eba3f3ab36f9ddd47758e381513d49384d9e269e75323c3c8e752"
+    },
+    "wsl_node": {
+      "status": "passed",
+      "tests": 21,
+      "path": "outputs/packaging_node_tests.txt",
+      "sha256": "57be3e33475c173f1f44cc97c3cf29105026579f49a6718d513806afa23ce086"
+    }
+  },
+  "remaining": {
+    "focused_mohela_render": "passed_for_december_2025_mohela_focus",
+    "independent_sensitivity_ui": "passed_for_december_2025_mohela_focus",
+    "row_focus_preserves_population": "post_focus_matches_sql_before_after_ui_comparison_pending",
+    "minimum_selection_ui": "passed_for_50_200_100_user_reported",
+    "slicer_clear_and_navigation": "passed_for_reported_clear_and_CA_navigation_not_all_filter_cases",
+    "multi_state_independent_numeric_check": "pending",
+    "california_empty_render": "passed_for_CA_minimum_100",
+    "partial_date_ui": "pending",
+    "keyboard_and_zoom_acceptance": "pending",
+    "confirmed_clean_folder_refresh": "pending",
+    "presentation_polish": "pending",
+    "debt_collection_ui": "pending",
+    "multi_row_focus_ui": "pending"
+  },
+  "gate_d_signoff": "not_granted",
+  "final_cv_measurement": "not_permitted",
+  "next_action": "Complete Debt collection, two-state independent numeric, partial-date, multi-row-focus and keyboard/zoom checks; then stage and explicitly confirm clean-folder refresh and final presentation/package review",
+  "limits": [
+    "No automatic reload despite owner save confirmation because unsaved flag remains true",
+    "Current captures do not prove real navigation, filter, focus or clear interaction",
+    "No new source validation, refresh, schema validation or model/DAX execution performed",
+    "Prior Full refresh outcome remains unspecified; ready state is insufficient to certify refresh",
+    "No cloud publication or dependency installation performed"
+  ],
+  "mohela_focused_review": {
+    "status": "reviewed_current_window",
+    "reviewed_at_utc": "2026-10-23T18:12:17.147812+00:00",
+    "owner_action_confirmation": "Row selected",
+    "filters": {
+      "received_start": "2023-01-01",
+      "received_end_inclusive": "2025-12-31",
+      "company": "all",
+      "product": "all",
+      "state": "all",
+      "minimum": 100,
+      "window_end": "2025-12-01"
+    },
+    "row": {
+      "company": "MOHELA",
+      "product": "Student loan",
+      "issue": "Dealing with your lender or servicer",
+      "rank": 1,
+      "elevated_months": 3,
+      "no": 590,
+      "known": 972,
+      "peer_no": 253,
+      "peer_known": 452
+    },
+    "cards_observed": {
+      "eligible": 96,
+      "qualifying": 1,
+      "segments": 1,
+      "stable": 0
+    },
+    "checks": {
+      "monthly_chart_has_oct_nov_dec_2025": true,
+      "segment_navy_peer_teal_visible": true,
+      "sensitivity_50_qualifies": true,
+      "sensitivity_100_qualifies": true,
+      "sensitivity_200_rejected_on_monthly_volume": true,
+      "expected_population_counts_match_existing_sql": true
+    },
+    "reference": {
+      "monthly_summary": "outputs/review_monthly_summary.csv",
+      "sha256": "f8ec11eca62f3e559195f8c959ccb3ef27b171b797e6f3d393dc05ae0d2de21f",
+      "focal_counts_and_sensitivity": "outputs/live_priority_plan.json"
+    },
+    "capture": {
+      "page": "review_priorities",
+      "sha256": "3b61f79da1dfc68a7282742b88e05902223f3ebb83351633f4bdc3a00169fff7",
+      "freshness": "warm capture following owner row-selection confirmation; no reload",
+      "retention": "temporary_validation_only",
+      "temporary_cleanup": "complete"
+    },
+    "limits": [
+      "Actual before/after click headline comparison not separately observed; post-focus cards agree with existing independently verified SQL population for the ending month",
+      "Gap and passing-minima columns require horizontal scrolling and were not fully visible in this capture",
+      "Monthly tooltips were not captured; per-month count parity relies on dated live-engine evidence",
+      "No refreshed source, new live DAX or clean-folder refresh is claimed"
+    ]
+  },
+  "owner_filter_check_confirmation": {
+    "response": "All checks passed",
+    "recorded_at_utc": "2026-10-23T18:15:09.431001+00:00",
+    "evidence_method": "user_reported",
+    "scope": [
+      "Clear row selection and Window End restores 1873/36/13/5",
+      "Minimum 50/200/100 gives 112/5/36 qualifying windows",
+      "CA minimum 100 gives 279/0/0/0",
+      "CA state survives page navigation; overview gives 906980 complaints and 3701 No",
+      "Returned to CA Review Priorities for capture"
+    ],
+    "limits": [
+      "Intermediate clear and minimum states were owner-reported rather than separately captured",
+      "Debt collection, two-state selection, partial dates, multi-row focus and keyboard/zoom were not included in this confirmation"
+    ]
+  },
+  "california_render_review": {
+    "status": "reviewed_current_window",
+    "reviewed_at_utc": "2026-10-23T18:15:09.431025+00:00",
+    "filters": {
+      "received_start": "2023-01-01",
+      "received_end_inclusive": "2025-12-31",
+      "company": "all",
+      "product": "all",
+      "state": "CA",
+      "minimum": 100,
+      "window_end": "all"
+    },
+    "overview_observed": {
+      "complaints": 906980,
+      "no": 3701,
+      "known": 906980,
+      "unknown": 0,
+      "valid_routes": 906980,
+      "median_routing_days": 0.0
+    },
+    "priority_cards_observed": {
+      "eligible": 279,
+      "qualifying": 0,
+      "segments": 0,
+      "stable": 0
+    },
+    "checks": {
+      "state_CA_visible_on_both_pages": true,
+      "empty_queue_no_error_or_loading": true,
+      "empty_state_interpretation_note_visible": true,
+      "sensitivity_unavailable_without_focus_expected": true,
+      "overview_and_priority_values_match_existing_independent_sql": true
+    },
+    "references": [
+      "outputs/live_overview_plan.json",
+      "outputs/live_priority_plan.json",
+      "outputs/native_queue_acceptance_results.json"
+    ],
+    "captures": [
+      {
+        "page": "Response Overview",
+        "sha256": "c1b5399cc6479887db882ab443938075c20a5177e88944eb19fbc39a72ce6ae4",
+        "retention": "temporary_validation_only"
+      },
+      {
+        "page": "Review Priorities",
+        "sha256": "bbe46e8c465ae401eea1c24ee680b8cdead5893d2b2b4d4c00791becc2ebcfe4",
+        "retention": "temporary_validation_only"
+      }
+    ],
+    "freshness": "Warm current-window captures after owner filter/navigation confirmation; no reload or new schema validation",
+    "limits": [
+      "Current view evidence does not certify clean-folder refresh or full arbitrary-state UI behavior",
+      "Long product labels and scrolling presentation limits remain"
+    ],
+    "temporary_cleanup": "complete"
+  },
+  "last_updated_at_utc": "2026-10-23T18:16:27.362316+00:00",
+  "final_manifest_readback": {
+    "status": "matches",
+    "files_checked": 36,
+    "differences": []
+  },
+  "documentation_check": {
+    "path": "outputs/packaging_documentation_checks.json",
+    "status": "passed",
+    "local_links_checked": 331
+  },
+  "handoff_view": {
+    "state": "CA",
+    "minimum": 100,
+    "window_end": "all",
+    "page": "Review Priorities",
+    "baseline_reset": "not_performed_by_agent"
+  }
+}

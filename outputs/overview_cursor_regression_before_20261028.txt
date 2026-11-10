@@ -1,0 +1,26 @@
+test_dax_filters_apply_to_entire_row (test_live_overview_plan.OverviewPlanTests.test_dax_filters_apply_to_entire_row) ... ok
+test_grouped_labels_are_filtered_with_their_identity_table (test_live_overview_plan.OverviewPlanTests.test_grouped_labels_are_filtered_with_their_identity_table) ... ok
+test_source_relation_and_empty_undefined_values (test_live_overview_plan.OverviewPlanTests.test_source_relation_and_empty_undefined_values) ... ERROR
+
+======================================================================
+ERROR: test_source_relation_and_empty_undefined_values (test_live_overview_plan.OverviewPlanTests.test_source_relation_and_empty_undefined_values)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/tests/test_live_overview_plan.py", line 15, in test_source_relation_and_empty_undefined_values
+    with tempfile.TemporaryDirectory(prefix="f1'overview-") as folder, duckdb.connect() as con:
+                                                                       ~~~~~~~~~~~~~~^^
+  File "/mnt/c/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/tests/test_live_overview_plan.py", line 26, in test_source_relation_and_empty_undefined_values
+    custom = build_plan(con, source, scopes={
+        'two_states': ("state IN ('CA', 'NY')", ["FILTER(ALL('Geography'), 'Geography'[State] IN {\"CA\", \"NY\"})"]),
+    })
+  File "/mnt/c/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/scripts/live_overview_plan.py", line 36, in build_plan
+    connection.read_parquet(str(source)).create_view('overview_input', replace=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/.venv/lib64/python3.14/site-packages/duckdb/_relation.py", line 3017, in guarded
+    raise _trimmed(error) from error.__cause__
+_duckdb.ResourceInUseException: Resource In Use Error: connection has an unfinished result from execute(); call complete() or abort(), or fetch until a fetch returns no rows, before other work on this connection, or use a separate connection from cursor()
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.343s
+
+FAILED (errors=1)

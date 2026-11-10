@@ -1,0 +1,29 @@
+✔ CLI requires the installed platform-specific MCP entry instead of launching an unverified wrapper (55.5469ms)
+✔ MCP request IDs preserve concurrent responses and propagate RPC errors (51.4758ms)
+✔ offline build exports through MCP and records validation limits (57.271ms)
+✔ MCP application error prevents export and persists failure evidence (52.8848ms)
+✔ batch item failure stops the build even when the MCP transport succeeds (54.6093ms)
+✔ existing model export is preserved instead of overwritten (5.0145ms)
+✔ exactly the approved pages and every visual stays within its canvas without overlaps (3.0982ms)
+✔ shared slicers have matching native sync groups and hidden identity projections (0.3231ms)
+✔ row focus reaches only evidence and sensitivity, preserving headline universe (0.3842ms)
+✔ bindings match the source model contract instead of an offline export (167.0657ms)
+✔ build is deterministic and defaults to the approved minimum (2.4743ms)
+✔ KPI units are unscaled, labels concise and automatic subtitles disabled (0.2654ms)
+✔ context and independent checks use native wrapping text with no totals (0.1796ms)
+✔ comparison palette and product axis retain readable identities (0.1242ms)
+✔ priority queue is flat, retains all bindings and excludes hierarchy operations (0.2336ms)
+✔ paired KPIs reserve full-width vertical rows for exact denominator counts (0.2524ms)
+✔ reads text, embedded resource and structured MCP payloads (2.5972ms)
+✔ operation and batch failures cannot pass acceptance (1.2705ms)
+✔ successful mutating operations may acknowledge without content; require readback separately (0.1357ms)
+✔ reconciliation rejects count drift, truncated output and undefined rates converted to zero (1.1655ms)
+✔ queue parity compares identity sets and rejects duplicated or missing keys (0.7865ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 363.9587

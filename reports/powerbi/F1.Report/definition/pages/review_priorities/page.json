@@ -1,0 +1,121 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "review_priorities",
+  "displayName": "Review Priorities",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F7F9FC'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_title",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_navigation",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_received_period",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_company",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_product",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_state",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_minimum",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_window_end",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_kpi_0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_kpi_1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_kpi_2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_kpi_3",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_monthly_comparison",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_focus_instruction",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_sensitivity",
+      "type": "DataFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_empty_queue_note",
+      "type": "NoFilter"
+    },
+    {
+      "source": "review_priorities_priority_queue",
+      "target": "review_priorities_review_context",
+      "type": "NoFilter"
+    }
+  ]
+}

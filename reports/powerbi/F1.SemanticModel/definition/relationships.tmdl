@@ -1,0 +1,20 @@
+relationship 'Complaint Cohorts to Date'
+	fromColumn: 'Complaint Cohorts'.'Received Date'
+	toColumn: Date.Date
+
+relationship 'Complaint Cohorts to Company'
+	fromColumn: 'Complaint Cohorts'.'Company Key'
+	toColumn: Company.'Company Key'
+
+relationship 'Complaint Cohorts to Product'
+	fromColumn: 'Complaint Cohorts'.'Product Key'
+	toColumn: Product.'Product Key'
+
+relationship 'Complaint Cohorts to Issue'
+	fromColumn: 'Complaint Cohorts'.'Issue Key'
+	toColumn: Issue.'Issue Key'
+
+relationship 'Complaint Cohorts to Geography'
+	fromColumn: 'Complaint Cohorts'.'Geography Key'
+	toColumn: Geography.'Geography Key'
+

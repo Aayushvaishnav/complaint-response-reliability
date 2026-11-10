@@ -1,0 +1,156 @@
+month,response,response_missing,complaints,timely,untimely,unknown
+2023-01-01,Closed with explanation,False,61731,61258,473,0
+2023-01-01,Closed with monetary relief,False,1802,1761,41,0
+2023-01-01,Closed with non-monetary relief,False,30352,30326,26,0
+2023-01-01,Untimely response,False,48,0,48,0
+2023-02-01,Closed with explanation,False,55601,55308,293,0
+2023-02-01,Closed with monetary relief,False,1588,1557,31,0
+2023-02-01,Closed with non-monetary relief,False,29289,29268,21,0
+2023-02-01,Untimely response,False,61,0,61,0
+2023-03-01,Closed with explanation,False,71444,71068,376,0
+2023-03-01,Closed with monetary relief,False,1850,1815,35,0
+2023-03-01,Closed with non-monetary relief,False,37268,37250,18,0
+2023-03-01,Untimely response,False,73,0,73,0
+2023-04-01,Closed with explanation,False,61293,61027,266,0
+2023-04-01,Closed with monetary relief,False,1476,1449,27,0
+2023-04-01,Closed with non-monetary relief,False,34272,34258,14,0
+2023-04-01,Untimely response,False,43,0,43,0
+2023-05-01,,True,1,1,0,0
+2023-05-01,Closed with explanation,False,59883,59613,270,0
+2023-05-01,Closed with monetary relief,False,1478,1472,6,0
+2023-05-01,Closed with non-monetary relief,False,44799,44787,12,0
+2023-05-01,Untimely response,False,50,0,50,0
+2023-06-01,Closed with explanation,False,55737,55526,211,0
+2023-06-01,Closed with monetary relief,False,1493,1485,8,0
+2023-06-01,Closed with non-monetary relief,False,47149,47145,4,0
+2023-06-01,Untimely response,False,45,0,45,0
+2023-07-01,Closed with explanation,False,56523,56267,256,0
+2023-07-01,Closed with monetary relief,False,1731,1718,13,0
+2023-07-01,Closed with non-monetary relief,False,48463,48454,9,0
+2023-07-01,Untimely response,False,56,0,56,0
+2023-08-01,,True,1,1,0,0
+2023-08-01,Closed with explanation,False,63672,63402,270,0
+2023-08-01,Closed with monetary relief,False,1687,1681,6,0
+2023-08-01,Closed with non-monetary relief,False,54284,54268,16,0
+2023-08-01,Untimely response,False,67,0,67,0
+2023-09-01,,True,3,3,0,0
+2023-09-01,Closed with explanation,False,58931,58519,412,0
+2023-09-01,Closed with monetary relief,False,1736,1726,10,0
+2023-09-01,Closed with non-monetary relief,False,52158,52147,11,0
+2023-09-01,Untimely response,False,59,0,59,0
+2023-10-01,Closed with explanation,False,60869,60271,598,0
+2023-10-01,Closed with monetary relief,False,1815,1808,7,0
+2023-10-01,Closed with non-monetary relief,False,54662,54638,24,0
+2023-10-01,Untimely response,False,74,0,74,0
+2023-11-01,,True,1,1,0,0
+2023-11-01,Closed with explanation,False,59773,59265,508,0
+2023-11-01,Closed with monetary relief,False,1833,1817,16,0
+2023-11-01,Closed with non-monetary relief,False,51690,51678,12,0
+2023-11-01,Untimely response,False,68,0,68,0
+2023-12-01,Closed with explanation,False,61166,60676,490,0
+2023-12-01,Closed with monetary relief,False,1866,1849,17,0
+2023-12-01,Closed with non-monetary relief,False,59969,59965,4,0
+2023-12-01,Untimely response,False,65,0,65,0
+2024-01-01,,True,3,3,0,0
+2024-01-01,Closed with explanation,False,67833,67274,559,0
+2024-01-01,Closed with monetary relief,False,2079,2073,6,0
+2024-01-01,Closed with non-monetary relief,False,73372,73360,12,0
+2024-01-01,Untimely response,False,78,0,78,0
+2024-02-01,,True,1,1,0,0
+2024-02-01,Closed with explanation,False,71207,70707,500,0
+2024-02-01,Closed with monetary relief,False,1902,1885,17,0
+2024-02-01,Closed with non-monetary relief,False,84403,84375,28,0
+2024-02-01,Untimely response,False,101,0,101,0
+2024-03-01,,True,3,3,0,0
+2024-03-01,Closed with explanation,False,81686,81106,580,0
+2024-03-01,Closed with monetary relief,False,2120,2111,9,0
+2024-03-01,Closed with non-monetary relief,False,93913,93854,59,0
+2024-03-01,Untimely response,False,93,0,93,0
+2024-04-01,,True,3,3,0,0
+2024-04-01,Closed with explanation,False,83328,82801,527,0
+2024-04-01,Closed with monetary relief,False,1965,1960,5,0
+2024-04-01,Closed with non-monetary relief,False,105715,105656,59,0
+2024-04-01,Untimely response,False,109,0,109,0
+2024-05-01,,True,3,3,0,0
+2024-05-01,Closed with explanation,False,98419,98024,395,0
+2024-05-01,Closed with monetary relief,False,1926,1915,11,0
+2024-05-01,Closed with non-monetary relief,False,111486,111448,38,0
+2024-05-01,Untimely response,False,127,0,127,0
+2024-06-01,Closed with explanation,False,94233,93921,312,0
+2024-06-01,Closed with monetary relief,False,1774,1762,12,0
+2024-06-01,Closed with non-monetary relief,False,108060,108046,14,0
+2024-06-01,Untimely response,False,101,0,101,0
+2024-07-01,Closed with explanation,False,111755,111403,352,0
+2024-07-01,Closed with monetary relief,False,1903,1892,11,0
+2024-07-01,Closed with non-monetary relief,False,118871,118781,90,0
+2024-07-01,Untimely response,False,125,0,125,0
+2024-08-01,Closed with explanation,False,134506,134058,448,0
+2024-08-01,Closed with monetary relief,False,2031,2009,22,0
+2024-08-01,Closed with non-monetary relief,False,127136,127057,79,0
+2024-08-01,Untimely response,False,143,0,143,0
+2024-09-01,Closed with explanation,False,137092,136643,449,0
+2024-09-01,Closed with monetary relief,False,1838,1823,15,0
+2024-09-01,Closed with non-monetary relief,False,125791,125695,96,0
+2024-09-01,Untimely response,False,99,0,99,0
+2024-10-01,Closed with explanation,False,153559,153144,415,0
+2024-10-01,Closed with monetary relief,False,1955,1952,3,0
+2024-10-01,Closed with non-monetary relief,False,140170,140091,79,0
+2024-10-01,Untimely response,False,193,0,193,0
+2024-11-01,Closed with explanation,False,147020,146577,443,0
+2024-11-01,Closed with monetary relief,False,2110,2103,7,0
+2024-11-01,Closed with non-monetary relief,False,137769,137688,81,0
+2024-11-01,Untimely response,False,178,0,178,0
+2024-12-01,Closed with explanation,False,159307,158837,470,0
+2024-12-01,Closed with monetary relief,False,2142,2138,4,0
+2024-12-01,Closed with non-monetary relief,False,142379,142350,29,0
+2024-12-01,Untimely response,False,153,0,153,0
+2025-01-01,Closed with explanation,False,286932,286079,853,0
+2025-01-01,Closed with monetary relief,False,2613,2611,2,0
+2025-01-01,Closed with non-monetary relief,False,185770,185455,315,0
+2025-01-01,Untimely response,False,468,0,468,0
+2025-02-01,Closed with explanation,False,178773,178033,740,0
+2025-02-01,Closed with monetary relief,False,1810,1806,4,0
+2025-02-01,Closed with non-monetary relief,False,154185,153987,198,0
+2025-02-01,Untimely response,False,468,0,468,0
+2025-03-01,Closed with explanation,False,201317,199495,1822,0
+2025-03-01,Closed with monetary relief,False,1927,1912,15,0
+2025-03-01,Closed with non-monetary relief,False,193019,192845,174,0
+2025-03-01,Untimely response,False,710,0,710,0
+2025-04-01,Closed with explanation,False,208334,206428,1906,0
+2025-04-01,Closed with monetary relief,False,1885,1862,23,0
+2025-04-01,Closed with non-monetary relief,False,195398,195234,164,0
+2025-04-01,Untimely response,False,483,0,483,0
+2025-05-01,Closed with explanation,False,218780,217099,1681,0
+2025-05-01,Closed with monetary relief,False,2051,2030,21,0
+2025-05-01,Closed with non-monetary relief,False,193884,193792,92,0
+2025-05-01,Untimely response,False,466,0,466,0
+2025-06-01,Closed with explanation,False,212385,210808,1577,0
+2025-06-01,Closed with monetary relief,False,2074,2056,18,0
+2025-06-01,Closed with non-monetary relief,False,197163,197137,26,0
+2025-06-01,Untimely response,False,539,0,539,0
+2025-07-01,Closed with explanation,False,252935,251973,962,0
+2025-07-01,Closed with monetary relief,False,2335,2331,4,0
+2025-07-01,Closed with non-monetary relief,False,216917,216877,40,0
+2025-07-01,Untimely response,False,995,0,995,0
+2025-08-01,Closed with explanation,False,335451,334363,1088,0
+2025-08-01,Closed with monetary relief,False,2183,2175,8,0
+2025-08-01,Closed with non-monetary relief,False,157107,157050,57,0
+2025-08-01,Untimely response,False,826,0,826,0
+2025-09-01,Closed with explanation,False,328652,327927,725,0
+2025-09-01,Closed with monetary relief,False,2056,2045,11,0
+2025-09-01,Closed with non-monetary relief,False,172159,172122,37,0
+2025-09-01,In progress,False,64,64,0,0
+2025-09-01,Untimely response,False,916,0,916,0
+2025-10-01,Closed with explanation,False,331732,331137,595,0
+2025-10-01,Closed with monetary relief,False,2178,2169,9,0
+2025-10-01,Closed with non-monetary relief,False,184661,184645,16,0
+2025-10-01,In progress,False,215,215,0,0
+2025-10-01,Untimely response,False,995,0,995,0
+2025-11-01,Closed with explanation,False,308896,308057,839,0
+2025-11-01,Closed with monetary relief,False,2242,2230,12,0
+2025-11-01,Closed with non-monetary relief,False,184396,184357,39,0
+2025-11-01,Untimely response,False,1123,0,1123,0
+2025-12-01,Closed with explanation,False,330678,329724,954,0
+2025-12-01,Closed with monetary relief,False,2772,2748,24,0
+2025-12-01,Closed with non-monetary relief,False,177577,177536,41,0
+2025-12-01,Untimely response,False,1446,0,1446,0

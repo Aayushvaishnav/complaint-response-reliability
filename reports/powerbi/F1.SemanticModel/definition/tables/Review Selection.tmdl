@@ -1,0 +1,141 @@
+/// Disconnected observed company/product/issue/month selectors; integer identities never derive from display labels.
+table 'Review Selection'
+	lineageTag: 34f15010-bb58-40ea-8262-62e6f5449527
+
+	/// Imported selection_key; preserves projection identity and meaning.
+	column 'Selection Key'
+		dataType: int64
+		isHidden
+		lineageTag: fab97bf3-a0b1-4c54-b6ca-a3bae2539451
+		summarizeBy: none
+		sourceColumn: selection_key
+
+	/// Imported segment_key; preserves projection identity and meaning.
+	column 'Segment Key'
+		dataType: int64
+		isHidden
+		lineageTag: 7c5be4c2-3d69-4d09-9799-314b22397bcf
+		summarizeBy: none
+		sourceColumn: segment_key
+
+	/// Imported company_key; preserves projection identity and meaning.
+	column 'Company Key'
+		dataType: int64
+		isHidden
+		lineageTag: 68f4573a-9fb5-4707-a3d9-6e39dedb0f0b
+		summarizeBy: none
+		sourceColumn: company_key
+
+	/// Imported product_key; preserves projection identity and meaning.
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		lineageTag: 9635fce7-2a57-4c33-be74-37cd8e077812
+		summarizeBy: none
+		sourceColumn: product_key
+
+	/// Imported issue_key; preserves projection identity and meaning.
+	column 'Issue Key'
+		dataType: int64
+		isHidden
+		lineageTag: a5c7dd85-262a-45b2-aa5f-108baaf7d1f5
+		summarizeBy: none
+		sourceColumn: issue_key
+
+	/// Imported window_end; preserves projection identity and meaning.
+	column 'Window End'
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		lineageTag: 00dda02b-7b2e-4ed2-a4ca-6e13a2ed4352
+		summarizeBy: none
+		sourceColumn: window_end
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Imported company_raw; preserves projection identity and meaning.
+	column 'Company Raw'
+		dataType: string
+		isHidden
+		lineageTag: 1d7e043f-2bc0-4a79-a37a-2d09fb8e8570
+		summarizeBy: none
+		sourceColumn: company_raw
+
+	/// Selector label grouped by tuple key; case-normalized display is not raw identity.
+	column Company
+		dataType: string
+		lineageTag: 9e3ea114-d7d0-4cc2-9a86-3202f5c95783
+		summarizeBy: none
+		sourceColumn: company
+
+		relatedColumnDetails
+			groupByColumn: 'Company Key'
+
+	/// Imported company_missingness; preserves projection identity and meaning.
+	column 'Company Missingness'
+		dataType: string
+		isHidden
+		lineageTag: a429698a-e7f3-4bc9-9ff5-b9092f30e733
+		summarizeBy: none
+		sourceColumn: company_missingness
+
+	/// Imported product_raw; preserves projection identity and meaning.
+	column 'Product Raw'
+		dataType: string
+		isHidden
+		lineageTag: 6a7ac5a4-285e-422b-91b3-31681eabf7a8
+		summarizeBy: none
+		sourceColumn: product_raw
+
+	/// Selector label grouped by tuple key; case-normalized display is not raw identity.
+	column Product
+		dataType: string
+		lineageTag: 3cb0ea08-7c4c-4505-8558-7e69bef764c0
+		summarizeBy: none
+		sourceColumn: product
+
+		relatedColumnDetails
+			groupByColumn: 'Product Key'
+
+	/// Imported product_missingness; preserves projection identity and meaning.
+	column 'Product Missingness'
+		dataType: string
+		isHidden
+		lineageTag: 11fe3ed6-3bbf-46bd-afbf-be3f794a45fd
+		summarizeBy: none
+		sourceColumn: product_missingness
+
+	/// Imported issue_raw; preserves projection identity and meaning.
+	column 'Issue Raw'
+		dataType: string
+		isHidden
+		lineageTag: 3e25e259-feb2-4532-b43b-01f510dc700e
+		summarizeBy: none
+		sourceColumn: issue_raw
+
+	/// Selector label grouped by tuple key; case-normalized display is not raw identity.
+	column Issue
+		dataType: string
+		lineageTag: 095d6a6d-ac4c-4ce4-8c52-8e886fb3da1f
+		summarizeBy: none
+		sourceColumn: issue
+
+		relatedColumnDetails
+			groupByColumn: 'Issue Key'
+
+	/// Imported issue_missingness; preserves projection identity and meaning.
+	column 'Issue Missingness'
+		dataType: string
+		isHidden
+		lineageTag: ec9ccf88-dadb-4379-869e-028efb691305
+		summarizeBy: none
+		sourceColumn: issue_missingness
+
+	partition 'Review Selection' = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(#"Source Folder" & "/review_selection.parquet")),
+				    Typed = Table.TransformColumnTypes(Source, {{"selection_key", Int64.Type}, {"segment_key", Int64.Type}, {"company_key", Int64.Type}, {"product_key", Int64.Type}, {"issue_key", Int64.Type}, {"window_end", type date}, {"company_raw", type text}, {"company", type text}, {"company_missingness", type text}, {"product_raw", type text}, {"product", type text}, {"product_missingness", type text}, {"issue_raw", type text}, {"issue", type text}, {"issue_missingness", type text}})
+				in
+				    Typed
+

@@ -1,0 +1,121 @@
+{
+  "accepted_at_utc": "2026-10-23T05:37:49.016500+00:00",
+  "gate": "A",
+  "status": "passed_with_documented_limits",
+  "source_basis": "user_confirmed_direct_official_export_plus_local_identity_and_publisher_evidence",
+  "checks": {
+    "full_source_validation_passed": true,
+    "source_evidence_supported_with_explicit_limits": true,
+    "raw_snapshot_identity_agrees": true,
+    "sample_import_passed": true,
+    "sample_covers_each_source_stratum": true,
+    "sample_covers_all_36_months": true,
+    "sample_covers_all_14_original_product_labels": true,
+    "all_four_metric_filter_checks_passed": true,
+    "parquet_roundtrip_preserves_values": true,
+    "own_environment_passes_dependency_check": true,
+    "dedicated_tests_passed": true,
+    "gate_a_sample.csv_hash_matches": true,
+    "gate_a_sample.parquet_hash_matches": true,
+    "project_document_links_resolve": true
+  },
+  "tests_run": 28,
+  "optimized_tests_log": "outputs/gate_a_tests_optimized.txt",
+  "sample_rows": 2304,
+  "sample_strata": 769,
+  "sample_representativeness": "not_representative; mechanics_only",
+  "metric_comparisons": 40,
+  "next_gate": "B",
+  "power_bi_load_state": "not_performed",
+  "gate_d_signoff": "not_granted",
+  "source_access_limits": [
+    "Original download URL and date were not recorded; official origin is user-confirmed",
+    "No byte comparison with a newly downloaded complete official export",
+    "GitHub Pages field documentation is corroborated by pinned publisher CSV headers; API README warns older documentation is not updated",
+    "Published timely-response flag is used as recorded; no operational deadline or resolution duration is inferred",
+    "Public-reuse and August-2023 effective-date statements may use explicitly recorded official search excerpts; blocked PDFs are not claimed as downloaded or read",
+    "No current data-use-policy page was retrieved; API software CC0 terms are not asserted as a dataset-wide licence"
+  ],
+  "artifacts": {
+    "config/source.json": {
+      "bytes": 1292,
+      "sha256": "6e11ae997297c8e3277650ca4edf92d6f59c2cb1bdfe485bce96c04d66abc40d"
+    },
+    "config/publisher_evidence.json": {
+      "bytes": 1666,
+      "sha256": "85b90a792ff20b2909ac257dc5988139271d2ff72adcdb0de5281e1c24ef5575"
+    },
+    "requirements.txt": {
+      "bytes": 14,
+      "sha256": "2a63ef8b6eeaa424c32f8d7206202e7a939b11c43213e3c58eecf8b73c920644"
+    },
+    "scripts/validate_source.py": {
+      "bytes": 9765,
+      "sha256": "a10566074d207a75f1b01627d8e2042debf5de5f13415d4cbae9436cd8f63150"
+    },
+    "scripts/verify_source_access.py": {
+      "bytes": 8117,
+      "sha256": "080a0e16ff51de17b255e8d67e2c34d14872083a4ed610680a9467b2451f956f"
+    },
+    "scripts/build_feasibility_sample.py": {
+      "bytes": 8518,
+      "sha256": "212f6937f47e2d6cf4da47a3958b9cb08fdb5a4267907520e4f61a5b61feec67"
+    },
+    "sql/validate_source.sql": {
+      "bytes": 537,
+      "sha256": "23c0e6250d71ca3b7eb771f4185ca764d3c516125dcad69173f28b987b801a78"
+    },
+    "sql/select_feasibility_sample.sql": {
+      "bytes": 556,
+      "sha256": "d75b27ab5955d67e225c4741f3b80f9a263ded79b06b9696f90e608190e1fd80"
+    },
+    "sql/sample_metric_smoke.sql": {
+      "bytes": 1021,
+      "sha256": "0ba79d67c9b86ce6e9f350642bd89c506072306f21074e978997a7ba5c9e6feb"
+    },
+    "business_requirements.md": {
+      "bytes": 5732,
+      "sha256": "b57a136b47967c6d1a17adce3a490653f6fa37b53a5d054bc8a2fa4a63aa8af4"
+    },
+    "data_dictionary.md": {
+      "bytes": 5146,
+      "sha256": "d3d41b486d62d050f785977d068820898d75da87d72dd5ff63694642ed7c0888"
+    },
+    "metric_dictionary.md": {
+      "bytes": 6738,
+      "sha256": "3474503ec77fb488d5fc04b989b89eacecd90984dd8fa5ae68160cc44bdfe947"
+    },
+    "environment.md": {
+      "bytes": 5873,
+      "sha256": "32f4f76ead696578dd8e5c301e8dd22d00865c324b6625e4e904a14b685f626b"
+    },
+    "outputs/source_validation.json": {
+      "bytes": 3672,
+      "sha256": "51fcf58167c97fae0b3ef096a1685e73464139b685dd1db7252b64925ae29beb"
+    },
+    "outputs/source_access_verification.json": {
+      "bytes": 6179,
+      "sha256": "b3e48439138da7561581c44252c477bedbbac33238d3ff7e4a9fc4c8032a9b65"
+    },
+    "outputs/gate_a_sample_validation.json": {
+      "bytes": 4979,
+      "sha256": "8c6a86b1210bd51a0e8865889835d1bd448469d6ec04097a844755f5afb4ff7b"
+    },
+    "outputs/environment_validation.json": {
+      "bytes": 491,
+      "sha256": "a893704aa46d4631134b80ada403b288a11b815a0445d1efdd3d051d2d33d83e"
+    },
+    "data/processed/source_validation.duckdb": {
+      "bytes": 310128640,
+      "sha256": "adcd70fd77199cff9c9a344687605621fc13ee3461ab07e55262108781fe8149"
+    },
+    "data/processed/gate_a_sample.csv": {
+      "bytes": 559696,
+      "sha256": "c4991c1cefa16d0342e61b60e03c3f71ab8311df9666a75ad296e6ea06ef0c98"
+    },
+    "data/processed/gate_a_sample.parquet": {
+      "bytes": 74945,
+      "sha256": "c5fef02620fa31ec0e9bc77ca0cd89452375389891b21a29db2aef38bc52b4a5"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "status": "failed",
+  "started_at_utc": "2026-10-23T15:06:56.418Z",
+  "operations": [
+    {
+      "id": "connect-foundation",
+      "tool": "connection_operations",
+      "operation": "ConnectFolder",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"Successfully loaded database \\u0027F1\\u0027 from TMDL folder\",\"operation\":\"ConnectFolder\",\"data\":{\"connectionName\":\"TMDL-C:\\\\Users\\\\Aayush\\\\my_files\\\\da_projects\\\\projects\\\\f1-complaint-response-reliability\\\\reports\\\\powerbi\\\\F1.SemanticModel\\\\definition\",\"databaseName\":\"F1\",\"folderPath\":\"C:\\\\Users\\\\Aayush\\\\my_files\\\\da_projects\\\\projects\\\\f1-complaint-response-reliability\\\\reports\\\\powerbi\\\\F1.SemanticModel\\\\definition\",\"tablesLoaded\":10,\"measuresLoaded\":16,\"relationshipsLoaded\":5,\"loadedAt\":\"2026-10-23T15:06:57.7376166Z\"},\"warnings\":[\"Model loaded into memory from the TMDL folder. Changes made through MCP are not automatically written to disk. Run \\u0060ExportToTmdlFolder\\u0060 before disconnecting to persist them.\"]}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "connection_operations.connectfolder",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "Successfully loaded database 'F1' from TMDL folder",
+          "operation": "ConnectFolder",
+          "data": {
+            "connectionName": "TMDL-C:\\Users\\Aayush\\my_files\\da_projects\\projects\\f1-complaint-response-reliability\\reports\\powerbi\\F1.SemanticModel\\definition",
+            "databaseName": "F1",
+            "folderPath": "C:\\Users\\Aayush\\my_files\\da_projects\\projects\\f1-complaint-response-reliability\\reports\\powerbi\\F1.SemanticModel\\definition",
+            "tablesLoaded": 10,
+            "measuresLoaded": 16,
+            "relationshipsLoaded": 5,
+            "loadedAt": "2026-10-23T15:06:57.7376166Z"
+          },
+          "warnings": [
+            "Model loaded into memory from the TMDL folder. Changes made through MCP are not automatically written to disk. Run `ExportToTmdlFolder` before disconnecting to persist them."
+          ]
+        }
+      ],
+      "duration_ms": 340.7057
+    },
+    {
+      "id": "add-priorities",
+      "tool": "measure_operations",
+      "operation": "Create",
+      "status": "running",
+      "raw": {
+        "content": [],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "measure_operations.create",
+            "readOnlyHint": false
+          }
+        }
+      }
+    }
+  ],
+  "server": {
+    "name": "powerbi-authoring-local",
+    "title": "Power BI Authoring MCP Server (Local)",
+    "version": "1.0.0",
+    "description": "Author Power BI semantic models in Power BI Desktop, Microsoft Fabric workspaces, and local PBIP and TMDL files."
+  },
+  "error": "MCP returned no inspectable payload: {\"content\":[],\"isError\":false,\"_meta\":{\"annotations\":{\"title\":\"measure_operations.create\",\"readOnlyHint\":false}}}",
+  "finished_at_utc": "2026-10-23T15:06:57.846Z"
+}

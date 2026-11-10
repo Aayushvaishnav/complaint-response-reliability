@@ -1,0 +1,13 @@
+{
+  "contract_status": "approved_analyst_screening",
+  "minimum_total_complaints": 100,
+  "allowed_minima": [50, 100, 200],
+  "window_months": 3,
+  "required_elevated_months": 2,
+  "excess_share": "0.01",
+  "taxonomy_boundary": "2023-08-24",
+  "excluded_longitudinal_month": "2023-08-01",
+  "rank_tuple": ["elevated_months DESC", "pooled_excess_pp DESC", "window_no DESC", "window_complaints DESC"],
+  "rank_interpretation": "Secondary analytical ordering; not a user-validated performance score",
+  "interpretation": "Analyst screening; not statistically validated or regulatory"
+}

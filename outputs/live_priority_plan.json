@@ -1,0 +1,244 @@
+{
+  "status": "expectations_generated",
+  "scope": "Development reconciliation; not CV measurement; live DAX not executed",
+  "created_at_utc": "2026-10-23T15:38:44.415554+00:00",
+  "input_sha256": {
+    "data/processed/complaints_typed.parquet": "6868323834e311a1000fdb0768348c36fd86c9fe1a0c9650aee85f3511405646",
+    "sql/longitudinal_contract.sql": "a9c2f9e1fd912ca07444c2bcdf1ad259710c9d2c8da269d4503f79f1235b311e",
+    "config/review_rule.json": "4ee113188aba8d565676dae03d471c43bcfe1fc0019bd07e2018f9c344fba764",
+    "data/processed/model-input/review_selection.parquet": "5a368807252ec062437419e97c4a494b02ff53cced939dccc2ce1bd65cec1aed"
+  },
+  "dax_reference": "https://learn.microsoft.com/en-us/dax/calculatetable-function-dax",
+  "cases": [
+    {
+      "id": "all_50",
+      "scope": "all",
+      "minimum": 50,
+      "expected": {
+        "eligible_windows": 4185,
+        "qualifying_windows": 112,
+        "qualifying_segments": 30,
+        "stable_windows": 5
+      },
+      "sql_seconds": 2.217682621005224,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 50)"
+    },
+    {
+      "id": "all_100",
+      "scope": "all",
+      "minimum": 100,
+      "expected": {
+        "eligible_windows": 1873,
+        "qualifying_windows": 36,
+        "qualifying_segments": 13,
+        "stable_windows": 5
+      },
+      "sql_seconds": 1.995909984994796,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 100)"
+    },
+    {
+      "id": "all_200",
+      "scope": "all",
+      "minimum": 200,
+      "expected": {
+        "eligible_windows": 815,
+        "qualifying_windows": 5,
+        "qualifying_segments": 3,
+        "stable_windows": 5
+      },
+      "sql_seconds": 1.9597037630010163,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 200)"
+    },
+    {
+      "id": "received_2023_50",
+      "scope": "received_2023",
+      "minimum": 50,
+      "expected": {
+        "eligible_windows": 432,
+        "qualifying_windows": 6,
+        "qualifying_segments": 4,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.4363391990045784,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 50, 'Date'[Year] = 2023)"
+    },
+    {
+      "id": "received_2023_100",
+      "scope": "received_2023",
+      "minimum": 100,
+      "expected": {
+        "eligible_windows": 150,
+        "qualifying_windows": 1,
+        "qualifying_segments": 1,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.4545002690065303,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 100, 'Date'[Year] = 2023)"
+    },
+    {
+      "id": "received_2023_200",
+      "scope": "received_2023",
+      "minimum": 200,
+      "expected": {
+        "eligible_windows": 79,
+        "qualifying_windows": 0,
+        "qualifying_segments": 0,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.45942184700106736,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 200, 'Date'[Year] = 2023)"
+    },
+    {
+      "id": "debt_collection_50",
+      "scope": "debt_collection",
+      "minimum": 50,
+      "expected": {
+        "eligible_windows": 874,
+        "qualifying_windows": 32,
+        "qualifying_segments": 8,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.6215591369982576,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 50, FILTER(ALL('Product'), 'Product'[Product] = \"Debt collection\"))"
+    },
+    {
+      "id": "debt_collection_100",
+      "scope": "debt_collection",
+      "minimum": 100,
+      "expected": {
+        "eligible_windows": 479,
+        "qualifying_windows": 11,
+        "qualifying_segments": 4,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.6053886819936452,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 100, FILTER(ALL('Product'), 'Product'[Product] = \"Debt collection\"))"
+    },
+    {
+      "id": "debt_collection_200",
+      "scope": "debt_collection",
+      "minimum": 200,
+      "expected": {
+        "eligible_windows": 229,
+        "qualifying_windows": 0,
+        "qualifying_segments": 0,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.5315590269965469,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 200, FILTER(ALL('Product'), 'Product'[Product] = \"Debt collection\"))"
+    },
+    {
+      "id": "california_50",
+      "scope": "california",
+      "minimum": 50,
+      "expected": {
+        "eligible_windows": 352,
+        "qualifying_windows": 0,
+        "qualifying_segments": 0,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.678579939994961,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 50, FILTER(ALL('Geography'), 'Geography'[State] = \"CA\"))"
+    },
+    {
+      "id": "california_100",
+      "scope": "california",
+      "minimum": 100,
+      "expected": {
+        "eligible_windows": 279,
+        "qualifying_windows": 0,
+        "qualifying_segments": 0,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.7285755769989919,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 100, FILTER(ALL('Geography'), 'Geography'[State] = \"CA\"))"
+    },
+    {
+      "id": "california_200",
+      "scope": "california",
+      "minimum": 200,
+      "expected": {
+        "eligible_windows": 279,
+        "qualifying_windows": 0,
+        "qualifying_segments": 0,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.6905265879977378,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 200, FILTER(ALL('Geography'), 'Geography'[State] = \"CA\"))"
+    }
+  ],
+  "focal": {
+    "company": "MOHELA",
+    "product": "Student loan",
+    "issue": "Dealing with your lender or servicer",
+    "selection_key": 130881,
+    "segment_key": 24731,
+    "minimum": 100,
+    "diagnostics": [
+      {
+        "month": "2025-10-01",
+        "complaints": 340,
+        "known": 340,
+        "untimely": 121,
+        "peer_complaints": 129,
+        "peer_known": 129,
+        "peer_untimely": 36,
+        "eligible_month": true,
+        "elevated": true,
+        "window_eligible": true,
+        "persistent": true,
+        "elevated_months": 3,
+        "window_complaints": 988,
+        "window_known": 988,
+        "window_no": 605,
+        "window_peer_known": 377,
+        "window_peer_no": 189,
+        "pooled_excess_pp": 11.102191819070228,
+        "priority_rank": 1
+      },
+      {
+        "month": "2025-11-01",
+        "complaints": 245,
+        "known": 245,
+        "untimely": 168,
+        "peer_complaints": 131,
+        "peer_known": 131,
+        "peer_untimely": 81,
+        "eligible_month": true,
+        "elevated": true,
+        "window_eligible": true,
+        "persistent": true,
+        "elevated_months": 3,
+        "window_complaints": 931,
+        "window_known": 931,
+        "window_no": 520,
+        "window_peer_known": 388,
+        "window_peer_no": 185,
+        "pooled_excess_pp": 8.173508144440628,
+        "priority_rank": 1
+      },
+      {
+        "month": "2025-12-01",
+        "complaints": 387,
+        "known": 387,
+        "untimely": 301,
+        "peer_complaints": 192,
+        "peer_known": 192,
+        "peer_untimely": 136,
+        "eligible_month": true,
+        "elevated": true,
+        "window_eligible": true,
+        "persistent": true,
+        "elevated_months": 3,
+        "window_complaints": 972,
+        "window_known": 972,
+        "window_no": 590,
+        "window_peer_known": 452,
+        "window_peer_no": 253,
+        "pooled_excess_pp": 4.726137149932619,
+        "priority_rank": 1
+      }
+    ]
+  },
+  "seconds": 14.342326957994374
+}

@@ -1,0 +1,710 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "review_priorities_priority_queue",
+  "position": {
+    "x": 320,
+    "y": 600,
+    "width": 1568,
+    "height": 336,
+    "z": 15,
+    "tabOrder": 15
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1B365D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "autoSizeColumnWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "columnAdjustment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'fixedWidth'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "selector": {
+            "metadata": "Review Selection.Window End"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "105D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Review Selection.Company"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "250D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Review Selection.Product"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "240D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Review Selection.Issue"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "300D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Complaint Cohorts.Priority Rank"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "75D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Complaint Cohorts.Queue Elevated Months"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "85D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Complaint Cohorts.Queue Window No Count"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "90D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Complaint Cohorts.Queue Window Known Count"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Complaint Cohorts.Queue Window Peer No Count"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Complaint Cohorts.Queue Window Peer Known Count"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "110D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Complaint Cohorts.Queue Pooled Gap pp"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "100D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Complaint Cohorts.Queue Passing Minima"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "120D"
+                }
+              }
+            }
+          }
+        },
+        {
+          "selector": {
+            "metadata": "Complaint Cohorts.Queue Review Reason"
+          },
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "300D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Review queue | ranks are separate within each ending month; scroll for supporting fields'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Segoe UI'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1B365D'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Review queue | ranks are separate within each ending month; scroll for supporting fields'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Review Selection"
+                    }
+                  },
+                  "Property": "Window End"
+                }
+              },
+              "queryRef": "Review Selection.Window End",
+              "nativeQueryRef": "Window End"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Review Selection"
+                    }
+                  },
+                  "Property": "Company"
+                }
+              },
+              "queryRef": "Review Selection.Company",
+              "nativeQueryRef": "Company"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Review Selection"
+                    }
+                  },
+                  "Property": "Product"
+                }
+              },
+              "queryRef": "Review Selection.Product",
+              "nativeQueryRef": "Product"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Review Selection"
+                    }
+                  },
+                  "Property": "Issue"
+                }
+              },
+              "queryRef": "Review Selection.Issue",
+              "nativeQueryRef": "Issue"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Review Selection"
+                    }
+                  },
+                  "Property": "Selection Key"
+                }
+              },
+              "queryRef": "Review Selection.Selection Key",
+              "nativeQueryRef": "Selection Key",
+              "hidden": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Review Selection"
+                    }
+                  },
+                  "Property": "Company Key"
+                }
+              },
+              "queryRef": "Review Selection.Company Key",
+              "nativeQueryRef": "Company Key",
+              "hidden": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Review Selection"
+                    }
+                  },
+                  "Property": "Product Key"
+                }
+              },
+              "queryRef": "Review Selection.Product Key",
+              "nativeQueryRef": "Product Key",
+              "hidden": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Review Selection"
+                    }
+                  },
+                  "Property": "Issue Key"
+                }
+              },
+              "queryRef": "Review Selection.Issue Key",
+              "nativeQueryRef": "Issue Key",
+              "hidden": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaint Cohorts"
+                    }
+                  },
+                  "Property": "Priority Rank"
+                }
+              },
+              "queryRef": "Complaint Cohorts.Priority Rank",
+              "nativeQueryRef": "Priority Rank",
+              "displayName": "Priority Rank"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaint Cohorts"
+                    }
+                  },
+                  "Property": "Queue Elevated Months"
+                }
+              },
+              "queryRef": "Complaint Cohorts.Queue Elevated Months",
+              "nativeQueryRef": "Elevated months",
+              "displayName": "Elevated months"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaint Cohorts"
+                    }
+                  },
+                  "Property": "Queue Window No Count"
+                }
+              },
+              "queryRef": "Complaint Cohorts.Queue Window No Count",
+              "nativeQueryRef": "No",
+              "displayName": "No"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaint Cohorts"
+                    }
+                  },
+                  "Property": "Queue Window Known Count"
+                }
+              },
+              "queryRef": "Complaint Cohorts.Queue Window Known Count",
+              "nativeQueryRef": "Known",
+              "displayName": "Known"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaint Cohorts"
+                    }
+                  },
+                  "Property": "Queue Window Peer No Count"
+                }
+              },
+              "queryRef": "Complaint Cohorts.Queue Window Peer No Count",
+              "nativeQueryRef": "Peer No",
+              "displayName": "Peer No"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaint Cohorts"
+                    }
+                  },
+                  "Property": "Queue Window Peer Known Count"
+                }
+              },
+              "queryRef": "Complaint Cohorts.Queue Window Peer Known Count",
+              "nativeQueryRef": "Peer known",
+              "displayName": "Peer known"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaint Cohorts"
+                    }
+                  },
+                  "Property": "Queue Pooled Gap pp"
+                }
+              },
+              "queryRef": "Complaint Cohorts.Queue Pooled Gap pp",
+              "nativeQueryRef": "Gap pp",
+              "displayName": "Gap pp"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaint Cohorts"
+                    }
+                  },
+                  "Property": "Queue Passing Minima"
+                }
+              },
+              "queryRef": "Complaint Cohorts.Queue Passing Minima",
+              "nativeQueryRef": "Passing minima",
+              "displayName": "Passing minima"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Complaint Cohorts"
+                    }
+                  },
+                  "Property": "Queue Review Reason"
+                }
+              },
+              "queryRef": "Complaint Cohorts.Queue Review Reason",
+              "nativeQueryRef": "Review reason",
+              "displayName": "Review reason"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Review Selection"
+                  }
+                },
+                "Property": "Window End"
+              }
+            },
+            "direction": "Ascending"
+          },
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Complaint Cohorts"
+                  }
+                },
+                "Property": "Priority Rank"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": false
+      }
+    }
+  }
+}

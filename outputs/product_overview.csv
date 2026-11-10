@@ -1,0 +1,15 @@
+product,complaints,timely,untimely,known,unknown,valid_routing,median_routing_days
+Credit reporting or other personal consumer reports,7577932,7569528,8404,7577932,0,7577932,0.0
+"Credit reporting, credit repair services, or other personal consumer reports",644814,644050,764,644814,0,644814,0.0
+Debt collection,507204,494729,12475,507204,0,507204,0.0
+Credit card,187839,187327,512,187839,0,187839,0.0
+Checking or savings account,186889,185516,1373,186889,0,186889,0.0
+"Money transfer, virtual currency, or money service",115119,113452,1667,115119,0,115119,0.0
+Mortgage,68988,68138,850,68988,0,68988,0.0
+Vehicle loan or lease,46923,46239,684,46923,0,46923,0.0
+Student loan,46573,38387,8186,46573,0,46573,0.0
+Credit card or prepaid card,35310,35064,246,35310,0,35310,0.0
+"Payday loan, title loan, personal loan, or advance loan",24732,23723,1009,24732,0,24732,0.0
+Prepaid card,15087,14269,818,15087,0,15087,0.0
+Debt or credit management,7163,6547,616,7163,0,7163,0.0
+"Payday loan, title loan, or personal loan",4684,4505,179,4684,0,4684,0.0

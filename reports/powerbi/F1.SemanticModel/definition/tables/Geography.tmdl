@@ -1,0 +1,56 @@
+/// One raw source identity; SQL null, empty and literal labels have distinct keys.
+table Geography
+	lineageTag: 4e18eb87-f150-48e5-82f0-056586562f89
+
+	/// Imported geography_key; preserves projection identity and meaning.
+	column 'Geography Key'
+		dataType: int64
+		isHidden
+		lineageTag: 60914668-165e-455b-b48a-0818fd74f6f1
+		summarizeBy: none
+		sourceColumn: geography_key
+
+	/// Imported raw_value; preserves projection identity and meaning.
+	column 'Raw Value'
+		dataType: string
+		isHidden
+		lineageTag: 43ecbefd-72c8-40f2-ba30-42d609e74434
+		summarizeBy: none
+		sourceColumn: raw_value
+
+	/// Imported is_missing; preserves projection identity and meaning.
+	column 'Is Missing'
+		dataType: boolean
+		isHidden
+		lineageTag: 8bc77092-e6e1-46a0-890f-bb6645ad82b7
+		summarizeBy: none
+		sourceColumn: is_missing
+
+	/// Imported missingness; preserves projection identity and meaning.
+	column Missingness
+		dataType: string
+		isHidden
+		lineageTag: a25c3df6-a2b5-4ed1-bee7-a860cb375339
+		summarizeBy: none
+		sourceColumn: missingness
+
+	/// Display label grouped by integer identity; VertiPaq may normalize case; SQL raw preservation is authoritative and identities must not merge.
+	column State
+		dataType: string
+		lineageTag: 0dad91d9-c616-4148-93e8-5f686883ce38
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: display_label
+
+		relatedColumnDetails
+			groupByColumn: 'Geography Key'
+
+	partition Geography = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(#"Source Folder" & "/geography.parquet")),
+				    Typed = Table.TransformColumnTypes(Source, {{"geography_key", Int64.Type}, {"raw_value", type text}, {"is_missing", type logical}, {"missingness", type text}, {"display_label", type text}})
+				in
+				    Typed
+

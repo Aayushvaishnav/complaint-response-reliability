@@ -1,0 +1,545 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-23T10:54:58.868916+00:00",
+  "gate_d_signoff": "not_granted",
+  "final_cv_measurement": "not_permitted",
+  "input_sha256": {
+    "data/processed/complaints_typed.parquet": "6868323834e311a1000fdb0768348c36fd86c9fe1a0c9650aee85f3511405646",
+    "config/review_rule.json": "4ee113188aba8d565676dae03d471c43bcfe1fc0019bd07e2018f9c344fba764",
+    "sql/longitudinal_contract.sql": "a9c2f9e1fd912ca07444c2bcdf1ad259710c9d2c8da269d4503f79f1235b311e",
+    "scripts/review_contract.py": "f62ee712225ed24dd7bdd7a6b5b8c0d6c4e00c01d179484749121836b4996887",
+    "outputs/typed_preparation_validation.json": "9e9826d7492a8afd8d774242699f3e2dddd780f988d4ab828cdcf924e5166d36",
+    "config/source.json": "6e11ae997297c8e3277650ca4edf92d6f59c2cb1bdfe485bce96c04d66abc40d"
+  },
+  "source_sha256": "ef4494d4ea9787db5dc87e3de659e07ffaecb6e19ee3df97c7c15e14d54a74d9",
+  "environment": {
+    "duckdb": "2.0.0",
+    "threads": 4,
+    "memory_limit": "4GB"
+  },
+  "limits": [
+    "No fresh raw/scoped CSV hash or live official export comparison; typed Parquet hash matches Gate B.",
+    "Timing-era proxy; August retained in descriptions and excluded from longitudinal windows.",
+    "Offline descriptive screening; no exposure adjustment, significance or causal claim.",
+    "Timings are single local development runs with warm/cold caches uncontrolled; no UI latency claim.",
+    "Filtered queues are recomputed at minimum 100; volume sensitivity 50/100/200 is full-population only."
+  ],
+  "scopes": {
+    "all": {
+      "checks": {
+        "monthly_groups": 36,
+        "complaints": 9469257,
+        "gate_b_independent_csv_counts_match": true,
+        "response_mix_reconciles": true,
+        "routing_distribution_medians_match": true,
+        "nested_volume_sensitivity": true,
+        "stable_windows": 5
+      },
+      "runs": [
+        {
+          "minimum": 50,
+          "sql_seconds": 3.1106734109998797,
+          "exact_rank_replay": {
+            "seconds": 0.0033313029998680577,
+            "distinct_tuples": 112,
+            "maximum_tuples_per_month": 9,
+            "potential_tuple_pairs": 618,
+            "by_month": [
+              {
+                "month": "2023-03-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2023-04-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2023-11-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2023-12-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2024-01-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2024-02-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2024-03-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2024-04-01",
+                "distinct_rank_tuples": 4,
+                "potential_tuple_pairs": 16
+              },
+              {
+                "month": "2024-05-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2024-06-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2024-07-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2024-08-01",
+                "distinct_rank_tuples": 5,
+                "potential_tuple_pairs": 25
+              },
+              {
+                "month": "2024-09-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2024-10-01",
+                "distinct_rank_tuples": 4,
+                "potential_tuple_pairs": 16
+              },
+              {
+                "month": "2024-11-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2024-12-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2025-01-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2025-02-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2025-03-01",
+                "distinct_rank_tuples": 4,
+                "potential_tuple_pairs": 16
+              },
+              {
+                "month": "2025-04-01",
+                "distinct_rank_tuples": 9,
+                "potential_tuple_pairs": 81
+              },
+              {
+                "month": "2025-05-01",
+                "distinct_rank_tuples": 8,
+                "potential_tuple_pairs": 64
+              },
+              {
+                "month": "2025-06-01",
+                "distinct_rank_tuples": 8,
+                "potential_tuple_pairs": 64
+              },
+              {
+                "month": "2025-07-01",
+                "distinct_rank_tuples": 9,
+                "potential_tuple_pairs": 81
+              },
+              {
+                "month": "2025-08-01",
+                "distinct_rank_tuples": 7,
+                "potential_tuple_pairs": 49
+              },
+              {
+                "month": "2025-09-01",
+                "distinct_rank_tuples": 8,
+                "potential_tuple_pairs": 64
+              },
+              {
+                "month": "2025-10-01",
+                "distinct_rank_tuples": 6,
+                "potential_tuple_pairs": 36
+              },
+              {
+                "month": "2025-11-01",
+                "distinct_rank_tuples": 4,
+                "potential_tuple_pairs": 16
+              },
+              {
+                "month": "2025-12-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              }
+            ]
+          },
+          "reference_seconds": 63.43077697899935,
+          "reference": {
+            "rows": 1566288,
+            "segments": 43508,
+            "months": 36,
+            "persistent_rows": 112,
+            "comparisons": 61085120
+          },
+          "persistent_windows": 112,
+          "unique_segments": 30
+        },
+        {
+          "minimum": 100,
+          "sql_seconds": 2.9855856629983464,
+          "exact_rank_replay": {
+            "seconds": 0.0030823679990135133,
+            "distinct_tuples": 36,
+            "maximum_tuples_per_month": 4,
+            "potential_tuple_pairs": 86,
+            "by_month": [
+              {
+                "month": "2023-12-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2024-01-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2024-02-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2024-03-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2024-09-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2024-10-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2024-11-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2024-12-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-01-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-03-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2025-04-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2025-05-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2025-06-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2025-07-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2025-08-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2025-09-01",
+                "distinct_rank_tuples": 4,
+                "potential_tuple_pairs": 16
+              },
+              {
+                "month": "2025-10-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2025-11-01",
+                "distinct_rank_tuples": 3,
+                "potential_tuple_pairs": 9
+              },
+              {
+                "month": "2025-12-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              }
+            ]
+          },
+          "reference_seconds": 64.08787742499771,
+          "reference": {
+            "rows": 1566288,
+            "segments": 43508,
+            "months": 36,
+            "persistent_rows": 36,
+            "comparisons": 61085196
+          },
+          "persistent_windows": 36,
+          "unique_segments": 13
+        },
+        {
+          "minimum": 200,
+          "sql_seconds": 3.121938186999614,
+          "exact_rank_replay": {
+            "seconds": 0.002757212001597509,
+            "distinct_tuples": 5,
+            "maximum_tuples_per_month": 2,
+            "potential_tuple_pairs": 7,
+            "by_month": [
+              {
+                "month": "2024-03-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-03-01",
+                "distinct_rank_tuples": 2,
+                "potential_tuple_pairs": 4
+              },
+              {
+                "month": "2025-04-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-05-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              }
+            ]
+          },
+          "reference_seconds": 64.85114958699705,
+          "reference": {
+            "rows": 1566288,
+            "segments": 43508,
+            "months": 36,
+            "persistent_rows": 5,
+            "comparisons": 61085227
+          },
+          "persistent_windows": 5,
+          "unique_segments": 3
+        }
+      ]
+    },
+    "2023": {
+      "checks": {
+        "monthly_groups": 12,
+        "complaints": 1292048,
+        "gate_b_independent_csv_counts_match": true,
+        "response_mix_reconciles": true,
+        "routing_distribution_medians_match": true
+      },
+      "runs": [
+        {
+          "minimum": 100,
+          "sql_seconds": 0.7295142889997805,
+          "exact_rank_replay": {
+            "seconds": 0.0022685209987685084,
+            "distinct_tuples": 1,
+            "maximum_tuples_per_month": 1,
+            "potential_tuple_pairs": 1,
+            "by_month": [
+              {
+                "month": "2023-12-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              }
+            ]
+          },
+          "reference_seconds": 10.839672473000974,
+          "reference": {
+            "rows": 273564,
+            "segments": 22797,
+            "months": 12,
+            "persistent_rows": 1,
+            "comparisons": 10668995
+          },
+          "persistent_windows": 1,
+          "unique_segments": 1
+        }
+      ]
+    },
+    "Debt collection": {
+      "checks": {
+        "monthly_groups": 36,
+        "complaints": 507204,
+        "gate_b_independent_csv_counts_match": true,
+        "response_mix_reconciles": true,
+        "routing_distribution_medians_match": true
+      },
+      "runs": [
+        {
+          "minimum": 100,
+          "sql_seconds": 0.9552149760020257,
+          "exact_rank_replay": {
+            "seconds": 0.0019169149964000098,
+            "distinct_tuples": 11,
+            "maximum_tuples_per_month": 1,
+            "potential_tuple_pairs": 11,
+            "by_month": [
+              {
+                "month": "2024-10-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2024-11-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2024-12-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-01-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-04-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-05-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-06-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-07-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-09-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-10-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              },
+              {
+                "month": "2025-11-01",
+                "distinct_rank_tuples": 1,
+                "potential_tuple_pairs": 1
+              }
+            ]
+          },
+          "reference_seconds": 15.846856960000878,
+          "reference": {
+            "rows": 401940,
+            "segments": 11165,
+            "months": 36,
+            "persistent_rows": 11,
+            "comparisons": 15675649
+          },
+          "persistent_windows": 11,
+          "unique_segments": 4
+        }
+      ]
+    },
+    "CA": {
+      "checks": {
+        "monthly_groups": 36,
+        "complaints": 906980,
+        "gate_b_independent_csv_counts_match": true,
+        "response_mix_reconciles": true,
+        "routing_distribution_medians_match": true
+      },
+      "runs": [
+        {
+          "minimum": 100,
+          "sql_seconds": 1.2438356530001329,
+          "exact_rank_replay": {
+            "seconds": 0.003170572999806609,
+            "distinct_tuples": 0,
+            "maximum_tuples_per_month": 0,
+            "potential_tuple_pairs": 0,
+            "by_month": []
+          },
+          "reference_seconds": 18.611291558998346,
+          "reference": {
+            "rows": 474804,
+            "segments": 13189,
+            "months": 36,
+            "persistent_rows": 0,
+            "comparisons": 18517356
+          },
+          "persistent_windows": 0,
+          "unique_segments": 0
+        }
+      ]
+    }
+  },
+  "output_sha256": {
+    "outputs/monthly_overview.csv": "10d8cba44c30703942611a761f172a694e00bdb87d1581ec91de85f38d78aa54",
+    "outputs/review_queue.csv": "53ee8adbb4a52a166bc5e823b73e7e0b404a08b1a5c974ae683834a4ae5a5940",
+    "outputs/review_monthly_summary.csv": "f8ec11eca62f3e559195f8c959ccb3ef27b171b797e6f3d393dc05ae0d2de21f",
+    "outputs/review_segment_history.csv": "fbacd032560d503d004f907cb7c045d7e3caa3af995481539632655bb080ced8",
+    "outputs/response_mix.csv": "e15e661629694cbf3cee66ae2b14f6285ee1122d697cdca5085f80e7aa2eec6a",
+    "outputs/routing_distribution.csv": "a373012a84c5c8e65d4e95a97a2144cb1a077c693b2b0c0e5a3ac763317d4425",
+    "outputs/product_overview.csv": "447dd7fcb1a87a19de20454bb692194dcd139acfa98b7f9da1f7224b77eadcd2"
+  },
+  "implementation_sha256": {
+    "scripts/population_analysis.py": "c2f847c804d44f33cd975905282a47c9e5fb7a014a39ff87943989be215d0bef",
+    "scripts/analysis_reference.py": "9096283cc8c42d72a8ba3c75a38e990ec9bf37947b3c5766b8bd5624284098dc",
+    "sql/longitudinal_contract.sql": "a9c2f9e1fd912ca07444c2bcdf1ad259710c9d2c8da269d4503f79f1235b311e",
+    "sql/monthly_overview.sql": "937550c4562606665c42ecfc0f463ce97276c6e0c24c2207c68c7d60897d9c10",
+    "sql/prepare_complaints.sql": "9cbc93b26fad2bd3304a582aa9cdffbe050b1d9ac38ecb6bbed0fba502e649ed",
+    "sql/product_overview.sql": "22950401ec9cd0a353e52756ab31f5eadb7dfb8839b9bf10feb9758d572f2190",
+    "sql/response_mix.sql": "b344d565504e2ee9a49e76a5a6d8d6c7033c2fdfd884e7c1a00f324ab3b6afea",
+    "sql/routing_distribution.sql": "c0a53f00356075bce4775d50ab1a725c011cce880e6a6746781b6c4bf2c76f99",
+    "sql/sample_metric_smoke.sql": "0ba79d67c9b86ce6e9f350642bd89c506072306f21074e978997a7ba5c9e6feb",
+    "sql/segment_month_counts.sql": "603b2edc00641a13e9dcfa7019e2b0c556fbede64c2197e1ecd685711b0c6023",
+    "sql/select_feasibility_sample.sql": "d75b27ab5955d67e225c4741f3b80f9a263ded79b06b9696f90e608190e1fd80",
+    "sql/validate_source.sql": "23c0e6250d71ca3b7eb771f4185ca764d3c516125dcad69173f28b987b801a78"
+  },
+  "finished_at_utc": "2026-10-23T10:59:15.479456+00:00"
+}

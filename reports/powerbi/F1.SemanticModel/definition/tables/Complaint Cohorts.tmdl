@@ -1,0 +1,2637 @@
+/// Observed received-day/category/routing-lag bins; counts are frequencies, not complaints per row.
+table 'Complaint Cohorts'
+	lineageTag: eeb231c0-c5af-4ed0-9cf1-5c02b643fa11
+
+	/// Sum imported complaint frequencies in current context; empty is zero.
+	measure 'Complaint Count' = COALESCE(SUM('Complaint Cohorts'[Complaint Rows]), 0)
+		formatString: #,##0
+		displayFolder: Counts
+		lineageTag: afa8d120-f07a-484a-856d-ce590aa1e127
+
+	/// Sum imported complaint frequencies in current context; empty is zero.
+	measure 'Timely Yes Count' = COALESCE(SUM('Complaint Cohorts'[Yes Rows]), 0)
+		formatString: #,##0
+		displayFolder: Counts
+		lineageTag: 134c331c-f81b-44a7-9697-4e937069e137
+
+	/// Sum imported complaint frequencies in current context; empty is zero.
+	measure 'Untimely No Count' = COALESCE(SUM('Complaint Cohorts'[No Rows]), 0)
+		formatString: #,##0
+		displayFolder: Counts
+		lineageTag: 94b905f7-97e8-482b-86b4-750fd542f9ef
+
+	/// Sum imported complaint frequencies in current context; empty is zero.
+	measure 'Unknown Flag Count' = COALESCE(SUM('Complaint Cohorts'[Unknown Rows]), 0)
+		formatString: #,##0
+		displayFolder: Counts
+		lineageTag: 8d245264-b178-484f-99e3-f753f9efdb6f
+
+	/// Exact recorded Yes plus No flags; excludes unknown flags.
+	measure 'Known Flag Count' = [Timely Yes Count] + [Untimely No Count]
+		formatString: #,##0
+		displayFolder: Counts
+		lineageTag: 3720db2c-5fd6-41f2-a37b-4f010935b9f3
+
+	/// Timely Yes Count divided by Known Flag Count; undefined is BLANK.
+	measure 'Timely Response Rate' = DIVIDE([Timely Yes Count], [Known Flag Count])
+		formatString: 0.00%
+		displayFolder: Rates
+		lineageTag: 8ed9369a-16da-413d-9e56-f101c7a7a99e
+
+	/// Untimely No Count divided by Known Flag Count; undefined is BLANK.
+	measure 'Untimely Share' = DIVIDE([Untimely No Count], [Known Flag Count])
+		formatString: 0.00%
+		displayFolder: Rates
+		lineageTag: bf8a9c53-e958-4b8b-87c0-69167ab3c4ba
+
+	/// Unknown Flag Count divided by Complaint Count; undefined is BLANK.
+	measure 'Unknown Flag Rate' = DIVIDE([Unknown Flag Count], [Complaint Count])
+		formatString: 0.00%
+		displayFolder: Rates
+		lineageTag: 580b1d97-8485-4219-aa3b-6328e1849add
+
+	/// Frequency of nonnegative valid routing lags.
+	measure 'Valid Routing Count' = CALCULATE([Complaint Count], KEEPFILTERS('Complaint Cohorts'[Routing Status] = "valid"))
+		formatString: #,##0
+		displayFolder: Routing
+		lineageTag: 65ccb832-e7f2-4060-85a2-76e977759c3c
+
+	/// All complaints minus valid routing frequencies; includes missing and negative lags.
+	measure 'Invalid Routing Count' = [Complaint Count] - [Valid Routing Count]
+		formatString: #,##0
+		displayFolder: Routing
+		lineageTag: f0d1b620-7b67-40b0-a487-eb3011fc62d7
+
+	/// Frequency-weighted median of valid lags; averages both middle observations; empty is BLANK.
+	measure 'Median Routing Days' =
+			VAR _bins =
+			    CALCULATETABLE(
+			        ADDCOLUMNS(VALUES('Complaint Cohorts'[Routing Days]),
+			            "__frequency", CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]))),
+			        KEEPFILTERS('Complaint Cohorts'[Routing Status] = "valid"),
+			        KEEPFILTERS(NOT ISBLANK('Complaint Cohorts'[Routing Days])),
+			        KEEPFILTERS('Complaint Cohorts'[Routing Days] >= 0))
+			VAR _total = SUMX(_bins, [__frequency])
+			VAR _lowerPosition = INT(DIVIDE(_total + 1, 2))
+			VAR _upperPosition = INT(DIVIDE(_total + 2, 2))
+			VAR _cumulative = ADDCOLUMNS(_bins, "__cumulative",
+			    VAR _day = 'Complaint Cohorts'[Routing Days]
+			    RETURN SUMX(FILTER(_bins, 'Complaint Cohorts'[Routing Days] <= _day), [__frequency]))
+			VAR _lower = MINX(FILTER(_cumulative, [__cumulative] >= _lowerPosition), 'Complaint Cohorts'[Routing Days])
+			VAR _upper = MINX(FILTER(_cumulative, [__cumulative] >= _upperPosition), 'Complaint Cohorts'[Routing Days])
+			RETURN IF(_total > 0, DIVIDE(_lower + _upper, 2), BLANK())
+		formatString: #,##0.0
+		displayFolder: Routing
+		lineageTag: 43c9d9ef-51cb-4308-a718-b1ad54f065cc
+
+	/// Issue frequency divided by all issues in current month context; all other filters retained; undefined is BLANK.
+	measure 'Monthly Issue Share' = DIVIDE([Complaint Count], CALCULATE([Complaint Count], REMOVEFILTERS('Issue')))
+		formatString: 0.00%
+		displayFolder: Issue Mix
+		lineageTag: 14f060a3-18f8-47b5-afd4-c4a63f0e0ba6
+
+	/// Other issues: all-issue total minus current issue selection; company, product, date and geography retained.
+	measure 'Peer Complaint Count' = CALCULATE([Complaint Count], REMOVEFILTERS('Issue')) - [Complaint Count]
+		formatString: #,##0
+		displayFolder: Peers
+		lineageTag: 6d1beafc-ea61-4c45-9fae-f02ae95ad401
+
+	/// Other issues: all-issue total minus current issue selection; company, product, date and geography retained.
+	measure 'Peer Known Count' = CALCULATE([Known Flag Count], REMOVEFILTERS('Issue')) - [Known Flag Count]
+		formatString: #,##0
+		displayFolder: Peers
+		lineageTag: 5bf1521e-45e2-40d8-8839-dc476ad96615
+
+	/// Other issues: all-issue total minus current issue selection; company, product, date and geography retained.
+	measure 'Peer No Count' = CALCULATE([Untimely No Count], REMOVEFILTERS('Issue')) - [Untimely No Count]
+		formatString: #,##0
+		displayFolder: Peers
+		lineageTag: dc55b869-b393-4345-b111-bb05c66f91cc
+
+	/// Other-issue No flags divided by other-issue known flags; undefined is BLANK.
+	measure 'Peer Untimely Share' = DIVIDE([Peer No Count], [Peer Known Count])
+		formatString: 0.00%
+		displayFolder: Peers
+		lineageTag: bf7e9214-bfa0-4931-851e-535a54eee171
+
+	/// Selected Review Minimum; dynamic selected population; undefined is BLANK.
+	measure 'Selected Review Minimum' = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: 5ed71d01-31da-4613-b25a-20033432ce15
+
+	/// Eligible Window Count; dynamic selected population; undefined is BLANK.
+	measure 'Eligible Window Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			RETURN IF(NOT ISBLANK(_minimum), COALESCE(COUNTROWS(FILTER(_evaluated, [__eligible])), 0), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: 253ae480-e681-467d-832d-a16799a9f7aa
+
+	/// Qualifying Window Count; dynamic selected population; undefined is BLANK.
+	measure 'Qualifying Window Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			RETURN IF(NOT ISBLANK(_minimum), COALESCE(COUNTROWS(_qualified), 0), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: 05bfe583-7661-43ca-84cb-d0983af7ebe2
+
+	/// Qualifying Segment Count; dynamic selected population; undefined is BLANK.
+	measure 'Qualifying Segment Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			RETURN IF(NOT ISBLANK(_minimum), COALESCE(COUNTROWS(DISTINCT(SELECTCOLUMNS(_qualified, "segment", [__segment]))), 0), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: ae242f0c-505a-4380-81a3-977162cb9169
+
+	/// Stable Window Count; dynamic selected population; undefined is BLANK.
+	measure 'Stable Window Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			RETURN IF(NOT ISBLANK(_minimum), COALESCE(COUNTROWS(FILTER(_evaluated, [__stable])), 0), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: 59319623-17bf-4e7d-92cd-1c3733d9bf80
+
+	/// Elevated Months; dynamic selected population; undefined is BLANK.
+	measure 'Elevated Months' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(_single, MAXX(_row, [__elevated]), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: 9df6c98c-eedb-42be-9ab5-6820a339442d
+
+	/// Window No Count; dynamic selected population; undefined is BLANK.
+	measure 'Window No Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(_single, MAXX(_row, [__no]), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: ac0bac5a-d809-4c22-96fb-bb6f1903a742
+
+	/// Window Known Count; dynamic selected population; undefined is BLANK.
+	measure 'Window Known Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(_single, MAXX(_row, [__knownCount]), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: f9419e67-0e81-4003-bd17-f3f9cd204d20
+
+	/// Window Peer No Count; dynamic selected population; undefined is BLANK.
+	measure 'Window Peer No Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(_single, MAXX(_row, [__peerNo]), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: f4908eb7-619e-4320-83ec-14587338cdb5
+
+	/// Window Peer Known Count; dynamic selected population; undefined is BLANK.
+	measure 'Window Peer Known Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(_single, MAXX(_row, [__peerKnown]), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: 3fa2c69c-8bd6-4a77-bc74-1944ac2267c3
+
+	/// Window Complaint Count; dynamic selected population; undefined is BLANK.
+	measure 'Window Complaint Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(_single, MAXX(_row, [__complaints]), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: bc602064-df85-426a-810f-5add74f12d28
+
+	/// Window Eligible; dynamic selected population; undefined is BLANK.
+	measure 'Window Eligible' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(COUNTROWS(_row) = 1 && NOT ISBLANK(_minimum), MAXX(_row, INT([__eligible])), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: 751036d7-5af3-442e-93fd-a4a2af4f75a4
+
+	/// Window Qualifies; dynamic selected population; undefined is BLANK.
+	measure 'Window Qualifies' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(COUNTROWS(_row) = 1 && NOT ISBLANK(_minimum), MAXX(_row, INT([__eligible] && [__elevated] >= 2)), BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: 42ac7d2f-cd25-4dae-af0d-8df42be96701
+
+	/// Pooled Gap pp; dynamic selected population; undefined is BLANK.
+	measure 'Pooled Gap pp' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(_single && MAXX(_row, [__knownCount]) > 0 && MAXX(_row, [__peerKnown]) > 0,
+			        100 * (DIVIDE(MAXX(_row, [__no]), MAXX(_row, [__knownCount])) -
+			        DIVIDE(MAXX(_row, [__peerNo]), MAXX(_row, [__peerKnown]))), BLANK())
+		formatString: 0.00
+		displayFolder: Review Priorities
+		lineageTag: 97129e9d-98b7-4e02-aaf7-45ac6b5eb216
+
+	/// Passing Minima; dynamic selected population; undefined is BLANK.
+	measure 'Passing Minima' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN IF(COUNTROWS(_row) = 1,
+			        VAR _passing = FILTER({50,100,200}, VAR _test = [Value]
+			            RETURN MAXX(_row, INT([__complete] && [__era] && [__known] && [__elevated] >= 2 && [__volume] >= _test)) = 1)
+			        RETURN IF(COUNTROWS(_passing) = 0, "None", CONCATENATEX(_passing, [Value], "/", [Value], ASC)),
+			        "Select exactly one review row")
+		formatString: @
+		displayFolder: Review Priorities
+		lineageTag: 9110e839-8474-4ce0-9d5b-b9e84d259885
+
+	/// Review Reason; dynamic selected population; undefined is BLANK.
+	measure 'Review Reason' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			RETURN SWITCH(TRUE(), NOT _single, "Select exactly one review row",
+			        COUNTROWS(_row) <> 1, "Window unavailable in selected ending months",
+			        ISBLANK(_minimum), "Unavailable: select exactly one minimum",
+			        NOT MAXX(_row, INT([__complete])), "Incomplete selected calendar months",
+			        NOT MAXX(_row, INT([__era])), "August 2023 boundary or mixed timing eras",
+			        MAXX(_row, [__volume]) < _minimum, "Monthly focal or peer volume below minimum",
+			        NOT MAXX(_row, INT([__known])), "Monthly focal or peer known denominator unavailable",
+			        MAXX(_row, [__elevated]) < 2, "Fewer than two elevated months",
+			        "Qualifies: at least two monthly gaps of 1pp; pooled gap is descriptive")
+		formatString: @
+		displayFolder: Review Priorities
+		lineageTag: e39c2928-ec91-485b-822c-88a2a03708ca
+
+	/// Priority Rank; dynamic selected population; undefined is BLANK.
+	measure 'Priority Rank' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			VAR _targetEnd = MAXX(_row, [__end])
+			VAR _ranked = FILTER(_qualified, [__end] = _targetEnd)
+			VAR _classes = FILTER(_ranked,
+			    VAR _rightKey = [__key]
+			    VAR _rightElevated = [__elevated]
+			    VAR _rightNo = [__no]
+			    VAR _rightKnown = [__knownCount]
+			    VAR _rightPeerNo = [__peerNo]
+			    VAR _rightPeerKnown = [__peerKnown]
+			    VAR _rightComplaints = [__complaints]
+			    RETURN COUNTROWS(FILTER(_ranked,
+			        VAR _leftNo = [__no]
+			        VAR _leftKnown = [__knownCount]
+			        VAR _leftPeerNo = [__peerNo]
+			        VAR _leftPeerKnown = [__peerKnown]
+			        VAR _comparison = (VAR _a = _leftNo
+			VAR _n = _leftKnown
+			VAR _b = _leftPeerNo
+			VAR _m = _leftPeerKnown
+			VAR _c = _rightNo
+			VAR _p = _rightKnown
+			VAR _d = _rightPeerNo
+			VAR _q = _rightPeerKnown
+			VAR _ra0 = _a * _m
+			VAR _ra1 = _b * _n
+			VAR _ra2 = _ra0 - _ra1
+			VAR _ra3 = SIGN(_ra2)
+			VAR _ra4 = ABS(_ra2)
+			VAR _ra5 = _n * _m
+			VAR _ra6 = _c * _q
+			VAR _ra7 = _d * _p
+			VAR _ra8 = _ra6 - _ra7
+			VAR _ra9 = SIGN(_ra8)
+			VAR _ra10 = ABS(_ra8)
+			VAR _ra11 = _p * _q
+			VAR _ra12 = INT(_ra4 / 32768)
+			VAR _ra13 = _ra12 * 32768
+			VAR _ra14 = _ra4 - _ra13
+			VAR _ra15 = INT(_ra12 / 32768)
+			VAR _ra16 = _ra15 * 32768
+			VAR _ra17 = _ra12 - _ra16
+			VAR _ra18 = INT(_ra11 / 32768)
+			VAR _ra19 = _ra18 * 32768
+			VAR _ra20 = _ra11 - _ra19
+			VAR _ra21 = INT(_ra18 / 32768)
+			VAR _ra22 = _ra21 * 32768
+			VAR _ra23 = _ra18 - _ra22
+			VAR _ra24 = _ra14 * _ra20
+			VAR _ra25 = 0 + _ra24
+			VAR _ra26 = INT(_ra25 / 32768)
+			VAR _ra27 = _ra26 * 32768
+			VAR _ra28 = _ra25 - _ra27
+			VAR _ra29 = _ra14 * _ra23
+			VAR _ra30 = _ra26 + _ra29
+			VAR _ra31 = _ra17 * _ra20
+			VAR _ra32 = _ra30 + _ra31
+			VAR _ra33 = INT(_ra32 / 32768)
+			VAR _ra34 = _ra33 * 32768
+			VAR _ra35 = _ra32 - _ra34
+			VAR _ra36 = _ra14 * _ra21
+			VAR _ra37 = _ra33 + _ra36
+			VAR _ra38 = _ra17 * _ra23
+			VAR _ra39 = _ra37 + _ra38
+			VAR _ra40 = _ra15 * _ra20
+			VAR _ra41 = _ra39 + _ra40
+			VAR _ra42 = INT(_ra41 / 32768)
+			VAR _ra43 = _ra42 * 32768
+			VAR _ra44 = _ra41 - _ra43
+			VAR _ra45 = _ra17 * _ra21
+			VAR _ra46 = _ra42 + _ra45
+			VAR _ra47 = _ra15 * _ra23
+			VAR _ra48 = _ra46 + _ra47
+			VAR _ra49 = INT(_ra48 / 32768)
+			VAR _ra50 = _ra49 * 32768
+			VAR _ra51 = _ra48 - _ra50
+			VAR _ra52 = _ra15 * _ra21
+			VAR _ra53 = _ra49 + _ra52
+			VAR _ra54 = INT(_ra53 / 32768)
+			VAR _ra55 = _ra54 * 32768
+			VAR _ra56 = _ra53 - _ra55
+			VAR _ra57 = INT(_ra10 / 32768)
+			VAR _ra58 = _ra57 * 32768
+			VAR _ra59 = _ra10 - _ra58
+			VAR _ra60 = INT(_ra57 / 32768)
+			VAR _ra61 = _ra60 * 32768
+			VAR _ra62 = _ra57 - _ra61
+			VAR _ra63 = INT(_ra5 / 32768)
+			VAR _ra64 = _ra63 * 32768
+			VAR _ra65 = _ra5 - _ra64
+			VAR _ra66 = INT(_ra63 / 32768)
+			VAR _ra67 = _ra66 * 32768
+			VAR _ra68 = _ra63 - _ra67
+			VAR _ra69 = _ra59 * _ra65
+			VAR _ra70 = 0 + _ra69
+			VAR _ra71 = INT(_ra70 / 32768)
+			VAR _ra72 = _ra71 * 32768
+			VAR _ra73 = _ra70 - _ra72
+			VAR _ra74 = _ra59 * _ra68
+			VAR _ra75 = _ra71 + _ra74
+			VAR _ra76 = _ra62 * _ra65
+			VAR _ra77 = _ra75 + _ra76
+			VAR _ra78 = INT(_ra77 / 32768)
+			VAR _ra79 = _ra78 * 32768
+			VAR _ra80 = _ra77 - _ra79
+			VAR _ra81 = _ra59 * _ra66
+			VAR _ra82 = _ra78 + _ra81
+			VAR _ra83 = _ra62 * _ra68
+			VAR _ra84 = _ra82 + _ra83
+			VAR _ra85 = _ra60 * _ra65
+			VAR _ra86 = _ra84 + _ra85
+			VAR _ra87 = INT(_ra86 / 32768)
+			VAR _ra88 = _ra87 * 32768
+			VAR _ra89 = _ra86 - _ra88
+			VAR _ra90 = _ra62 * _ra66
+			VAR _ra91 = _ra87 + _ra90
+			VAR _ra92 = _ra60 * _ra68
+			VAR _ra93 = _ra91 + _ra92
+			VAR _ra94 = INT(_ra93 / 32768)
+			VAR _ra95 = _ra94 * 32768
+			VAR _ra96 = _ra93 - _ra95
+			VAR _ra97 = _ra60 * _ra66
+			VAR _ra98 = _ra94 + _ra97
+			VAR _ra99 = INT(_ra98 / 32768)
+			VAR _ra100 = _ra99 * 32768
+			VAR _ra101 = _ra98 - _ra100
+			RETURN IF(_ra3 == _ra9, _ra3 * (IF(_ra54 == _ra99, IF(_ra56 == _ra101, IF(_ra51 == _ra96, IF(_ra44 == _ra89, IF(_ra35 == _ra80, IF(_ra28 == _ra73, 0, IF(_ra28 > _ra73, 1, -1)), IF(_ra35 > _ra80, 1, -1)), IF(_ra44 > _ra89, 1, -1)), IF(_ra51 > _ra96, 1, -1)), IF(_ra56 > _ra101, 1, -1)), IF(_ra54 > _ra99, 1, -1))), IF(_ra3 > _ra9, 1, -1)))
+			        RETURN [__key] < _rightKey && [__elevated] = _rightElevated &&
+			            [__no] = _rightNo && [__complaints] = _rightComplaints && _comparison = 0)) = 0)
+			VAR _rightElevated = MAXX(_row, [__elevated])
+			VAR _rightNo = MAXX(_row, [__no])
+			VAR _rightKnown = MAXX(_row, [__knownCount])
+			VAR _rightPeerNo = MAXX(_row, [__peerNo])
+			VAR _rightPeerKnown = MAXX(_row, [__peerKnown])
+			VAR _rightComplaints = MAXX(_row, [__complaints])
+			VAR _better = COUNTROWS(FILTER(_classes,
+			        VAR _leftNo = [__no]
+			        VAR _leftKnown = [__knownCount]
+			        VAR _leftPeerNo = [__peerNo]
+			        VAR _leftPeerKnown = [__peerKnown]
+			        VAR _comparison = (VAR _a = _leftNo
+			VAR _n = _leftKnown
+			VAR _b = _leftPeerNo
+			VAR _m = _leftPeerKnown
+			VAR _c = _rightNo
+			VAR _p = _rightKnown
+			VAR _d = _rightPeerNo
+			VAR _q = _rightPeerKnown
+			VAR _ra0 = _a * _m
+			VAR _ra1 = _b * _n
+			VAR _ra2 = _ra0 - _ra1
+			VAR _ra3 = SIGN(_ra2)
+			VAR _ra4 = ABS(_ra2)
+			VAR _ra5 = _n * _m
+			VAR _ra6 = _c * _q
+			VAR _ra7 = _d * _p
+			VAR _ra8 = _ra6 - _ra7
+			VAR _ra9 = SIGN(_ra8)
+			VAR _ra10 = ABS(_ra8)
+			VAR _ra11 = _p * _q
+			VAR _ra12 = INT(_ra4 / 32768)
+			VAR _ra13 = _ra12 * 32768
+			VAR _ra14 = _ra4 - _ra13
+			VAR _ra15 = INT(_ra12 / 32768)
+			VAR _ra16 = _ra15 * 32768
+			VAR _ra17 = _ra12 - _ra16
+			VAR _ra18 = INT(_ra11 / 32768)
+			VAR _ra19 = _ra18 * 32768
+			VAR _ra20 = _ra11 - _ra19
+			VAR _ra21 = INT(_ra18 / 32768)
+			VAR _ra22 = _ra21 * 32768
+			VAR _ra23 = _ra18 - _ra22
+			VAR _ra24 = _ra14 * _ra20
+			VAR _ra25 = 0 + _ra24
+			VAR _ra26 = INT(_ra25 / 32768)
+			VAR _ra27 = _ra26 * 32768
+			VAR _ra28 = _ra25 - _ra27
+			VAR _ra29 = _ra14 * _ra23
+			VAR _ra30 = _ra26 + _ra29
+			VAR _ra31 = _ra17 * _ra20
+			VAR _ra32 = _ra30 + _ra31
+			VAR _ra33 = INT(_ra32 / 32768)
+			VAR _ra34 = _ra33 * 32768
+			VAR _ra35 = _ra32 - _ra34
+			VAR _ra36 = _ra14 * _ra21
+			VAR _ra37 = _ra33 + _ra36
+			VAR _ra38 = _ra17 * _ra23
+			VAR _ra39 = _ra37 + _ra38
+			VAR _ra40 = _ra15 * _ra20
+			VAR _ra41 = _ra39 + _ra40
+			VAR _ra42 = INT(_ra41 / 32768)
+			VAR _ra43 = _ra42 * 32768
+			VAR _ra44 = _ra41 - _ra43
+			VAR _ra45 = _ra17 * _ra21
+			VAR _ra46 = _ra42 + _ra45
+			VAR _ra47 = _ra15 * _ra23
+			VAR _ra48 = _ra46 + _ra47
+			VAR _ra49 = INT(_ra48 / 32768)
+			VAR _ra50 = _ra49 * 32768
+			VAR _ra51 = _ra48 - _ra50
+			VAR _ra52 = _ra15 * _ra21
+			VAR _ra53 = _ra49 + _ra52
+			VAR _ra54 = INT(_ra53 / 32768)
+			VAR _ra55 = _ra54 * 32768
+			VAR _ra56 = _ra53 - _ra55
+			VAR _ra57 = INT(_ra10 / 32768)
+			VAR _ra58 = _ra57 * 32768
+			VAR _ra59 = _ra10 - _ra58
+			VAR _ra60 = INT(_ra57 / 32768)
+			VAR _ra61 = _ra60 * 32768
+			VAR _ra62 = _ra57 - _ra61
+			VAR _ra63 = INT(_ra5 / 32768)
+			VAR _ra64 = _ra63 * 32768
+			VAR _ra65 = _ra5 - _ra64
+			VAR _ra66 = INT(_ra63 / 32768)
+			VAR _ra67 = _ra66 * 32768
+			VAR _ra68 = _ra63 - _ra67
+			VAR _ra69 = _ra59 * _ra65
+			VAR _ra70 = 0 + _ra69
+			VAR _ra71 = INT(_ra70 / 32768)
+			VAR _ra72 = _ra71 * 32768
+			VAR _ra73 = _ra70 - _ra72
+			VAR _ra74 = _ra59 * _ra68
+			VAR _ra75 = _ra71 + _ra74
+			VAR _ra76 = _ra62 * _ra65
+			VAR _ra77 = _ra75 + _ra76
+			VAR _ra78 = INT(_ra77 / 32768)
+			VAR _ra79 = _ra78 * 32768
+			VAR _ra80 = _ra77 - _ra79
+			VAR _ra81 = _ra59 * _ra66
+			VAR _ra82 = _ra78 + _ra81
+			VAR _ra83 = _ra62 * _ra68
+			VAR _ra84 = _ra82 + _ra83
+			VAR _ra85 = _ra60 * _ra65
+			VAR _ra86 = _ra84 + _ra85
+			VAR _ra87 = INT(_ra86 / 32768)
+			VAR _ra88 = _ra87 * 32768
+			VAR _ra89 = _ra86 - _ra88
+			VAR _ra90 = _ra62 * _ra66
+			VAR _ra91 = _ra87 + _ra90
+			VAR _ra92 = _ra60 * _ra68
+			VAR _ra93 = _ra91 + _ra92
+			VAR _ra94 = INT(_ra93 / 32768)
+			VAR _ra95 = _ra94 * 32768
+			VAR _ra96 = _ra93 - _ra95
+			VAR _ra97 = _ra60 * _ra66
+			VAR _ra98 = _ra94 + _ra97
+			VAR _ra99 = INT(_ra98 / 32768)
+			VAR _ra100 = _ra99 * 32768
+			VAR _ra101 = _ra98 - _ra100
+			RETURN IF(_ra3 == _ra9, _ra3 * (IF(_ra54 == _ra99, IF(_ra56 == _ra101, IF(_ra51 == _ra96, IF(_ra44 == _ra89, IF(_ra35 == _ra80, IF(_ra28 == _ra73, 0, IF(_ra28 > _ra73, 1, -1)), IF(_ra35 > _ra80, 1, -1)), IF(_ra44 > _ra89, 1, -1)), IF(_ra51 > _ra96, 1, -1)), IF(_ra56 > _ra101, 1, -1)), IF(_ra54 > _ra99, 1, -1))), IF(_ra3 > _ra9, 1, -1)))
+			        RETURN SWITCH(TRUE(),
+			            [__elevated] > _rightElevated, TRUE(),
+			            [__elevated] < _rightElevated, FALSE(),
+			            _comparison > 0, TRUE(), _comparison < 0, FALSE(),
+			            [__no] > _rightNo, TRUE(), [__no] < _rightNo, FALSE(),
+			            [__complaints] > _rightComplaints)))
+			RETURN IF(COUNTROWS(FILTER(_row, [__eligible] && [__elevated] >= 2)) = 1,
+			    1 + _better, BLANK())
+		formatString: #,##0
+		displayFolder: Review Priorities
+		lineageTag: f572adb1-0f48-46fa-a9ea-8144b8703921
+
+	/// Sensitivity Reason; dynamic selected population; undefined is BLANK.
+	measure 'Sensitivity Reason' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			VAR _sensitivity = IF(HASONEVALUE('Sensitivity Minimum'[Minimum]), SELECTEDVALUE('Sensitivity Minimum'[Minimum]), BLANK())
+			RETURN SWITCH(TRUE(), NOT _single, "Select exactly one review row",
+			        COUNTROWS(_row) <> 1, "Window unavailable in selected ending months",
+			        ISBLANK(_sensitivity), "Unavailable: select exactly one minimum",
+			        NOT MAXX(_row, INT([__complete])), "Incomplete selected calendar months",
+			        NOT MAXX(_row, INT([__era])), "August 2023 boundary or mixed timing eras",
+			        MAXX(_row, [__volume]) < _sensitivity, "Monthly focal or peer volume below minimum",
+			        NOT MAXX(_row, INT([__known])), "Monthly focal or peer known denominator unavailable",
+			        MAXX(_row, [__elevated]) < 2, "Fewer than two elevated months",
+			        "Qualifies: at least two monthly gaps of 1pp; pooled gap is descriptive")
+		formatString: @
+		displayFolder: Sensitivity
+		lineageTag: 645b820e-0027-4a90-890b-05f3eace418e
+
+	/// Sensitivity Result; dynamic selected population; undefined is BLANK.
+	measure 'Sensitivity Result' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100, IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _singlePrune = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _focusKeyPrune = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _identities = SELECTCOLUMNS(CALCULATETABLE('Review Selection', REMOVEFILTERS('Review Selection'), TREATAS({_focusKeyPrune}, 'Review Selection'[Selection Key])),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key], "__product", 'Review Selection'[Product Key],
+			    "__issue", 'Review Selection'[Issue Key], "__end", 'Review Selection'[Window End])
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues && _singlePrune && [__key] == _focusKeyPrune)
+			VAR _statistics = GENERATE(_candidates,
+			    VAR _company = [__company]
+			    VAR _product = [__product]
+			    VAR _issue = [__issue]
+			    VAR _end = [__end]
+			    VAR _start = EDATE(_end, -2)
+			    VAR _months = SELECTCOLUMNS(GENERATESERIES(0, 2), "__month", EDATE(_start, [Value]))
+			    VAR _monthly = GENERATE(_months,
+			        VAR _month = [__month]
+			        VAR _next = EDATE(_month, 1)
+			        VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)
+			        RETURN ROW("__complete", COUNTROWS(_monthDates) = DAY(EOMONTH(_month, 0)),
+			            "__fc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__fn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))),
+			"__pc", CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pk", CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue),
+			"__pn", CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)))
+			    VAR _complete = COUNTROWS(FILTER(_monthly, NOT [__complete])) = 0
+			    VAR _era = _end < DATE(2023,8,1) || _start >= DATE(2023,9,1)
+			    VAR _known = MINX(_monthly, [__fk]) > 0 && MINX(_monthly, [__pk]) > 0
+			    VAR _volume = MINX(_monthly, MIN([__fc], [__pc]))
+			    VAR _elevated = COUNTROWS(FILTER(_monthly, [__fk] > 0 && [__pk] > 0 &&
+			        100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			    RETURN ROW("__complete", _complete, "__era", _era, "__known", _known,
+			        "__volume", _volume, "__elevated", _elevated,
+			        "__no", SUMX(_monthly, [__fn]), "__knownCount", SUMX(_monthly, [__fk]),
+			        "__peerNo", SUMX(_monthly, [__pn]), "__peerKnown", SUMX(_monthly, [__pk]),
+			        "__complaints", SUMX(_monthly, [__fc])))
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", [__complete] && [__era] && [__known] && NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__complete] && [__era] && [__known] && [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _focusKey = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_evaluated, _single && [__key] == _focusKey)
+			VAR _sensitivity = IF(HASONEVALUE('Sensitivity Minimum'[Minimum]), SELECTEDVALUE('Sensitivity Minimum'[Minimum]), BLANK())
+			RETURN IF(NOT _single || COUNTROWS(_row) <> 1 || ISBLANK(_sensitivity), "Unavailable",
+			        IF(MAXX(_row, INT([__complete] && [__era] && [__known] && [__volume] >= _sensitivity && [__elevated] >= 2)) = 1,
+			        "Qualifies", "Does not qualify"))
+		formatString: @
+		displayFolder: Sensitivity
+		lineageTag: ce9cf7d4-b338-438c-a2a9-21218b45488a
+
+	/// Review Context; dynamic selected population; undefined is BLANK.
+	measure 'Review Context' =
+			VAR _dates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _minimum = [Selected Review Minimum]
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _endCount = COUNTROWS(_ends)
+			VAR _allEndCount = CALCULATE(COUNTROWS('Review Window'), REMOVEFILTERS('Review Window'))
+			VAR _endingText = IF(_endCount = _allEndCount, "all " & FORMAT(_endCount, "0"),
+			    CONCATENATEX(_ends, FORMAT('Review Window'[Window End], "yyyy-MM"), ", ", 'Review Window'[Window End], ASC))
+			RETURN "Received " & FORMAT(MINX(_dates, 'Date'[Date]), "yyyy-MM-dd") & " to " &
+			    FORMAT(MAXX(_dates, 'Date'[Date]), "yyyy-MM-dd") & "; minimum " &
+			    IF(ISBLANK(_minimum), "unavailable: select one minimum", FORMAT(_minimum, "0")) &
+			    "; ending months: " & _endingText &
+			    "; 3 complete same-era months; August 2023 excluded; at least 2 monthly gaps >=1pp. Pooled gap is descriptive."
+		formatString: @
+		displayFolder: Review Priorities
+		lineageTag: 7941df3b-a920-4fd6-9078-7f940d588f6b
+
+	/// Focused Monthly Complaint Count; dynamic selected population; undefined is BLANK.
+	measure 'Focused Monthly Complaint Count' =
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _company = SELECTEDVALUE('Review Selection'[Company Key])
+			VAR _product = SELECTEDVALUE('Review Selection'[Product Key])
+			VAR _issue = SELECTEDVALUE('Review Selection'[Issue Key])
+			VAR _end = SELECTEDVALUE('Review Selection'[Window End])
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _month = SELECTEDVALUE('Date'[Month Start])
+			VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < EDATE(_month, 1))
+			VAR _visible = _single && NOT ISBLANK(_month) && _month >= EDATE(_end, -2) && _month <= _end
+			RETURN IF(_visible, CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))), BLANK())
+		formatString: #,##0
+		displayFolder: Focused Evidence
+		lineageTag: edb65c6d-d2a6-4160-a330-b7d70c3512c7
+
+	/// Focused Monthly No Count; dynamic selected population; undefined is BLANK.
+	measure 'Focused Monthly No Count' =
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _company = SELECTEDVALUE('Review Selection'[Company Key])
+			VAR _product = SELECTEDVALUE('Review Selection'[Product Key])
+			VAR _issue = SELECTEDVALUE('Review Selection'[Issue Key])
+			VAR _end = SELECTEDVALUE('Review Selection'[Window End])
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _month = SELECTEDVALUE('Date'[Month Start])
+			VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < EDATE(_month, 1))
+			VAR _visible = _single && NOT ISBLANK(_month) && _month >= EDATE(_end, -2) && _month <= _end
+			RETURN IF(_visible, CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))), BLANK())
+		formatString: #,##0
+		displayFolder: Focused Evidence
+		lineageTag: cfac4be8-cd9b-4776-8117-9cd18c78f40e
+
+	/// Focused Monthly Known Count; dynamic selected population; undefined is BLANK.
+	measure 'Focused Monthly Known Count' =
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _company = SELECTEDVALUE('Review Selection'[Company Key])
+			VAR _product = SELECTEDVALUE('Review Selection'[Product Key])
+			VAR _issue = SELECTEDVALUE('Review Selection'[Issue Key])
+			VAR _end = SELECTEDVALUE('Review Selection'[Window End])
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _month = SELECTEDVALUE('Date'[Month Start])
+			VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < EDATE(_month, 1))
+			VAR _visible = _single && NOT ISBLANK(_month) && _month >= EDATE(_end, -2) && _month <= _end
+			RETURN IF(_visible, CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))), BLANK())
+		formatString: #,##0
+		displayFolder: Focused Evidence
+		lineageTag: 7e68f97b-413a-42ed-a6c6-ca9c5a091835
+
+	/// Focused Monthly Peer No Count; dynamic selected population; undefined is BLANK.
+	measure 'Focused Monthly Peer No Count' =
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _company = SELECTEDVALUE('Review Selection'[Company Key])
+			VAR _product = SELECTEDVALUE('Review Selection'[Product Key])
+			VAR _issue = SELECTEDVALUE('Review Selection'[Issue Key])
+			VAR _end = SELECTEDVALUE('Review Selection'[Window End])
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _month = SELECTEDVALUE('Date'[Month Start])
+			VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < EDATE(_month, 1))
+			VAR _visible = _single && NOT ISBLANK(_month) && _month >= EDATE(_end, -2) && _month <= _end
+			RETURN IF(_visible, CALCULATE([Untimely No Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue), BLANK())
+		formatString: #,##0
+		displayFolder: Focused Evidence
+		lineageTag: 45285546-bd6f-4aa8-9c77-31b2446292e7
+
+	/// Focused Monthly Peer Known Count; dynamic selected population; undefined is BLANK.
+	measure 'Focused Monthly Peer Known Count' =
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _company = SELECTEDVALUE('Review Selection'[Company Key])
+			VAR _product = SELECTEDVALUE('Review Selection'[Product Key])
+			VAR _issue = SELECTEDVALUE('Review Selection'[Issue Key])
+			VAR _end = SELECTEDVALUE('Review Selection'[Window End])
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _month = SELECTEDVALUE('Date'[Month Start])
+			VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < EDATE(_month, 1))
+			VAR _visible = _single && NOT ISBLANK(_month) && _month >= EDATE(_end, -2) && _month <= _end
+			RETURN IF(_visible, CALCULATE([Known Flag Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue), BLANK())
+		formatString: #,##0
+		displayFolder: Focused Evidence
+		lineageTag: fc05691a-90b0-4965-9a8f-2d44072741be
+
+	/// Focused Monthly Untimely Share; dynamic selected population; undefined is BLANK.
+	measure 'Focused Monthly Untimely Share' =
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _company = SELECTEDVALUE('Review Selection'[Company Key])
+			VAR _product = SELECTEDVALUE('Review Selection'[Product Key])
+			VAR _issue = SELECTEDVALUE('Review Selection'[Issue Key])
+			VAR _end = SELECTEDVALUE('Review Selection'[Window End])
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _month = SELECTEDVALUE('Date'[Month Start])
+			VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < EDATE(_month, 1))
+			VAR _visible = _single && NOT ISBLANK(_month) && _month >= EDATE(_end, -2) && _month <= _end
+			RETURN IF(_visible, CALCULATE([Untimely Share], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key]))), BLANK())
+		formatString: 0.00%
+		displayFolder: Focused Evidence
+		lineageTag: e1df444f-ecca-498a-ad8c-6786e9582928
+
+	/// Focused Monthly Peer Untimely Share; dynamic selected population; undefined is BLANK.
+	measure 'Focused Monthly Peer Untimely Share' =
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _company = SELECTEDVALUE('Review Selection'[Company Key])
+			VAR _product = SELECTEDVALUE('Review Selection'[Product Key])
+			VAR _issue = SELECTEDVALUE('Review Selection'[Issue Key])
+			VAR _end = SELECTEDVALUE('Review Selection'[Window End])
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _month = SELECTEDVALUE('Date'[Month Start])
+			VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < EDATE(_month, 1))
+			VAR _visible = _single && NOT ISBLANK(_month) && _month >= EDATE(_end, -2) && _month <= _end
+			RETURN IF(_visible, CALCULATE([Untimely Share], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue), BLANK())
+		formatString: 0.00%
+		displayFolder: Focused Evidence
+		lineageTag: 9fa0ecaf-469e-4469-bfd6-90b17c8429a5
+
+	/// Focused Monthly Issue Share; dynamic selected population; undefined is BLANK.
+	measure 'Focused Monthly Issue Share' =
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _company = SELECTEDVALUE('Review Selection'[Company Key])
+			VAR _product = SELECTEDVALUE('Review Selection'[Product Key])
+			VAR _issue = SELECTEDVALUE('Review Selection'[Issue Key])
+			VAR _end = SELECTEDVALUE('Review Selection'[Window End])
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _month = SELECTEDVALUE('Date'[Month Start])
+			VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < EDATE(_month, 1))
+			VAR _visible = _single && NOT ISBLANK(_month) && _month >= EDATE(_end, -2) && _month <= _end
+			VAR _focal = CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key])))
+			VAR _peer = CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)
+			RETURN IF(_visible, DIVIDE(_focal, _focal + _peer), BLANK())
+		formatString: 0.00%
+		displayFolder: Focused Evidence
+		lineageTag: 7ed9dc7c-860b-43f5-bf44-42749aeabbdd
+
+	/// Issue Share Change pp; dynamic selected population; undefined is BLANK.
+	measure 'Issue Share Change pp' =
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _company = SELECTEDVALUE('Review Selection'[Company Key])
+			VAR _product = SELECTEDVALUE('Review Selection'[Product Key])
+			VAR _issue = SELECTEDVALUE('Review Selection'[Issue Key])
+			VAR _end = SELECTEDVALUE('Review Selection'[Window End])
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _month = SELECTEDVALUE('Date'[Month Start])
+			VAR _monthDates = FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < EDATE(_month, 1))
+			VAR _visible = _single && NOT ISBLANK(_month) && _month >= EDATE(_end, -2) && _month <= _end
+			VAR _prior = EDATE(_month, -1)
+			VAR _priorDates = FILTER(_selectedDates, 'Date'[Date] >= _prior && 'Date'[Date] < _month)
+			VAR _sameEra = _month < DATE(2023,8,1) || _prior >= DATE(2023,9,1)
+			VAR _currentFocal = CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key])))
+			VAR _currentPeer = CALCULATE([Complaint Count], REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'), TREATAS(_monthDates, 'Date'[Date]), KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'), 'Issue'[Issue Key] <> _issue)
+			VAR _priorFocal = CALCULATE([Complaint Count], REMOVEFILTERS('Date'), TREATAS(_priorDates, 'Date'[Date]),
+			    KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])),
+			    KEEPFILTERS(TREATAS({_issue}, 'Issue'[Issue Key])))
+			VAR _priorTotal = CALCULATE([Complaint Count], REMOVEFILTERS('Date'), TREATAS(_priorDates, 'Date'[Date]),
+			    KEEPFILTERS(TREATAS({_company}, 'Company'[Company Key])), KEEPFILTERS(TREATAS({_product}, 'Product'[Product Key])), REMOVEFILTERS('Issue'))
+			RETURN IF(_visible && _sameEra && COUNTROWS(_monthDates) = DAY(EOMONTH(_month,0)) &&
+			    COUNTROWS(_priorDates) = DAY(EOMONTH(_prior,0)) && _currentFocal + _currentPeer > 0 && _priorTotal > 0,
+			    100 * (DIVIDE(_currentFocal, _currentFocal + _currentPeer) - DIVIDE(_priorFocal, _priorTotal)), BLANK())
+		formatString: 0.00
+		displayFolder: Focused Evidence
+		lineageTag: 83959a38-08b6-4372-bc94-38ebb52cc206
+
+	/// Qualifying queue display of Elevated Months; BLANK outside qualifying windows. Use the original diagnostic measure for rejected-window audits.
+	measure 'Queue Elevated Months' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _key = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_qualified, _single && [__key] == _key)
+			RETURN MAXX(_row, [__elevated])
+		formatString: #,##0
+		displayFolder: Queue Display
+		lineageTag: 090f0a0c-c0e5-437b-a25f-6e7b5211463f
+
+	/// Qualifying queue display of Window No Count; BLANK outside qualifying windows. Use the original diagnostic measure for rejected-window audits.
+	measure 'Queue Window No Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _key = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_qualified, _single && [__key] == _key)
+			RETURN MAXX(_row, [__no])
+		formatString: #,##0
+		displayFolder: Queue Display
+		lineageTag: 5157bfa2-484c-4c16-957b-be4f17282a0d
+
+	/// Qualifying queue display of Window Known Count; BLANK outside qualifying windows. Use the original diagnostic measure for rejected-window audits.
+	measure 'Queue Window Known Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _key = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_qualified, _single && [__key] == _key)
+			RETURN MAXX(_row, [__knownCount])
+		formatString: #,##0
+		displayFolder: Queue Display
+		lineageTag: 820b3f45-77e2-406b-8959-b6824f6270ea
+
+	/// Qualifying queue display of Window Peer No Count; BLANK outside qualifying windows. Use the original diagnostic measure for rejected-window audits.
+	measure 'Queue Window Peer No Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _key = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_qualified, _single && [__key] == _key)
+			RETURN MAXX(_row, [__peerNo])
+		formatString: #,##0
+		displayFolder: Queue Display
+		lineageTag: 7b686a33-4e52-4687-aa6f-1c431064ce5e
+
+	/// Qualifying queue display of Window Peer Known Count; BLANK outside qualifying windows. Use the original diagnostic measure for rejected-window audits.
+	measure 'Queue Window Peer Known Count' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _key = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_qualified, _single && [__key] == _key)
+			RETURN MAXX(_row, [__peerKnown])
+		formatString: #,##0
+		displayFolder: Queue Display
+		lineageTag: 6613c5ab-84a2-43f1-af8a-0d780e42eaa6
+
+	/// Qualifying queue display of Pooled Gap pp; BLANK outside qualifying windows. Use the original diagnostic measure for rejected-window audits.
+	measure 'Queue Pooled Gap pp' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _key = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_qualified, _single && [__key] == _key)
+			RETURN IF(COUNTROWS(_row) = 1,
+			        100 * (DIVIDE(MAXX(_row, [__no]), MAXX(_row, [__knownCount])) -
+			            DIVIDE(MAXX(_row, [__peerNo]), MAXX(_row, [__peerKnown]))), BLANK())
+		formatString: 0.00
+		displayFolder: Queue Display
+		lineageTag: ceef66e0-63a9-4156-9ccd-3c1e35518748
+
+	/// Qualifying queue display of Passing Minima; BLANK outside qualifying windows. Use the original diagnostic measure for rejected-window audits.
+	measure 'Queue Passing Minima' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _key = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_qualified, _single && [__key] == _key)
+			RETURN IF(COUNTROWS(_row) = 1,
+			        VAR _volume = MAXX(_row, [__volume])
+			        RETURN CONCATENATEX(FILTER({50,100,200}, [Value] <= _volume), [Value], "/", [Value], ASC), BLANK())
+		formatString: @
+		displayFolder: Queue Display
+		lineageTag: eb03972d-cf42-4094-9fda-03ec692301d6
+
+	/// Qualifying queue display of Review Reason; BLANK outside qualifying windows. Use the original diagnostic measure for rejected-window audits.
+	measure 'Queue Review Reason' =
+			VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))
+			VAR _monthCounts = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Date'[Month Start], "__selectedDays", COUNTROWS('Date')),
+			    REMOVEFILTERS('Date'), TREATAS(_selectedDates, 'Date'[Date]))
+			VAR _completeMonths = SELECTCOLUMNS(FILTER(_monthCounts,
+			    'Date'[Month Start] <> DATE(2023,8,1) &&
+			    [__selectedDays] = DAY(EOMONTH('Date'[Month Start], 0))),
+			    "__completeMonth", 'Date'[Month Start])
+			VAR _ends = VALUES('Review Window'[Window End])
+			VAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,
+			    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))
+			VAR _companies = VALUES('Company'[Company Key])
+			VAR _products = VALUES('Product'[Product Key])
+			VAR _issues = VALUES('Issue'[Issue Key])
+			VAR _identities = SELECTCOLUMNS(ALL('Review Selection'),
+			    "__key", 'Review Selection'[Selection Key], "__segment", 'Review Selection'[Segment Key],
+			    "__company", 'Review Selection'[Company Key] + 0,
+			    "__product", 'Review Selection'[Product Key] + 0,
+			    "__issue", 'Review Selection'[Issue Key] + 0,
+			    "__end", EDATE('Review Selection'[Window End], 0))
+			VAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&
+			    [__product] IN _products && [__issue] IN _issues)
+			VAR _grouped = CALCULATETABLE(
+			    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],
+			        'Issue'[Issue Key], 'Date'[Month Start],
+			        "__fc", SUM('Complaint Cohorts'[Complaint Rows]),
+			        "__fk", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),
+			        "__fn", SUM('Complaint Cohorts'[No Rows]),
+			        "__tc", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),
+			        "__tk", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),
+			        "__tn", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),
+			    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),
+			    TREATAS(_completeMonths, 'Date'[Month Start]))
+			VAR _withPeers = ADDCOLUMNS(_grouped,
+			    "__pc", [__tc] - [__fc], "__pk", [__tk] - [__fk], "__pn", [__tn] - [__fn])
+			VAR _sparse = FILTER(_withPeers,
+			    [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)
+			VAR _monthly = ADDCOLUMNS(_sparse, "__elevated",
+			    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))
+			VAR _shift0 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 0),
+			    "__m0fc", [__fc],
+			    "__m0fk", [__fk],
+			    "__m0fn", [__fn],
+			    "__m0pc", [__pc],
+			    "__m0pk", [__pk],
+			    "__m0pn", [__pn],
+			    "__m0elevated", [__elevated])
+			VAR _shift1 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 1),
+			    "__m1fc", [__fc],
+			    "__m1fk", [__fk],
+			    "__m1fn", [__fn],
+			    "__m1pc", [__pc],
+			    "__m1pk", [__pk],
+			    "__m1pn", [__pn],
+			    "__m1elevated", [__elevated])
+			VAR _shift2 = SELECTCOLUMNS(_monthly, "__company", 'Company'[Company Key] + 0,
+			    "__product", 'Product'[Product Key] + 0,
+			    "__issue", 'Issue'[Issue Key] + 0,
+			    "__end", EDATE('Date'[Month Start], 2),
+			    "__m2fc", [__fc],
+			    "__m2fk", [__fk],
+			    "__m2fn", [__fn],
+			    "__m2pc", [__pc],
+			    "__m2pk", [__pk],
+			    "__m2pn", [__pn],
+			    "__m2elevated", [__elevated])
+			VAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)
+			VAR _joined = NATURALINNERJOIN(_candidates, _windows)
+			VAR _statistics = ADDCOLUMNS(_joined,
+			    "__complete", TRUE(), "__era", TRUE(), "__known", TRUE(),
+			    "__volume", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), "__elevated", [__m0elevated] + [__m1elevated] + [__m2elevated],
+			    "__no", [__m0fn] + [__m1fn] + [__m2fn], "__knownCount", [__m0fk] + [__m1fk] + [__m2fk],
+			    "__peerNo", [__m0pn] + [__m1pn] + [__m2pn], "__peerKnown", [__m0pk] + [__m1pk] + [__m2pk],
+			    "__complaints", [__m0fc] + [__m1fc] + [__m2fc])
+			VAR _evaluated = ADDCOLUMNS(_statistics,
+			    "__eligible", NOT ISBLANK(_minimum) && [__volume] >= _minimum,
+			    "__stable", [__volume] >= 200 && [__elevated] >= 2)
+			VAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)
+			VAR _single = HASONEVALUE('Review Selection'[Selection Key])
+			VAR _key = SELECTEDVALUE('Review Selection'[Selection Key])
+			VAR _row = FILTER(_qualified, _single && [__key] == _key)
+			RETURN IF(COUNTROWS(_row) = 1,
+			        "Qualifies: at least two monthly gaps of 1pp; pooled gap is descriptive", BLANK())
+		formatString: @
+		displayFolder: Queue Display
+		lineageTag: 8aa1d5a5-4ba8-4cb0-9355-c2cf44d42390
+
+	/// Imported received_date; preserves projection identity and meaning.
+	column 'Received Date'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-MM-dd
+		lineageTag: cc45e31f-a8b6-4354-ac18-a9e50236e76a
+		summarizeBy: none
+		sourceColumn: received_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Imported company_key; preserves projection identity and meaning.
+	column 'Company Key'
+		dataType: int64
+		isHidden
+		lineageTag: 3c1da425-c438-4039-9428-a8fd6fdb1676
+		summarizeBy: none
+		sourceColumn: company_key
+
+	/// Imported product_key; preserves projection identity and meaning.
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		lineageTag: db9c5849-13ca-4472-966f-66ae34f21145
+		summarizeBy: none
+		sourceColumn: product_key
+
+	/// Imported issue_key; preserves projection identity and meaning.
+	column 'Issue Key'
+		dataType: int64
+		isHidden
+		lineageTag: c3a9db94-8470-49df-a893-fc21be02bdcb
+		summarizeBy: none
+		sourceColumn: issue_key
+
+	/// Imported geography_key; preserves projection identity and meaning.
+	column 'Geography Key'
+		dataType: int64
+		isHidden
+		lineageTag: c620144b-1101-4a93-b08f-450ed4463ba9
+		summarizeBy: none
+		sourceColumn: geography_key
+
+	/// Imported routing_status; preserves projection identity and meaning.
+	column 'Routing Status'
+		dataType: string
+		isHidden
+		lineageTag: e52b241b-8ba1-4792-b45f-9cc14d78f1c9
+		summarizeBy: none
+		sourceColumn: routing_status
+
+	/// Imported routing_days; preserves projection identity and meaning.
+	column 'Routing Days'
+		dataType: int64
+		isHidden
+		lineageTag: 9323cd85-7e8f-4115-930d-f87e6f4fd129
+		summarizeBy: none
+		sourceColumn: routing_days
+
+	/// Imported complaint_rows; preserves projection identity and meaning.
+	column 'Complaint Rows'
+		dataType: int64
+		isHidden
+		lineageTag: 208290dd-1154-4dff-b6cd-48bc54d9c86b
+		summarizeBy: none
+		sourceColumn: complaint_rows
+
+	/// Imported yes_rows; preserves projection identity and meaning.
+	column 'Yes Rows'
+		dataType: int64
+		isHidden
+		lineageTag: 8f9cb559-4af9-4e38-be8d-1fe41d8b0a1b
+		summarizeBy: none
+		sourceColumn: yes_rows
+
+	/// Imported no_rows; preserves projection identity and meaning.
+	column 'No Rows'
+		dataType: int64
+		isHidden
+		lineageTag: 95a7f852-4843-4d67-8fce-0726a181cc5c
+		summarizeBy: none
+		sourceColumn: no_rows
+
+	/// Imported unknown_rows; preserves projection identity and meaning.
+	column 'Unknown Rows'
+		dataType: int64
+		isHidden
+		lineageTag: 0ba58c94-a02a-41c2-be20-422bc887f4ef
+		summarizeBy: none
+		sourceColumn: unknown_rows
+
+	partition 'Complaint Cohorts' = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(#"Source Folder" & "/complaint_cohorts.parquet")),
+				    Typed = Table.TransformColumnTypes(Source, {{"received_date", type date}, {"company_key", Int64.Type}, {"product_key", Int64.Type}, {"issue_key", Int64.Type}, {"geography_key", Int64.Type}, {"routing_status", type text}, {"routing_days", Int64.Type}, {"complaint_rows", Int64.Type}, {"yes_rows", Int64.Type}, {"no_rows", Int64.Type}, {"unknown_rows", Int64.Type}})
+				in
+				    Typed
+

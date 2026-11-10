@@ -1,0 +1,48 @@
+{
+  "status": "baseline_repair_render_reviewed",
+  "reviewed_at_utc": "2026-10-23T17:00:45.961Z",
+  "freshness": "Owner confirmed reopening latest F1 without saving over authored files; queue rows visible; screenshots match sparse queue bindings and manifest",
+  "report_definition_files_checked": 36,
+  "checks": {
+    "overview_data_rows": true,
+    "precise_kpi_denominators_visible": true,
+    "priority_cards_1873_36_13_5": true,
+    "flat_queue_with_company_product_issue_rows": true,
+    "no_loading_spinner_or_error_in_final_baseline": true,
+    "context_text_visible": true,
+    "all_minimum_options_visible": true,
+    "sensitivity_total_removed": true,
+    "no_focus_instruction_expected": true
+  },
+  "previews": [
+    {
+      "path": "projects\\f1-complaint-response-reliability\\reports\\previews\\f1-response-overview-2026-10-23.png",
+      "sha256": "fe4ff996f14da01d2015749bc0ba2b1434c69bb0745d1436a145909814b96bab"
+    },
+    {
+      "path": "projects\\f1-complaint-response-reliability\\reports\\previews\\f1-review-priorities-2026-10-23.png",
+      "sha256": "9baae1a75adf30fca338fa7fa89e654bc85d1dd6eb38a71728090457739ef601"
+    }
+  ],
+  "limits": [
+    "Long product labels may still truncate in the narrow overview bar chart; full raw labels remain in the model and audit output.",
+    "Supporting queue fields require horizontal scrolling; no-focus evidence remains blank until one row is selected.",
+    "Focused and California rendered states plus actual interaction acceptance remain pending.",
+    "Full refresh invocation outcome was unspecified; clean-folder refresh remains pending.",
+    "The overview product bars retain Desktop's blue fallback instead of the intended navy; final palette polish remains open."
+  ],
+  "gate_d_signoff": "not_granted",
+  "temporary_capture_cleanup": "complete",
+  "data_acceptance": {
+    "path": "outputs/native_queue_acceptance_results.json",
+    "operations": 49,
+    "compared_fields": 2194,
+    "ready_measures": 53
+  },
+  "tests": {
+    "python": 110,
+    "optimized_python": 110,
+    "wsl_node": 21,
+    "windows_node_with_wsl_python": 21
+  }
+}

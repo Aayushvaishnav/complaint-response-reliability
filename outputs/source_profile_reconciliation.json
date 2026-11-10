@@ -1,0 +1,51 @@
+{
+  "checked_at_utc": "2026-10-23T05:07:51.213792+00:00",
+  "method": "Independent Python csv parsing and integer summation of SQL profile exports",
+  "scopes": {
+    "full": {
+      "profile_totals": {
+        "product_counts": 18590360,
+        "timely_flags": 18590360,
+        "response_categories": 18590360,
+        "monthly_counts": 18590360
+      },
+      "profile_totals_reconcile": true,
+      "year_counts": {
+        "2011": 2536,
+        "2012": 72368,
+        "2013": 108214,
+        "2014": 152908,
+        "2015": 168272,
+        "2016": 191292,
+        "2017": 242745,
+        "2018": 257130,
+        "2019": 277239,
+        "2020": 444212,
+        "2021": 495940,
+        "2022": 800245,
+        "2023": 1292048,
+        "2024": 2734268,
+        "2025": 5442941,
+        "2026": 5908002
+      },
+      "month_count": 179
+    },
+    "scoped": {
+      "profile_totals": {
+        "product_counts": 9469257,
+        "timely_flags": 9469257,
+        "response_categories": 9469257,
+        "monthly_counts": 9469257
+      },
+      "profile_totals_reconcile": true,
+      "year_counts": {
+        "2023": 1292048,
+        "2024": 2734268,
+        "2025": 5442941
+      },
+      "month_count": 36,
+      "all_36_expected_months_present": true
+    }
+  },
+  "main_source_report_counts_match": true
+}

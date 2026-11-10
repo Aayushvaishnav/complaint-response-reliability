@@ -1,0 +1,376 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-23T12:20:47.373990+00:00",
+  "model_dax_rendering_acceptance": "not_performed",
+  "source_sha256": {
+    "data/processed/complaints_typed.parquet": "6868323834e311a1000fdb0768348c36fd86c9fe1a0c9650aee85f3511405646",
+    "config/review_rule.json": "4ee113188aba8d565676dae03d471c43bcfe1fc0019bd07e2018f9c344fba764",
+    "sql/longitudinal_contract.sql": "a9c2f9e1fd912ca07444c2bcdf1ad259710c9d2c8da269d4503f79f1235b311e",
+    "scripts/review_contract.py": "f62ee712225ed24dd7bdd7a6b5b8c0d6c4e00c01d179484749121836b4996887",
+    "outputs/typed_preparation_validation.json": "9e9826d7492a8afd8d774242699f3e2dddd780f988d4ab828cdcf924e5166d36",
+    "config/source.json": "6e11ae997297c8e3277650ca4edf92d6f59c2cb1bdfe485bce96c04d66abc40d"
+  },
+  "source_counts": {
+    "complaint_rows": 9469257,
+    "yes_rows": 9431474,
+    "no_rows": 37783,
+    "unknown_rows": 0
+  },
+  "projected_counts": {
+    "complaint_rows": 9469257,
+    "yes_rows": 9431474,
+    "no_rows": 37783,
+    "unknown_rows": 0
+  },
+  "reconstruction_difference_rows": 0,
+  "selection_difference_rows": 0,
+  "dimension_checks": {
+    "company": {
+      "rows": 5150,
+      "unique_keys": 5150,
+      "raw_identities": 5150
+    },
+    "product": {
+      "rows": 14,
+      "unique_keys": 14,
+      "raw_identities": 14
+    },
+    "issue": {
+      "rows": 94,
+      "unique_keys": 94,
+      "raw_identities": 94
+    },
+    "geography": {
+      "rows": 63,
+      "unique_keys": 63,
+      "raw_identities": 63
+    }
+  },
+  "cohort_groups": 1883868,
+  "overview_checks": {
+    "all": {
+      "complaint_rows": 9469257,
+      "median_routing_days": 0.0
+    },
+    "2023": {
+      "complaint_rows": 1292048,
+      "median_routing_days": 0.0
+    },
+    "Debt collection": {
+      "complaint_rows": 507204,
+      "median_routing_days": 0.0
+    },
+    "CA": {
+      "complaint_rows": 906980,
+      "median_routing_days": 0.0
+    }
+  },
+  "exports": {
+    "complaint_cohorts": {
+      "path": "data/processed/model-input/complaint_cohorts.parquet",
+      "sha256": "6032da525772bd2fc0f8479d8e909e6c759f4f9f2f53850e36c37a27b66552ec",
+      "rows": 1883868,
+      "schema": [
+        {
+          "name": "received_date",
+          "type": "DATE"
+        },
+        {
+          "name": "company_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "product_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "issue_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "geography_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "routing_status",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "routing_days",
+          "type": "BIGINT"
+        },
+        {
+          "name": "complaint_rows",
+          "type": "BIGINT"
+        },
+        {
+          "name": "yes_rows",
+          "type": "BIGINT"
+        },
+        {
+          "name": "no_rows",
+          "type": "BIGINT"
+        },
+        {
+          "name": "unknown_rows",
+          "type": "BIGINT"
+        }
+      ]
+    },
+    "date": {
+      "path": "data/processed/model-input/date.parquet",
+      "sha256": "7f819eb62cba433143a43c6cb270ccb2e709feb7ca9282f064814a8edad1feaf",
+      "rows": 1096,
+      "schema": [
+        {
+          "name": "date",
+          "type": "DATE"
+        },
+        {
+          "name": "year",
+          "type": "INTEGER"
+        },
+        {
+          "name": "month_start",
+          "type": "DATE"
+        },
+        {
+          "name": "month_label",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "month_order",
+          "type": "INTEGER"
+        },
+        {
+          "name": "timing_era",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "boundary_month",
+          "type": "BOOLEAN"
+        }
+      ]
+    },
+    "company": {
+      "path": "data/processed/model-input/company.parquet",
+      "sha256": "7556faa01c6881e5d3791ccac0ff3abc68aeb8bc192a4c3f46dcaba32b1234bb",
+      "rows": 5150,
+      "schema": [
+        {
+          "name": "company_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "raw_value",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "is_missing",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "missingness",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "display_label",
+          "type": "VARCHAR"
+        }
+      ]
+    },
+    "product": {
+      "path": "data/processed/model-input/product.parquet",
+      "sha256": "4e43ebff8d6cb9acf40ff71c67d7f46fe6c688f24e0626665169a9fe3957a7d1",
+      "rows": 14,
+      "schema": [
+        {
+          "name": "product_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "raw_value",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "is_missing",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "missingness",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "display_label",
+          "type": "VARCHAR"
+        }
+      ]
+    },
+    "issue": {
+      "path": "data/processed/model-input/issue.parquet",
+      "sha256": "0170f06d7bdbd8d3959bc934c4b0861c521fc82caed531334ab23847d10e4f21",
+      "rows": 94,
+      "schema": [
+        {
+          "name": "issue_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "raw_value",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "is_missing",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "missingness",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "display_label",
+          "type": "VARCHAR"
+        }
+      ]
+    },
+    "geography": {
+      "path": "data/processed/model-input/geography.parquet",
+      "sha256": "d736a842c2f5b82b1ebd354cc3acd3d100a8ae4c0c9ed4eacc74e10cab7abb73",
+      "rows": 63,
+      "schema": [
+        {
+          "name": "geography_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "raw_value",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "is_missing",
+          "type": "BOOLEAN"
+        },
+        {
+          "name": "missingness",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "display_label",
+          "type": "VARCHAR"
+        }
+      ]
+    },
+    "review_minimum": {
+      "path": "data/processed/model-input/review_minimum.parquet",
+      "sha256": "8892f58d1156ee3099b4d7ef154a80ed212a1f633495b51617b012e4291c79dc",
+      "rows": 3,
+      "schema": [
+        {
+          "name": "minimum",
+          "type": "BIGINT"
+        }
+      ]
+    },
+    "sensitivity_minimum": {
+      "path": "data/processed/model-input/sensitivity_minimum.parquet",
+      "sha256": "8892f58d1156ee3099b4d7ef154a80ed212a1f633495b51617b012e4291c79dc",
+      "rows": 3,
+      "schema": [
+        {
+          "name": "minimum",
+          "type": "BIGINT"
+        }
+      ]
+    },
+    "review_window": {
+      "path": "data/processed/model-input/review_window.parquet",
+      "sha256": "aa6d83471e4a414c1d3725052c346892c4b75172915a5b58dfaf5736a9d4fa9d",
+      "rows": 36,
+      "schema": [
+        {
+          "name": "window_end",
+          "type": "DATE"
+        },
+        {
+          "name": "window_label",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "month_order",
+          "type": "INTEGER"
+        }
+      ]
+    },
+    "review_selection": {
+      "path": "data/processed/model-input/review_selection.parquet",
+      "sha256": "5a368807252ec062437419e97c4a494b02ff53cced939dccc2ce1bd65cec1aed",
+      "rows": 233427,
+      "schema": [
+        {
+          "name": "selection_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "segment_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "company_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "product_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "issue_key",
+          "type": "BIGINT"
+        },
+        {
+          "name": "window_end",
+          "type": "DATE"
+        },
+        {
+          "name": "company_raw",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "product_raw",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "issue_raw",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "company",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "product",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "issue",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "company_missingness",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "product_missingness",
+          "type": "VARCHAR"
+        },
+        {
+          "name": "issue_missingness",
+          "type": "VARCHAR"
+        }
+      ]
+    }
+  },
+  "implementation_sha256": {
+    "scripts/export_import_projection.py": "f1b743d0e3545c889797476b81185d93c5f32011917977a0cf75224d2db1edaf",
+    "sql/import_projection.sql": "155aa8d23985821be3e460aa0d88b1e86450218a8e9e271ced489695c263cec1"
+  }
+}

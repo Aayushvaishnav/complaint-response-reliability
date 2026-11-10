@@ -1,0 +1,46 @@
+✔ exactly the approved pages and every visual stays within its canvas without overlaps (2.434157ms)
+✔ shared slicers have matching native sync groups and hidden identity projections (0.366894ms)
+✔ row focus reaches only evidence and sensitivity, preserving headline universe (0.303195ms)
+✔ bindings match the source model contract instead of an offline export (88.721122ms)
+✔ build is deterministic and defaults to the approved minimum (10.813913ms)
+✔ KPI units are unscaled, labels concise and automatic subtitles disabled (0.381301ms)
+✔ context and independent checks use native wrapping text with no totals (0.237543ms)
+✔ comparison palette and product axis retain readable identities (0.20887ms)
+✖ single-series charts use an unselected default color (2.290991ms)
+✔ priority queue is flat, retains all bindings and excludes hierarchy operations (0.501054ms)
+✔ paired KPIs reserve full-width vertical rows for exact denominator counts (0.200103ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 275.622917
+
+✖ failing tests:
+
+test at projects/f1-complaint-response-reliability/tests/test_build_report.test.cjs:103:1
+✖ single-series charts use an unselected default color (2.290991ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + {
+  +   metadata: 'Complaint Cohorts.Timely Response Rate'
+  + }
+  - undefined
+  
+      at TestContext.<anonymous> (/mnt/c/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/tests/test_build_report.test.cjs:107:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { metadata: 'Complaint Cohorts.Timely Response Rate' },
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,39 @@
+/// Disconnected potential ending months; does not filter received dates.
+table 'Review Window'
+	lineageTag: 55583e48-9feb-445b-8101-ec13bf3f3ec9
+
+	/// Imported window_end; preserves projection identity and meaning.
+	column 'Window End'
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		lineageTag: 4509890f-3d19-4fb8-92fa-110588fecbc8
+		summarizeBy: none
+		sourceColumn: window_end
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Imported window_label; preserves projection identity and meaning.
+	column 'Window Label'
+		dataType: string
+		lineageTag: 4c9704e4-c4e5-42f9-a9c6-58879e8cba64
+		summarizeBy: none
+		sourceColumn: window_label
+		sortByColumn: 'Month Order'
+
+	/// Imported month_order; preserves projection identity and meaning.
+	column 'Month Order'
+		dataType: int64
+		isHidden
+		lineageTag: 2bd82682-e10b-46bc-823d-0131f1d4c2a2
+		summarizeBy: none
+		sourceColumn: month_order
+
+	partition 'Review Window' = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(#"Source Folder" & "/review_window.parquet")),
+				    Typed = Table.TransformColumnTypes(Source, {{"window_end", type date}, {"window_label", type text}, {"month_order", Int64.Type}})
+				in
+				    Typed
+

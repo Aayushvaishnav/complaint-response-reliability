@@ -1,0 +1,55 @@
+/// One raw source identity; SQL null, empty and literal labels have distinct keys.
+table Product
+	lineageTag: d3efaa28-7d24-4d31-a9d1-5ec558f87ae0
+
+	/// Imported product_key; preserves projection identity and meaning.
+	column 'Product Key'
+		dataType: int64
+		isHidden
+		lineageTag: c2f4eb5e-2d32-4cf6-818e-34eaace68c0f
+		summarizeBy: none
+		sourceColumn: product_key
+
+	/// Imported raw_value; preserves projection identity and meaning.
+	column 'Raw Value'
+		dataType: string
+		isHidden
+		lineageTag: 7acc5343-c885-4c90-9bf3-85fc31443c11
+		summarizeBy: none
+		sourceColumn: raw_value
+
+	/// Imported is_missing; preserves projection identity and meaning.
+	column 'Is Missing'
+		dataType: boolean
+		isHidden
+		lineageTag: 5c5dab40-bcf3-43d1-a9f9-94d3eabdf2bd
+		summarizeBy: none
+		sourceColumn: is_missing
+
+	/// Imported missingness; preserves projection identity and meaning.
+	column Missingness
+		dataType: string
+		isHidden
+		lineageTag: 90267395-ad91-48a2-aac3-c8165d1c14ef
+		summarizeBy: none
+		sourceColumn: missingness
+
+	/// Display label grouped by integer identity; VertiPaq may normalize case; SQL raw preservation is authoritative and identities must not merge.
+	column Product
+		dataType: string
+		lineageTag: 77347d41-b37a-4a9c-95b1-6a4d85893b19
+		summarizeBy: none
+		sourceColumn: display_label
+
+		relatedColumnDetails
+			groupByColumn: 'Product Key'
+
+	partition Product = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(#"Source Folder" & "/product.parquet")),
+				    Typed = Table.TransformColumnTypes(Source, {{"product_key", Int64.Type}, {"raw_value", type text}, {"is_missing", type logical}, {"missingness", type text}, {"display_label", type text}})
+				in
+				    Typed
+

@@ -1,0 +1,30 @@
+✔ CLI requires the installed platform-specific MCP entry instead of launching an unverified wrapper (91.75722ms)
+✔ MCP request IDs preserve concurrent responses and propagate RPC errors (76.567124ms)
+✔ offline build exports through MCP and records validation limits (83.893816ms)
+✔ MCP application error prevents export and persists failure evidence (81.676801ms)
+✔ batch item failure stops the build even when the MCP transport succeeds (81.355956ms)
+✔ existing model export is preserved instead of overwritten (0.919972ms)
+✔ exactly the approved pages and every visual stays within its canvas without overlaps (2.372256ms)
+✔ shared slicers have matching native sync groups and hidden identity projections (0.34932ms)
+✔ row focus reaches only evidence and sensitivity, preserving headline universe (0.285412ms)
+✔ bindings match the source model contract instead of an offline export (83.907674ms)
+✔ build is deterministic and defaults to the approved minimum (15.942462ms)
+✔ KPI units are unscaled, labels concise and automatic subtitles disabled (0.38677ms)
+✔ context and independent checks use native wrapping text with no totals (0.369457ms)
+✔ comparison palette and product axis retain readable identities (0.174555ms)
+✔ single-series charts use an unselected default color (0.296462ms)
+✔ priority queue is flat, retains all bindings and excludes hierarchy operations (0.582495ms)
+✔ paired KPIs reserve full-width vertical rows for exact denominator counts (0.212716ms)
+✔ reads text, embedded resource and structured MCP payloads (2.102154ms)
+✔ operation and batch failures cannot pass acceptance (0.398572ms)
+✔ successful mutating operations may acknowledge without content; require readback separately (0.164556ms)
+✔ reconciliation rejects count drift, truncated output and undefined rates converted to zero (0.33837ms)
+✔ queue parity compares identity sets and rejects duplicated or missing keys (0.389244ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 573.945787

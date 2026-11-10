@@ -1,0 +1,127 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-23T15:36:32.680Z",
+  "operations": [
+    {
+      "id": "connect-live",
+      "tool": "connection_operations",
+      "operation": "Connect",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"Connection \\u0027PBIDesktop-F1-64458\\u0027 established successfully\",\"operation\":\"Connect\",\"data\":\"PBIDesktop-F1-64458\"}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "connection_operations.connect",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "Connection 'PBIDesktop-F1-64458' established successfully",
+          "operation": "Connect",
+          "data": "PBIDesktop-F1-64458"
+        }
+      ],
+      "duration_ms": 503.7470999999998
+    },
+    {
+      "id": "optimized-eligible",
+      "tool": "dax_query_operations",
+      "operation": "Execute",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"executionMetrics\":{\"calculatedExecutionMetrics\":{\"totalDuration\":1426,\"totalCpuTime\":1422,\"queryStartDateTime\":\"2026-10-23T21:06:34.243333+05:30\",\"queryEndDateTime\":\"2026-10-23T21:06:35.67+05:30\",\"storageEngineDuration\":143,\"storageEngineNetParallelDuration\":144,\"storageEngineCpuTime\":141,\"storageEngineQueryCount\":12,\"vertipaqCacheMatches\":6,\"formulaEngineDuration\":1283,\"totalDirectQueryDuration\":0,\"totalDirectQueryCount\":0,\"activityId\":\"8B5B48FA-544D-4DAE-8166-C39F818188C6\",\"queryText\":\"DEFINE MEASURE \\u0027Complaint Cohorts\\u0027[Eligible Window Count] = VAR _selectedDates = CALCULATETABLE(VALUES(\\u0027Date\\u0027[Date]), ALLSELECTED(\\u0027Date\\u0027))\\nVAR _ends = VALUES(\\u0027Review Window\\u0027[Window End])\\nVAR _minimum = IF(NOT ISFILTERED(\\u0027Review Minimum\\u0027), 100,\\n    IF(HASONEVALUE(\\u0027Review Minimum\\u0027[Minimum]), SELECTEDVALUE(\\u0027Review Minimum\\u0027[Minimum]), BLANK()))\\nVAR _companies = VALUES(\\u0027Company\\u0027[Company Key])\\nVAR _products = VALUES(\\u0027Product\\u0027[Product Key])\\nVAR _issues = VALUES(\\u0027Issue\\u0027[Issue Key])\\nVAR _identities = SELECTCOLUMNS(ALL(\\u0027Review Selection\\u0027),\\n    \\u0022__key\\u0022, \\u0027Review Selection\\u0027[Selection Key], \\u0022__segment\\u0022, \\u0027Review Selection\\u0027[Segment Key],\\n    \\u0022__company\\u0022, \\u0027Review Selection\\u0027[Company Key] \\u002B 0,\\n    \\u0022__product\\u0022, \\u0027Review Selection\\u0027[Product Key] \\u002B 0,\\n    \\u0022__issue\\u0022, \\u0027Review Selection\\u0027[Issue Key] \\u002B 0,\\n    \\u0022__end\\u0022, EDATE(\\u0027Review Selection\\u0027[Window End], 0))\\nVAR _candidates = FILTER(_identities, [__end] IN _ends \\u0026\\u0026 [__company] IN _companies \\u0026\\u0026\\n    [__product] IN _products \\u0026\\u0026 [__issue] IN _issues)\\nVAR _grouped = CALCULATETABLE(\\n    SUMMARIZECOLUMNS(\\u0027Company\\u0027[Company Key], \\u0027Product\\u0027[Product Key],\\n        \\u0027Issue\\u0027[Issue Key], \\u0027Date\\u0027[Month Start],\\n        \\u0022__fc\\u0022, SUM(\\u0027Complaint Cohorts\\u0027[Complaint Rows]),\\n        \\u0022__fk\\u0022, SUM(\\u0027Complaint Cohorts\\u0027[Yes Rows]) \\u002B SUM(\\u0027Complaint Cohorts\\u0027[No Rows]),\\n        \\u0022__fn\\u0022, SUM(\\u0027Complaint Cohorts\\u0027[No Rows]),\\n        \\u0022__tc\\u0022, IGNORE(CALCULATE(SUM(\\u0027Complaint Cohorts\\u0027[Complaint Rows]), REMOVEFILTERS(\\u0027Issue\\u0027))),\\n        \\u0022__tk\\u0022, IGNORE(CALCULATE(SUM(\\u0027Complaint Cohorts\\u0027[Yes Rows]) \\u002B SUM(\\u0027Complaint Cohorts\\u0027[No Rows]), REMOVEFILTERS(\\u0027Issue\\u0027))),\\n        \\u0022__tn\\u0022, IGNORE(CALCULATE(SUM(\\u0027Complaint Cohorts\\u0027[No Rows]), REMOVEFILTERS(\\u0027Issue\\u0027)))),\\n    REMOVEFILTERS(\\u0027Review Selection\\u0027), REMOVEFILTERS(\\u0027Date\\u0027),\\n    TREATAS(_selectedDates, \\u0027Date\\u0027[Date]))\\nVAR _withPeers = ADDCOLUMNS(_grouped,\\n    \\u0022__pc\\u0022, [__tc] - [__fc], \\u0022__pk\\u0022, [__tk] - [__fk], \\u0022__pn\\u0022, [__tn] - [__fn])\\nVAR _sparse = FILTER(_withPeers,\\n    VAR _month = \\u0027Date\\u0027[Month Start]\\n    VAR _next = EDATE(_month, 1)\\n    RETURN _month \\u003C\\u003E DATE(2023,8,1) \\u0026\\u0026\\n        COUNTROWS(FILTER(_selectedDates, \\u0027Date\\u0027[Date] \\u003E= _month \\u0026\\u0026 \\u0027Date\\u0027[Date] \\u003C _next)) = DAY(EOMONTH(_month,0)) \\u0026\\u0026\\n        [__fc] \\u003E= 50 \\u0026\\u0026 [__pc] \\u003E= 50 \\u0026\\u0026 [__fk] \\u003E 0 \\u0026\\u0026 [__pk] \\u003E 0)\\nVAR _monthly = ADDCOLUMNS(_sparse, \\u0022__elevated\\u0022,\\n    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) \\u003E= [__fk] * [__pk]))\\nVAR _shift0 = SELECTCOLUMNS(_monthly, \\u0022__company\\u0022, \\u0027Company\\u0027[Company Key] \\u002B 0,\\n    \\u0022__product\\u0022, \\u0027Product\\u0027[Product Key] \\u002B 0,\\n    \\u0022__issue\\u0022, \\u0027Issue\\u0027[Issue Key] \\u002B 0,\\n    \\u0022__end\\u0022, EDATE(\\u0027Date\\u0027[Month Start], 0),\\n    \\u0022__m0fc\\u0022, [__fc],\\n    \\u0022__m0fk\\u0022, [__fk],\\n    \\u0022__m0fn\\u0022, [__fn],\\n    \\u0022__m0pc\\u0022, [__pc],\\n    \\u0022__m0pk\\u0022, [__pk],\\n    \\u0022__m0pn\\u0022, [__pn],\\n    \\u0022__m0elevated\\u0022, [__elevated])\\nVAR _shift1 = SELECTCOLUMNS(_monthly, \\u0022__company\\u0022, \\u0027Company\\u0027[Company Key] \\u002B 0,\\n    \\u0022__product\\u0022, \\u0027Product\\u0027[Product Key] \\u002B 0,\\n    \\u0022__issue\\u0022, \\u0027Issue\\u0027[Issue Key] \\u002B 0,\\n    \\u0022__end\\u0022, EDATE(\\u0027Date\\u0027[Month Start], 1),\\n    \\u0022__m1fc\\u0022, [__fc],\\n    \\u0022__m1fk\\u0022, [__fk],\\n    \\u0022__m1fn\\u0022, [__fn],\\n    \\u0022__m1pc\\u0022, [__pc],\\n    \\u0022__m1pk\\u0022, [__pk],\\n    \\u0022__m1pn\\u0022, [__pn],\\n    \\u0022__m1elevated\\u0022, [__elevated])\\nVAR _shift2 = SELECTCOLUMNS(_monthly, \\u0022__company\\u0022, \\u0027Company\\u0027[Company Key] \\u002B 0,\\n    \\u0022__product\\u0022, \\u0027Product\\u0027[Product Key] \\u002B 0,\\n    \\u0022__issue\\u0022, \\u0027Issue\\u0027[Issue Key] \\u002B 0,\\n    \\u0022__end\\u0022, EDATE(\\u0027Date\\u0027[Month Start], 2),\\n    \\u0022__m2fc\\u0022, [__fc],\\n    \\u0022__m2fk\\u0022, [__fk],\\n    \\u0022__m2fn\\u0022, [__fn],\\n    \\u0022__m2pc\\u0022, [__pc],\\n    \\u0022__m2pk\\u0022, [__pk],\\n    \\u0022__m2pn\\u0022, [__pn],\\n    \\u0022__m2elevated\\u0022, [__elevated])\\nVAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)\\nVAR _joined = NATURALINNERJOIN(_candidates, _windows)\\nVAR _statistics = ADDCOLUMNS(_joined,\\n    \\u0022__complete\\u0022, TRUE(), \\u0022__era\\u0022, TRUE(), \\u0022__known\\u0022, TRUE(),\\n    \\u0022__volume\\u0022, MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), \\u0022__elevated\\u0022, [__m0elevated] \\u002B [__m1elevated] \\u002B [__m2elevated],\\n    \\u0022__no\\u0022, [__m0fn] \\u002B [__m1fn] \\u002B [__m2fn], \\u0022__knownCount\\u0022, [__m0fk] \\u002B [__m1fk] \\u002B [__m2fk],\\n    \\u0022__peerNo\\u0022, [__m0pn] \\u002B [__m1pn] \\u002B [__m2pn], \\u0022__peerKnown\\u0022, [__m0pk] \\u002B [__m1pk] \\u002B [__m2pk],\\n    \\u0022__complaints\\u0022, [__m0fc] \\u002B [__m1fc] \\u002B [__m2fc])\\nVAR _evaluated = ADDCOLUMNS(_statistics,\\n    \\u0022__eligible\\u0022, NOT ISBLANK(_minimum) \\u0026\\u0026 [__volume] \\u003E= _minimum,\\n    \\u0022__stable\\u0022, [__volume] \\u003E= 200 \\u0026\\u0026 [__elevated] \\u003E= 2)\\nVAR _qualified = FILTER(_evaluated, [__eligible] \\u0026\\u0026 [__elevated] \\u003E= 2)\\nRETURN IF(NOT ISBLANK(_minimum), COALESCE(COUNTROWS(FILTER(_evaluated, [__eligible])),0),BLANK())\\nEVALUATE ROW(\\u0022eligible\\u0022, [Eligible Window Count])\",\"parallelStorageEngineEventsDetected\":false,\"totalCpuFactor\":0.9971949509116409,\"storageEngineCpuFactor\":0.986013986013986,\"storageEngineDurationPercentage\":10.098176718092567,\"formulaEngineDurationPercentage\":89.97194950911641,\"vertipaqCacheMatchesPercentage\":50},\"reportedExecutionMetrics\":{\"activityId\":\"8B5B48FA-544D-4DAE-8166-C39F818188C6\",\"requestId\":\"F8C8B186-50C8-4620-B048-4D74CB6CB1A9\",\"timeStart\":\"2026-10-23T21:06:34.242+05:30\",\"timeEnd\":\"2026-10-23T21:06:35.671+05:30\",\"durationMs\":1428,\"vertipaqJobCpuTimeMs\":141,\"queryProcessingCpuTimeMs\":1281,\"totalCpuTimeMs\":1422,\"executionDelayMs\":0,\"approximatePeakMemConsumptionKB\":140420,\"commandType\":\"Statement\",\"queryDialect\":\"3\",\"queryResultRows\":1}},\"message\":\"DAX query executed successfully, returned 1 rows in 1448ms\",\"operation\":\"Execute\",\"data\":{\"rowCount\":1,\"isTruncated\":false,\"columns\":[{\"name\":\"[eligible]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":0}],\"rows\":[{\"[eligible]\":1873}],\"executionTimeMs\":1448}}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "dax_query_operations.execute",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "executionMetrics": {
+            "calculatedExecutionMetrics": {
+              "totalDuration": 1426,
+              "totalCpuTime": 1422,
+              "queryStartDateTime": "2026-10-23T21:06:34.243333+05:30",
+              "queryEndDateTime": "2026-10-23T21:06:35.67+05:30",
+              "storageEngineDuration": 143,
+              "storageEngineNetParallelDuration": 144,
+              "storageEngineCpuTime": 141,
+              "storageEngineQueryCount": 12,
+              "vertipaqCacheMatches": 6,
+              "formulaEngineDuration": 1283,
+              "totalDirectQueryDuration": 0,
+              "totalDirectQueryCount": 0,
+              "activityId": "8B5B48FA-544D-4DAE-8166-C39F818188C6",
+              "queryText": "DEFINE MEASURE 'Complaint Cohorts'[Eligible Window Count] = VAR _selectedDates = CALCULATETABLE(VALUES('Date'[Date]), ALLSELECTED('Date'))\nVAR _ends = VALUES('Review Window'[Window End])\nVAR _minimum = IF(NOT ISFILTERED('Review Minimum'), 100,\n    IF(HASONEVALUE('Review Minimum'[Minimum]), SELECTEDVALUE('Review Minimum'[Minimum]), BLANK()))\nVAR _companies = VALUES('Company'[Company Key])\nVAR _products = VALUES('Product'[Product Key])\nVAR _issues = VALUES('Issue'[Issue Key])\nVAR _identities = SELECTCOLUMNS(ALL('Review Selection'),\n    \"__key\", 'Review Selection'[Selection Key], \"__segment\", 'Review Selection'[Segment Key],\n    \"__company\", 'Review Selection'[Company Key] + 0,\n    \"__product\", 'Review Selection'[Product Key] + 0,\n    \"__issue\", 'Review Selection'[Issue Key] + 0,\n    \"__end\", EDATE('Review Selection'[Window End], 0))\nVAR _candidates = FILTER(_identities, [__end] IN _ends && [__company] IN _companies &&\n    [__product] IN _products && [__issue] IN _issues)\nVAR _grouped = CALCULATETABLE(\n    SUMMARIZECOLUMNS('Company'[Company Key], 'Product'[Product Key],\n        'Issue'[Issue Key], 'Date'[Month Start],\n        \"__fc\", SUM('Complaint Cohorts'[Complaint Rows]),\n        \"__fk\", SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]),\n        \"__fn\", SUM('Complaint Cohorts'[No Rows]),\n        \"__tc\", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]), REMOVEFILTERS('Issue'))),\n        \"__tk\", IGNORE(CALCULATE(SUM('Complaint Cohorts'[Yes Rows]) + SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue'))),\n        \"__tn\", IGNORE(CALCULATE(SUM('Complaint Cohorts'[No Rows]), REMOVEFILTERS('Issue')))),\n    REMOVEFILTERS('Review Selection'), REMOVEFILTERS('Date'),\n    TREATAS(_selectedDates, 'Date'[Date]))\nVAR _withPeers = ADDCOLUMNS(_grouped,\n    \"__pc\", [__tc] - [__fc], \"__pk\", [__tk] - [__fk], \"__pn\", [__tn] - [__fn])\nVAR _sparse = FILTER(_withPeers,\n    VAR _month = 'Date'[Month Start]\n    VAR _next = EDATE(_month, 1)\n    RETURN _month <> DATE(2023,8,1) &&\n        COUNTROWS(FILTER(_selectedDates, 'Date'[Date] >= _month && 'Date'[Date] < _next)) = DAY(EOMONTH(_month,0)) &&\n        [__fc] >= 50 && [__pc] >= 50 && [__fk] > 0 && [__pk] > 0)\nVAR _monthly = ADDCOLUMNS(_sparse, \"__elevated\",\n    INT(100 * ([__fn] * [__pk] - [__pn] * [__fk]) >= [__fk] * [__pk]))\nVAR _shift0 = SELECTCOLUMNS(_monthly, \"__company\", 'Company'[Company Key] + 0,\n    \"__product\", 'Product'[Product Key] + 0,\n    \"__issue\", 'Issue'[Issue Key] + 0,\n    \"__end\", EDATE('Date'[Month Start], 0),\n    \"__m0fc\", [__fc],\n    \"__m0fk\", [__fk],\n    \"__m0fn\", [__fn],\n    \"__m0pc\", [__pc],\n    \"__m0pk\", [__pk],\n    \"__m0pn\", [__pn],\n    \"__m0elevated\", [__elevated])\nVAR _shift1 = SELECTCOLUMNS(_monthly, \"__company\", 'Company'[Company Key] + 0,\n    \"__product\", 'Product'[Product Key] + 0,\n    \"__issue\", 'Issue'[Issue Key] + 0,\n    \"__end\", EDATE('Date'[Month Start], 1),\n    \"__m1fc\", [__fc],\n    \"__m1fk\", [__fk],\n    \"__m1fn\", [__fn],\n    \"__m1pc\", [__pc],\n    \"__m1pk\", [__pk],\n    \"__m1pn\", [__pn],\n    \"__m1elevated\", [__elevated])\nVAR _shift2 = SELECTCOLUMNS(_monthly, \"__company\", 'Company'[Company Key] + 0,\n    \"__product\", 'Product'[Product Key] + 0,\n    \"__issue\", 'Issue'[Issue Key] + 0,\n    \"__end\", EDATE('Date'[Month Start], 2),\n    \"__m2fc\", [__fc],\n    \"__m2fk\", [__fk],\n    \"__m2fn\", [__fn],\n    \"__m2pc\", [__pc],\n    \"__m2pk\", [__pk],\n    \"__m2pn\", [__pn],\n    \"__m2elevated\", [__elevated])\nVAR _windows = NATURALINNERJOIN(NATURALINNERJOIN(_shift0, _shift1), _shift2)\nVAR _joined = NATURALINNERJOIN(_candidates, _windows)\nVAR _statistics = ADDCOLUMNS(_joined,\n    \"__complete\", TRUE(), \"__era\", TRUE(), \"__known\", TRUE(),\n    \"__volume\", MIN(MIN([__m0fc], [__m0pc]), MIN(MIN([__m1fc], [__m1pc]), MIN([__m2fc], [__m2pc]))), \"__elevated\", [__m0elevated] + [__m1elevated] + [__m2elevated],\n    \"__no\", [__m0fn] + [__m1fn] + [__m2fn], \"__knownCount\", [__m0fk] + [__m1fk] + [__m2fk],\n    \"__peerNo\", [__m0pn] + [__m1pn] + [__m2pn], \"__peerKnown\", [__m0pk] + [__m1pk] + [__m2pk],\n    \"__complaints\", [__m0fc] + [__m1fc] + [__m2fc])\nVAR _evaluated = ADDCOLUMNS(_statistics,\n    \"__eligible\", NOT ISBLANK(_minimum) && [__volume] >= _minimum,\n    \"__stable\", [__volume] >= 200 && [__elevated] >= 2)\nVAR _qualified = FILTER(_evaluated, [__eligible] && [__elevated] >= 2)\nRETURN IF(NOT ISBLANK(_minimum), COALESCE(COUNTROWS(FILTER(_evaluated, [__eligible])),0),BLANK())\nEVALUATE ROW(\"eligible\", [Eligible Window Count])",
+              "parallelStorageEngineEventsDetected": false,
+              "totalCpuFactor": 0.9971949509116409,
+              "storageEngineCpuFactor": 0.986013986013986,
+              "storageEngineDurationPercentage": 10.098176718092567,
+              "formulaEngineDurationPercentage": 89.97194950911641,
+              "vertipaqCacheMatchesPercentage": 50
+            },
+            "reportedExecutionMetrics": {
+              "activityId": "8B5B48FA-544D-4DAE-8166-C39F818188C6",
+              "requestId": "F8C8B186-50C8-4620-B048-4D74CB6CB1A9",
+              "timeStart": "2026-10-23T21:06:34.242+05:30",
+              "timeEnd": "2026-10-23T21:06:35.671+05:30",
+              "durationMs": 1428,
+              "vertipaqJobCpuTimeMs": 141,
+              "queryProcessingCpuTimeMs": 1281,
+              "totalCpuTimeMs": 1422,
+              "executionDelayMs": 0,
+              "approximatePeakMemConsumptionKB": 140420,
+              "commandType": "Statement",
+              "queryDialect": "3",
+              "queryResultRows": 1
+            }
+          },
+          "message": "DAX query executed successfully, returned 1 rows in 1448ms",
+          "operation": "Execute",
+          "data": {
+            "rowCount": 1,
+            "isTruncated": false,
+            "columns": [
+              {
+                "name": "[eligible]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 0
+              }
+            ],
+            "rows": [
+              {
+                "[eligible]": 1873
+              }
+            ],
+            "executionTimeMs": 1448
+          }
+        }
+      ],
+      "duration_ms": 2196.5343000000003
+    }
+  ],
+  "server": {
+    "name": "powerbi-authoring-local",
+    "title": "Power BI Authoring MCP Server (Local)",
+    "version": "1.0.0",
+    "description": "Author Power BI semantic models in Power BI Desktop, Microsoft Fabric workspaces, and local PBIP and TMDL files."
+  },
+  "finished_at_utc": "2026-10-23T15:36:36.371Z"
+}

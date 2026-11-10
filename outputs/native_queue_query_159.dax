@@ -1,0 +1,91 @@
+DEFINE
+	VAR __DS0FilterTable = 
+		TREATAS({100}, 'Review Minimum'[Minimum])
+
+	VAR __ValueFilterDM0 = 
+		FILTER(
+			KEEPFILTERS(
+				SUMMARIZECOLUMNS(
+					'Review Selection'[Window End],
+					'Review Selection'[Company Key],
+					'Review Selection'[Product Key],
+					'Review Selection'[Issue Key],
+					'Review Selection'[Selection Key],
+					'Review Selection'[Company],
+					'Review Selection'[Product],
+					'Review Selection'[Issue],
+					__DS0FilterTable,
+					"Priority_Rank", 'Complaint Cohorts'[Priority Rank],
+					"Elevated_Months", 'Complaint Cohorts'[Elevated Months],
+					"Window_No_Count", 'Complaint Cohorts'[Window No Count],
+					"Window_Known_Count", 'Complaint Cohorts'[Window Known Count],
+					"Window_Peer_No_Count", 'Complaint Cohorts'[Window Peer No Count],
+					"Window_Peer_Known_Count", 'Complaint Cohorts'[Window Peer Known Count],
+					"Pooled_Gap_pp", 'Complaint Cohorts'[Pooled Gap pp],
+					"Passing_Minima", 'Complaint Cohorts'[Passing Minima],
+					"Review_Reason", 'Complaint Cohorts'[Review Reason]
+				)
+			),
+			[Priority_Rank] > 0
+		)
+
+	VAR __DS0Core = 
+		SUMMARIZECOLUMNS(
+			'Review Selection'[Window End],
+			'Review Selection'[Company Key],
+			'Review Selection'[Product Key],
+			'Review Selection'[Issue Key],
+			'Review Selection'[Selection Key],
+			'Review Selection'[Company],
+			'Review Selection'[Product],
+			'Review Selection'[Issue],
+			__DS0FilterTable,
+			__ValueFilterDM0,
+			"Priority_Rank", 'Complaint Cohorts'[Priority Rank],
+			"Elevated_Months", 'Complaint Cohorts'[Elevated Months],
+			"Window_No_Count", 'Complaint Cohorts'[Window No Count],
+			"Window_Known_Count", 'Complaint Cohorts'[Window Known Count],
+			"Window_Peer_No_Count", 'Complaint Cohorts'[Window Peer No Count],
+			"Window_Peer_Known_Count", 'Complaint Cohorts'[Window Peer Known Count],
+			"Pooled_Gap_pp", 'Complaint Cohorts'[Pooled Gap pp],
+			"Passing_Minima", 'Complaint Cohorts'[Passing Minima],
+			"Review_Reason", 'Complaint Cohorts'[Review Reason]
+		)
+
+	VAR __DS0PrimaryWindowed = 
+		TOPN(
+			501,
+			__DS0Core,
+			'Review Selection'[Window End],
+			1,
+			[Priority_Rank],
+			1,
+			'Review Selection'[Company],
+			1,
+			'Review Selection'[Company Key],
+			1,
+			'Review Selection'[Product],
+			1,
+			'Review Selection'[Product Key],
+			1,
+			'Review Selection'[Issue],
+			1,
+			'Review Selection'[Issue Key],
+			1,
+			'Review Selection'[Selection Key],
+			1
+		)
+
+EVALUATE
+	__DS0PrimaryWindowed
+
+ORDER BY
+	'Review Selection'[Window End],
+	[Priority_Rank],
+	'Review Selection'[Company],
+	'Review Selection'[Company Key],
+	'Review Selection'[Product],
+	'Review Selection'[Product Key],
+	'Review Selection'[Issue],
+	'Review Selection'[Issue Key],
+	'Review Selection'[Selection Key]

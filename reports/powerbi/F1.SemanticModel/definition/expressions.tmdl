@@ -1,0 +1,6 @@
+/// Single local folder containing validated Parquet projections.
+expression 'Source Folder' = "C:/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/data/processed/model-input" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 91ffeab8-0e1f-4bd3-aafe-fcd43f39a358
+
+	annotation PBI_ResultType = Text
+

@@ -1,0 +1,33 @@
+test_duplicate_source_ids_are_rejected (test_feasibility_sample.FeasibilitySampleTests.test_duplicate_source_ids_are_rejected) ... ok
+test_empty_cohort_has_zero_counts_and_blank_rates (test_feasibility_sample.FeasibilitySampleTests.test_empty_cohort_has_zero_counts_and_blank_rates) ... ok
+test_even_and_odd_routing_medians (test_feasibility_sample.FeasibilitySampleTests.test_even_and_odd_routing_medians) ... ok
+test_invalid_sent_date_retains_complaint_and_timeliness (test_feasibility_sample.FeasibilitySampleTests.test_invalid_sent_date_retains_complaint_and_timeliness) ... ok
+test_lowest_text_ids_and_month_product_flag_coverage (test_feasibility_sample.FeasibilitySampleTests.test_lowest_text_ids_and_month_product_flag_coverage) ... ok
+test_nonpositive_or_noninteger_sample_limits_are_rejected (test_feasibility_sample.FeasibilitySampleTests.test_nonpositive_or_noninteger_sample_limits_are_rejected) ... ok
+test_out_of_scope_only_source_has_no_feasibility_sample (test_feasibility_sample.FeasibilitySampleTests.test_out_of_scope_only_source_has_no_feasibility_sample) ... ok
+test_received_date_boundaries (test_feasibility_sample.FeasibilitySampleTests.test_received_date_boundaries) ... ok
+test_response_category_does_not_replace_timely_flag (test_feasibility_sample.FeasibilitySampleTests.test_response_category_does_not_replace_timely_flag) ... ok
+test_sample_rebuild_keeps_identity (test_feasibility_sample.FeasibilitySampleTests.test_sample_rebuild_keeps_identity) ... ok
+test_selection_is_independent_of_input_order (test_feasibility_sample.FeasibilitySampleTests.test_selection_is_independent_of_input_order) ... ok
+test_unknown_flags_and_invalid_lags_are_preserved_and_reconciled (test_feasibility_sample.FeasibilitySampleTests.test_unknown_flags_and_invalid_lags_are_preserved_and_reconciled) ... ok
+test_zero_known_response_denominator_is_blank (test_feasibility_sample.FeasibilitySampleTests.test_zero_known_response_denominator_is_blank) ... ok
+test_executable_header_values_are_rejected (test_source_access.SourceAccessTests.test_executable_header_values_are_rejected) ... ok
+test_extracts_literal_header_without_executing_publisher_code (test_source_access.SourceAccessTests.test_extracts_literal_header_without_executing_publisher_code) ... ok
+test_http_403_is_explicit_evidence_instead_of_success (test_source_access.SourceAccessTests.test_http_403_is_explicit_evidence_instead_of_success) ... ok
+test_missing_or_structurally_different_headers_are_rejected (test_source_access.SourceAccessTests.test_missing_or_structurally_different_headers_are_rejected) ... ok
+test_reviewed_publisher_excerpt_keeps_its_evidence_basis_explicit (test_source_access.SourceAccessTests.test_reviewed_publisher_excerpt_keeps_its_evidence_basis_explicit) ... ok
+test_bom_and_special_text_survive_export (test_validate_source.SourceValidationTests.test_bom_and_special_text_survive_export) ... ok
+test_date_boundaries_unknowns_negative_lags_and_raw_values (test_validate_source.SourceValidationTests.test_date_boundaries_unknowns_negative_lags_and_raw_values) ... ok
+test_different_existing_snapshot_is_preserved (test_validate_source.SourceValidationTests.test_different_existing_snapshot_is_preserved) ... ok
+test_duplicate_ids_block_export_instead_of_silent_deduplication (test_validate_source.SourceValidationTests.test_duplicate_ids_block_export_instead_of_silent_deduplication) ... ok
+test_empty_date_cohort_blocks_export (test_validate_source.SourceValidationTests.test_empty_date_cohort_blocks_export) ... ok
+test_invalid_received_dates_block_export (test_validate_source.SourceValidationTests.test_invalid_received_dates_block_export) ... ok
+test_malformed_records_fail_strict_import (test_validate_source.SourceValidationTests.test_malformed_records_fail_strict_import) ... ok
+test_non_numeric_or_missing_ids_block_export (test_validate_source.SourceValidationTests.test_non_numeric_or_missing_ids_block_export) ... ok
+test_rerun_reconciles_the_same_source (test_validate_source.SourceValidationTests.test_rerun_reconciles_the_same_source) ... ok
+test_schema_drift_is_rejected (test_validate_source.SourceValidationTests.test_schema_drift_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 2.090s
+
+OK

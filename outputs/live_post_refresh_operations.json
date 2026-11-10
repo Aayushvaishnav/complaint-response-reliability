@@ -1,0 +1,237 @@
+{
+  "operations": [
+    {
+      "id": "connect-live",
+      "tool": "connection_operations",
+      "captureConnection": true,
+      "request": {
+        "operation": "Connect",
+        "connectionString": "data source=localhost:64458;Application Name=MCP-PBIModeling"
+      }
+    },
+    {
+      "id": "partition-readback",
+      "tool": "partition_operations",
+      "useConnection": true,
+      "request": {
+        "operation": "List"
+      }
+    },
+    {
+      "id": "measure-states",
+      "tool": "measure_operations",
+      "useConnection": true,
+      "requireReadyMeasures": true,
+      "request": {
+        "operation": "Get",
+        "references": [
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Complaint Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Timely Yes Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Untimely No Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Unknown Flag Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Known Flag Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Timely Response Rate"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Untimely Share"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Unknown Flag Rate"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Valid Routing Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Invalid Routing Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Median Routing Days"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Monthly Issue Share"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Peer Complaint Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Peer Known Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Peer No Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Peer Untimely Share"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Selected Review Minimum"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Eligible Window Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Qualifying Window Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Qualifying Segment Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Stable Window Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Elevated Months"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Window No Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Window Known Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Window Peer No Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Window Peer Known Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Window Complaint Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Window Eligible"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Window Qualifies"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Pooled Gap pp"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Passing Minima"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Review Reason"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Priority Rank"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Sensitivity Reason"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Sensitivity Result"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Review Context"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Focused Monthly Complaint Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Focused Monthly No Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Focused Monthly Known Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Focused Monthly Peer No Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Focused Monthly Peer Known Count"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Focused Monthly Untimely Share"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Focused Monthly Peer Untimely Share"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Focused Monthly Issue Share"
+          },
+          {
+            "tableName": "Complaint Cohorts",
+            "name": "Issue Share Change pp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "post-refresh-count",
+      "tool": "dax_query_operations",
+      "useConnection": true,
+      "expectedRow": {
+        "complaints": 9469257,
+        "no": 37783
+      },
+      "request": {
+        "operation": "Execute",
+        "query": "EVALUATE ROW(\"complaints\",[Complaint Count],\"no\",[Untimely No Count])",
+        "resultMode": "Inline",
+        "timeoutSeconds": 60,
+        "maxRows": 5
+      }
+    },
+    {
+      "id": "export-live",
+      "tool": "database_operations",
+      "useConnection": true,
+      "request": {
+        "operation": "ExportToTmdlFolder",
+        "tmdlFolderPath": "C:/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/reports/powerbi/F1.SemanticModel/definition"
+      }
+    }
+  ]
+}

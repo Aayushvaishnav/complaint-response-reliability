@@ -1,0 +1,811 @@
+{
+  "status": "foundation_only",
+  "tableDefinitions": [
+    {
+      "name": "Complaint Cohorts",
+      "description": "Observed received-day/category/routing-lag bins; counts are frequencies, not complaints per row.",
+      "columns": [
+        {
+          "name": "Received Date",
+          "sourceColumn": "received_date",
+          "dataType": "DateTime",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported received_date; preserves projection identity and meaning.",
+          "formatString": "yyyy-MM-dd"
+        },
+        {
+          "name": "Company Key",
+          "sourceColumn": "company_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported company_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Product Key",
+          "sourceColumn": "product_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported product_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Issue Key",
+          "sourceColumn": "issue_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported issue_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Geography Key",
+          "sourceColumn": "geography_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported geography_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Routing Status",
+          "sourceColumn": "routing_status",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported routing_status; preserves projection identity and meaning."
+        },
+        {
+          "name": "Routing Days",
+          "sourceColumn": "routing_days",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported routing_days; preserves projection identity and meaning."
+        },
+        {
+          "name": "Complaint Rows",
+          "sourceColumn": "complaint_rows",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported complaint_rows; preserves projection identity and meaning."
+        },
+        {
+          "name": "Yes Rows",
+          "sourceColumn": "yes_rows",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported yes_rows; preserves projection identity and meaning."
+        },
+        {
+          "name": "No Rows",
+          "sourceColumn": "no_rows",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported no_rows; preserves projection identity and meaning."
+        },
+        {
+          "name": "Unknown Rows",
+          "sourceColumn": "unknown_rows",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported unknown_rows; preserves projection identity and meaning."
+        }
+      ],
+      "partitionName": "Complaint Cohorts",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/complaint_cohorts.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"received_date\", type date}, {\"company_key\", Int64.Type}, {\"product_key\", Int64.Type}, {\"issue_key\", Int64.Type}, {\"geography_key\", Int64.Type}, {\"routing_status\", type text}, {\"routing_days\", Int64.Type}, {\"complaint_rows\", Int64.Type}, {\"yes_rows\", Int64.Type}, {\"no_rows\", Int64.Type}, {\"unknown_rows\", Int64.Type}})\nin\n    Typed"
+    },
+    {
+      "name": "Date",
+      "description": "Contiguous received-date calendar, 2023 through 2025.",
+      "columns": [
+        {
+          "name": "Date",
+          "sourceColumn": "date",
+          "dataType": "DateTime",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported date; preserves projection identity and meaning.",
+          "formatString": "yyyy-MM-dd"
+        },
+        {
+          "name": "Year",
+          "sourceColumn": "year",
+          "dataType": "Int64",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported year; preserves projection identity and meaning."
+        },
+        {
+          "name": "Month Start",
+          "sourceColumn": "month_start",
+          "dataType": "DateTime",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported month_start; preserves projection identity and meaning.",
+          "formatString": "yyyy-MM-dd"
+        },
+        {
+          "name": "Month Label",
+          "sourceColumn": "month_label",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported month_label; preserves projection identity and meaning.",
+          "sortByColumn": "Month Order"
+        },
+        {
+          "name": "Month Order",
+          "sourceColumn": "month_order",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported month_order; preserves projection identity and meaning."
+        },
+        {
+          "name": "Timing Era",
+          "sourceColumn": "timing_era",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported timing_era; preserves projection identity and meaning."
+        },
+        {
+          "name": "Boundary Month",
+          "sourceColumn": "boundary_month",
+          "dataType": "Boolean",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported boundary_month; preserves projection identity and meaning."
+        }
+      ],
+      "partitionName": "Date",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/date.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"date\", type date}, {\"year\", Int64.Type}, {\"month_start\", type date}, {\"month_label\", type text}, {\"month_order\", Int64.Type}, {\"timing_era\", type text}, {\"boundary_month\", type logical}})\nin\n    Typed",
+      "dataCategory": "Time"
+    },
+    {
+      "name": "Company",
+      "description": "One raw source identity; SQL null, empty and literal labels have distinct keys.",
+      "columns": [
+        {
+          "name": "Company Key",
+          "sourceColumn": "company_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported company_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Raw Value",
+          "sourceColumn": "raw_value",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported raw_value; preserves projection identity and meaning."
+        },
+        {
+          "name": "Is Missing",
+          "sourceColumn": "is_missing",
+          "dataType": "Boolean",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported is_missing; preserves projection identity and meaning."
+        },
+        {
+          "name": "Missingness",
+          "sourceColumn": "missingness",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported missingness; preserves projection identity and meaning."
+        },
+        {
+          "name": "Company",
+          "sourceColumn": "display_label",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Display label grouped by integer identity; VertiPaq may normalize case; SQL raw preservation is authoritative and identities must not merge.",
+          "groupByColumns": [
+            "Company Key"
+          ]
+        }
+      ],
+      "partitionName": "Company",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/company.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"company_key\", Int64.Type}, {\"raw_value\", type text}, {\"is_missing\", type logical}, {\"missingness\", type text}, {\"display_label\", type text}})\nin\n    Typed"
+    },
+    {
+      "name": "Product",
+      "description": "One raw source identity; SQL null, empty and literal labels have distinct keys.",
+      "columns": [
+        {
+          "name": "Product Key",
+          "sourceColumn": "product_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported product_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Raw Value",
+          "sourceColumn": "raw_value",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported raw_value; preserves projection identity and meaning."
+        },
+        {
+          "name": "Is Missing",
+          "sourceColumn": "is_missing",
+          "dataType": "Boolean",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported is_missing; preserves projection identity and meaning."
+        },
+        {
+          "name": "Missingness",
+          "sourceColumn": "missingness",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported missingness; preserves projection identity and meaning."
+        },
+        {
+          "name": "Product",
+          "sourceColumn": "display_label",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Display label grouped by integer identity; VertiPaq may normalize case; SQL raw preservation is authoritative and identities must not merge.",
+          "groupByColumns": [
+            "Product Key"
+          ]
+        }
+      ],
+      "partitionName": "Product",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/product.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"product_key\", Int64.Type}, {\"raw_value\", type text}, {\"is_missing\", type logical}, {\"missingness\", type text}, {\"display_label\", type text}})\nin\n    Typed"
+    },
+    {
+      "name": "Issue",
+      "description": "One raw source identity; SQL null, empty and literal labels have distinct keys.",
+      "columns": [
+        {
+          "name": "Issue Key",
+          "sourceColumn": "issue_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported issue_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Raw Value",
+          "sourceColumn": "raw_value",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported raw_value; preserves projection identity and meaning."
+        },
+        {
+          "name": "Is Missing",
+          "sourceColumn": "is_missing",
+          "dataType": "Boolean",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported is_missing; preserves projection identity and meaning."
+        },
+        {
+          "name": "Missingness",
+          "sourceColumn": "missingness",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported missingness; preserves projection identity and meaning."
+        },
+        {
+          "name": "Issue",
+          "sourceColumn": "display_label",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Display label grouped by integer identity; VertiPaq may normalize case; SQL raw preservation is authoritative and identities must not merge.",
+          "groupByColumns": [
+            "Issue Key"
+          ]
+        }
+      ],
+      "partitionName": "Issue",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/issue.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"issue_key\", Int64.Type}, {\"raw_value\", type text}, {\"is_missing\", type logical}, {\"missingness\", type text}, {\"display_label\", type text}})\nin\n    Typed"
+    },
+    {
+      "name": "Geography",
+      "description": "One raw source identity; SQL null, empty and literal labels have distinct keys.",
+      "columns": [
+        {
+          "name": "Geography Key",
+          "sourceColumn": "geography_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported geography_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Raw Value",
+          "sourceColumn": "raw_value",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported raw_value; preserves projection identity and meaning."
+        },
+        {
+          "name": "Is Missing",
+          "sourceColumn": "is_missing",
+          "dataType": "Boolean",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported is_missing; preserves projection identity and meaning."
+        },
+        {
+          "name": "Missingness",
+          "sourceColumn": "missingness",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported missingness; preserves projection identity and meaning."
+        },
+        {
+          "name": "State",
+          "sourceColumn": "display_label",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Display label grouped by integer identity; VertiPaq may normalize case; SQL raw preservation is authoritative and identities must not merge.",
+          "groupByColumns": [
+            "Geography Key"
+          ],
+          "dataCategory": "StateOrProvince"
+        }
+      ],
+      "partitionName": "Geography",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/geography.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"geography_key\", Int64.Type}, {\"raw_value\", type text}, {\"is_missing\", type logical}, {\"missingness\", type text}, {\"display_label\", type text}})\nin\n    Typed"
+    },
+    {
+      "name": "Review Minimum",
+      "description": "Disconnected analyst minimum choices: 50, 100, 200; foundation has no selection measures.",
+      "columns": [
+        {
+          "name": "Minimum",
+          "sourceColumn": "minimum",
+          "dataType": "Int64",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported minimum; preserves projection identity and meaning."
+        }
+      ],
+      "partitionName": "Review Minimum",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/review_minimum.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"minimum\", Int64.Type}})\nin\n    Typed"
+    },
+    {
+      "name": "Sensitivity Minimum",
+      "description": "Disconnected analyst minimum choices: 50, 100, 200; foundation has no selection measures.",
+      "columns": [
+        {
+          "name": "Minimum",
+          "sourceColumn": "minimum",
+          "dataType": "Int64",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported minimum; preserves projection identity and meaning."
+        }
+      ],
+      "partitionName": "Sensitivity Minimum",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/sensitivity_minimum.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"minimum\", Int64.Type}})\nin\n    Typed"
+    },
+    {
+      "name": "Review Window",
+      "description": "Disconnected potential ending months; does not filter received dates.",
+      "columns": [
+        {
+          "name": "Window End",
+          "sourceColumn": "window_end",
+          "dataType": "DateTime",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported window_end; preserves projection identity and meaning.",
+          "formatString": "yyyy-MM-dd"
+        },
+        {
+          "name": "Window Label",
+          "sourceColumn": "window_label",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported window_label; preserves projection identity and meaning.",
+          "sortByColumn": "Month Order"
+        },
+        {
+          "name": "Month Order",
+          "sourceColumn": "month_order",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported month_order; preserves projection identity and meaning."
+        }
+      ],
+      "partitionName": "Review Window",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/review_window.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"window_end\", type date}, {\"window_label\", type text}, {\"month_order\", Int64.Type}})\nin\n    Typed"
+    },
+    {
+      "name": "Review Selection",
+      "description": "Disconnected observed company/product/issue/month selectors; integer identities never derive from display labels.",
+      "columns": [
+        {
+          "name": "Selection Key",
+          "sourceColumn": "selection_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported selection_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Segment Key",
+          "sourceColumn": "segment_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported segment_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Company Key",
+          "sourceColumn": "company_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported company_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Product Key",
+          "sourceColumn": "product_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported product_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Issue Key",
+          "sourceColumn": "issue_key",
+          "dataType": "Int64",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported issue_key; preserves projection identity and meaning."
+        },
+        {
+          "name": "Window End",
+          "sourceColumn": "window_end",
+          "dataType": "DateTime",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Imported window_end; preserves projection identity and meaning.",
+          "formatString": "yyyy-MM-dd"
+        },
+        {
+          "name": "Company Raw",
+          "sourceColumn": "company_raw",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported company_raw; preserves projection identity and meaning."
+        },
+        {
+          "name": "Company",
+          "sourceColumn": "company",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Selector label grouped by tuple key; case-normalized display is not raw identity.",
+          "groupByColumns": [
+            "Company Key"
+          ]
+        },
+        {
+          "name": "Company Missingness",
+          "sourceColumn": "company_missingness",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported company_missingness; preserves projection identity and meaning."
+        },
+        {
+          "name": "Product Raw",
+          "sourceColumn": "product_raw",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported product_raw; preserves projection identity and meaning."
+        },
+        {
+          "name": "Product",
+          "sourceColumn": "product",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Selector label grouped by tuple key; case-normalized display is not raw identity.",
+          "groupByColumns": [
+            "Product Key"
+          ]
+        },
+        {
+          "name": "Product Missingness",
+          "sourceColumn": "product_missingness",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported product_missingness; preserves projection identity and meaning."
+        },
+        {
+          "name": "Issue Raw",
+          "sourceColumn": "issue_raw",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported issue_raw; preserves projection identity and meaning."
+        },
+        {
+          "name": "Issue",
+          "sourceColumn": "issue",
+          "dataType": "String",
+          "isHidden": false,
+          "summarizeBy": "None",
+          "description": "Selector label grouped by tuple key; case-normalized display is not raw identity.",
+          "groupByColumns": [
+            "Issue Key"
+          ]
+        },
+        {
+          "name": "Issue Missingness",
+          "sourceColumn": "issue_missingness",
+          "dataType": "String",
+          "isHidden": true,
+          "summarizeBy": "None",
+          "description": "Imported issue_missingness; preserves projection identity and meaning."
+        }
+      ],
+      "partitionName": "Review Selection",
+      "mode": "Import",
+      "mExpression": "let\n    Source = Parquet.Document(File.Contents(#\"Source Folder\" & \"/review_selection.parquet\")),\n    Typed = Table.TransformColumnTypes(Source, {{\"selection_key\", Int64.Type}, {\"segment_key\", Int64.Type}, {\"company_key\", Int64.Type}, {\"product_key\", Int64.Type}, {\"issue_key\", Int64.Type}, {\"window_end\", type date}, {\"company_raw\", type text}, {\"company\", type text}, {\"company_missingness\", type text}, {\"product_raw\", type text}, {\"product\", type text}, {\"product_missingness\", type text}, {\"issue_raw\", type text}, {\"issue\", type text}, {\"issue_missingness\", type text}})\nin\n    Typed"
+    }
+  ],
+  "relationshipDefinitions": [
+    {
+      "name": "Complaint Cohorts to Date",
+      "fromTable": "Complaint Cohorts",
+      "fromColumn": "Received Date",
+      "toTable": "Date",
+      "toColumn": "Date",
+      "fromCardinality": "Many",
+      "toCardinality": "One",
+      "crossFilteringBehavior": "OneDirection",
+      "isActive": true
+    },
+    {
+      "name": "Complaint Cohorts to Company",
+      "fromTable": "Complaint Cohorts",
+      "fromColumn": "Company Key",
+      "toTable": "Company",
+      "toColumn": "Company Key",
+      "fromCardinality": "Many",
+      "toCardinality": "One",
+      "crossFilteringBehavior": "OneDirection",
+      "isActive": true
+    },
+    {
+      "name": "Complaint Cohorts to Product",
+      "fromTable": "Complaint Cohorts",
+      "fromColumn": "Product Key",
+      "toTable": "Product",
+      "toColumn": "Product Key",
+      "fromCardinality": "Many",
+      "toCardinality": "One",
+      "crossFilteringBehavior": "OneDirection",
+      "isActive": true
+    },
+    {
+      "name": "Complaint Cohorts to Issue",
+      "fromTable": "Complaint Cohorts",
+      "fromColumn": "Issue Key",
+      "toTable": "Issue",
+      "toColumn": "Issue Key",
+      "fromCardinality": "Many",
+      "toCardinality": "One",
+      "crossFilteringBehavior": "OneDirection",
+      "isActive": true
+    },
+    {
+      "name": "Complaint Cohorts to Geography",
+      "fromTable": "Complaint Cohorts",
+      "fromColumn": "Geography Key",
+      "toTable": "Geography",
+      "toColumn": "Geography Key",
+      "fromCardinality": "Many",
+      "toCardinality": "One",
+      "crossFilteringBehavior": "OneDirection",
+      "isActive": true
+    }
+  ],
+  "measureDefinitions": [
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Complaint Count",
+      "expression": "COALESCE(SUM('Complaint Cohorts'[Complaint Rows]), 0)",
+      "description": "Sum imported complaint frequencies in current context; empty is zero.",
+      "displayFolder": "Counts",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Timely Yes Count",
+      "expression": "COALESCE(SUM('Complaint Cohorts'[Yes Rows]), 0)",
+      "description": "Sum imported complaint frequencies in current context; empty is zero.",
+      "displayFolder": "Counts",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Untimely No Count",
+      "expression": "COALESCE(SUM('Complaint Cohorts'[No Rows]), 0)",
+      "description": "Sum imported complaint frequencies in current context; empty is zero.",
+      "displayFolder": "Counts",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Unknown Flag Count",
+      "expression": "COALESCE(SUM('Complaint Cohorts'[Unknown Rows]), 0)",
+      "description": "Sum imported complaint frequencies in current context; empty is zero.",
+      "displayFolder": "Counts",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Known Flag Count",
+      "expression": "[Timely Yes Count] + [Untimely No Count]",
+      "description": "Exact recorded Yes plus No flags; excludes unknown flags.",
+      "displayFolder": "Counts",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Timely Response Rate",
+      "expression": "DIVIDE([Timely Yes Count], [Known Flag Count])",
+      "description": "Timely Yes Count divided by Known Flag Count; undefined is BLANK.",
+      "displayFolder": "Rates",
+      "formatString": "0.00%",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Untimely Share",
+      "expression": "DIVIDE([Untimely No Count], [Known Flag Count])",
+      "description": "Untimely No Count divided by Known Flag Count; undefined is BLANK.",
+      "displayFolder": "Rates",
+      "formatString": "0.00%",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Unknown Flag Rate",
+      "expression": "DIVIDE([Unknown Flag Count], [Complaint Count])",
+      "description": "Unknown Flag Count divided by Complaint Count; undefined is BLANK.",
+      "displayFolder": "Rates",
+      "formatString": "0.00%",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Valid Routing Count",
+      "expression": "CALCULATE([Complaint Count], KEEPFILTERS('Complaint Cohorts'[Routing Status] = \"valid\"))",
+      "description": "Frequency of nonnegative valid routing lags.",
+      "displayFolder": "Routing",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Invalid Routing Count",
+      "expression": "[Complaint Count] - [Valid Routing Count]",
+      "description": "All complaints minus valid routing frequencies; includes missing and negative lags.",
+      "displayFolder": "Routing",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Median Routing Days",
+      "expression": "VAR _bins =\n    CALCULATETABLE(\n        ADDCOLUMNS(VALUES('Complaint Cohorts'[Routing Days]),\n            \"__frequency\", CALCULATE(SUM('Complaint Cohorts'[Complaint Rows]))),\n        KEEPFILTERS('Complaint Cohorts'[Routing Status] = \"valid\"),\n        KEEPFILTERS(NOT ISBLANK('Complaint Cohorts'[Routing Days])),\n        KEEPFILTERS('Complaint Cohorts'[Routing Days] >= 0))\nVAR _total = SUMX(_bins, [__frequency])\nVAR _lowerPosition = INT(DIVIDE(_total + 1, 2))\nVAR _upperPosition = INT(DIVIDE(_total + 2, 2))\nVAR _cumulative = ADDCOLUMNS(_bins, \"__cumulative\",\n    VAR _day = 'Complaint Cohorts'[Routing Days]\n    RETURN SUMX(FILTER(_bins, 'Complaint Cohorts'[Routing Days] <= _day), [__frequency]))\nVAR _lower = MINX(FILTER(_cumulative, [__cumulative] >= _lowerPosition), 'Complaint Cohorts'[Routing Days])\nVAR _upper = MINX(FILTER(_cumulative, [__cumulative] >= _upperPosition), 'Complaint Cohorts'[Routing Days])\nRETURN IF(_total > 0, DIVIDE(_lower + _upper, 2), BLANK())",
+      "description": "Frequency-weighted median of valid lags; averages both middle observations; empty is BLANK.",
+      "displayFolder": "Routing",
+      "formatString": "#,##0.0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Monthly Issue Share",
+      "expression": "DIVIDE([Complaint Count], CALCULATE([Complaint Count], REMOVEFILTERS('Issue')))",
+      "description": "Issue frequency divided by all issues in current month context; all other filters retained; undefined is BLANK.",
+      "displayFolder": "Issue Mix",
+      "formatString": "0.00%",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Peer Complaint Count",
+      "expression": "CALCULATE([Complaint Count], REMOVEFILTERS('Issue')) - [Complaint Count]",
+      "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained.",
+      "displayFolder": "Peers",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Peer Known Count",
+      "expression": "CALCULATE([Known Flag Count], REMOVEFILTERS('Issue')) - [Known Flag Count]",
+      "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained.",
+      "displayFolder": "Peers",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Peer No Count",
+      "expression": "CALCULATE([Untimely No Count], REMOVEFILTERS('Issue')) - [Untimely No Count]",
+      "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained.",
+      "displayFolder": "Peers",
+      "formatString": "#,##0",
+      "isHidden": false
+    },
+    {
+      "tableName": "Complaint Cohorts",
+      "name": "Peer Untimely Share",
+      "expression": "DIVIDE([Peer No Count], [Peer Known Count])",
+      "description": "Other-issue No flags divided by other-issue known flags; undefined is BLANK.",
+      "displayFolder": "Peers",
+      "formatString": "0.00%",
+      "isHidden": false
+    }
+  ],
+  "parameterDefinition": {
+    "name": "Source Folder",
+    "kind": "M",
+    "expression": "\"C:/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/data/processed/model-input\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
+    "description": "Single local folder containing validated Parquet projections."
+  },
+  "modelDefinition": {
+    "name": "F1",
+    "culture": "en-US",
+    "sourceQueryCulture": "en-US",
+    "discourageImplicitMeasures": true,
+    "defaultMode": "Import",
+    "annotations": [
+      {
+        "key": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      }
+    ]
+  }
+}

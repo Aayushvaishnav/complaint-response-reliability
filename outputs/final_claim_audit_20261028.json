@@ -1,0 +1,68 @@
+{
+  "status": "verified",
+  "reviewed_at_utc": "2026-10-28T09:35:30.800303+00:00",
+  "measurement_sha256": "8a8e7f59c195317c57acb05a85b560980ceb27feca699d5398b452515fbf3064",
+  "frozen_artifacts_unchanged": 138,
+  "independent_method": "Standalone complaint-grain monthly SQL plus Fraction arithmetic; no canonical window/rank SQL used for focal audit",
+  "monthly": [
+    {
+      "month": "2025-10-01",
+      "segment_complaints": 340,
+      "segment_known": 340,
+      "segment_no": 121,
+      "peer_complaints": 129,
+      "peer_known": 129,
+      "peer_no": 36
+    },
+    {
+      "month": "2025-11-01",
+      "segment_complaints": 245,
+      "segment_known": 245,
+      "segment_no": 168,
+      "peer_complaints": 131,
+      "peer_known": 131,
+      "peer_no": 81
+    },
+    {
+      "month": "2025-12-01",
+      "segment_complaints": 387,
+      "segment_known": 387,
+      "segment_no": 301,
+      "peer_complaints": 192,
+      "peer_known": 192,
+      "peer_no": 136
+    }
+  ],
+  "focal": {
+    "segment_no": 590,
+    "segment_known": 972,
+    "peer_no": 253,
+    "peer_known": 452,
+    "gap_pp_fraction": "129775/27459",
+    "gap_pp": 4.726137149932627,
+    "elevated_months": 3,
+    "sensitivity": {
+      "50": {
+        "volume_eligible": true,
+        "elevated_months": 3,
+        "persistent": true
+      },
+      "100": {
+        "volume_eligible": true,
+        "elevated_months": 3,
+        "persistent": true
+      },
+      "200": {
+        "volume_eligible": false,
+        "elevated_months": 0,
+        "persistent": false
+      }
+    }
+  },
+  "claims": {
+    "F1_01": "verified",
+    "F1_02": "verified",
+    "F1_03": "verified"
+  },
+  "limits": "Historical overlapping screening windows; no causal, current-operational, overall-service-quality or achieved-improvement inference"
+}

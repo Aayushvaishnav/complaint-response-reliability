@@ -1,0 +1,20 @@
+/// Disconnected analyst minimum choices: 50, 100, 200; foundation has no selection measures.
+table 'Review Minimum'
+	lineageTag: 5e99d42e-aea7-408e-a16c-3fb5c2790422
+
+	/// Imported minimum; preserves projection identity and meaning.
+	column Minimum
+		dataType: int64
+		lineageTag: e1b08845-1e78-4394-bab5-fd1fe098f43a
+		summarizeBy: none
+		sourceColumn: minimum
+
+	partition 'Review Minimum' = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(#"Source Folder" & "/review_minimum.parquet")),
+				    Typed = Table.TransformColumnTypes(Source, {{"minimum", Int64.Type}})
+				in
+				    Typed
+

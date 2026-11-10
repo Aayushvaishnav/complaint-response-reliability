@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-10-23T12:28:06.281939+00:00",
+  "scope": "Offline definition and source identity only; live DAX/refresh/report acceptance not performed",
+  "actual_inventory": {
+    "tables": 10,
+    "relationships": 5,
+    "parameters": 1,
+    "measures": 16
+  },
+  "current_projection_hashes": {
+    "data/processed/complaints_typed.parquet": "6868323834e311a1000fdb0768348c36fd86c9fe1a0c9650aee85f3511405646",
+    "config/review_rule.json": "4ee113188aba8d565676dae03d471c43bcfe1fc0019bd07e2018f9c344fba764",
+    "sql/longitudinal_contract.sql": "a9c2f9e1fd912ca07444c2bcdf1ad259710c9d2c8da269d4503f79f1235b311e",
+    "scripts/review_contract.py": "f62ee712225ed24dd7bdd7a6b5b8c0d6c4e00c01d179484749121836b4996887",
+    "outputs/typed_preparation_validation.json": "9e9826d7492a8afd8d774242699f3e2dddd780f988d4ab828cdcf924e5166d36",
+    "config/source.json": "6e11ae997297c8e3277650ca4edf92d6f59c2cb1bdfe485bce96c04d66abc40d",
+    "data/processed/model-input/complaint_cohorts.parquet": "6032da525772bd2fc0f8479d8e909e6c759f4f9f2f53850e36c37a27b66552ec",
+    "data/processed/model-input/date.parquet": "7f819eb62cba433143a43c6cb270ccb2e709feb7ca9282f064814a8edad1feaf",
+    "data/processed/model-input/company.parquet": "7556faa01c6881e5d3791ccac0ff3abc68aeb8bc192a4c3f46dcaba32b1234bb",
+    "data/processed/model-input/product.parquet": "4e43ebff8d6cb9acf40ff71c67d7f46fe6c688f24e0626665169a9fe3957a7d1",
+    "data/processed/model-input/issue.parquet": "0170f06d7bdbd8d3959bc934c4b0861c521fc82caed531334ab23847d10e4f21",
+    "data/processed/model-input/geography.parquet": "d736a842c2f5b82b1ebd354cc3acd3d100a8ae4c0c9ed4eacc74e10cab7abb73",
+    "data/processed/model-input/review_minimum.parquet": "8892f58d1156ee3099b4d7ef154a80ed212a1f633495b51617b012e4291c79dc",
+    "data/processed/model-input/sensitivity_minimum.parquet": "8892f58d1156ee3099b4d7ef154a80ed212a1f633495b51617b012e4291c79dc",
+    "data/processed/model-input/review_window.parquet": "aa6d83471e4a414c1d3725052c346892c4b75172915a5b58dfaf5736a9d4fa9d",
+    "data/processed/model-input/review_selection.parquet": "5a368807252ec062437419e97c4a494b02ff53cced939dccc2ce1bd65cec1aed"
+  },
+  "blueprint_schema_tables_checked": 10,
+  "sql_lower_display_collision_groups": {
+    "company": 4,
+    "product": 0,
+    "issue": 0,
+    "geography": 0
+  },
+  "mcp_reopened_export": {
+    "method": "connection_operations ConnectFolder",
+    "database": "F1",
+    "tablesLoaded": 10,
+    "measuresLoaded": 16,
+    "relationshipsLoaded": 5,
+    "verified_at_utc": "2026-10-23T12:24:31.507301Z"
+  },
+  "metadata_readback": {
+    "method": "column_operations Get; named_expression_operations Get; partition_operations Get; table_operations Get",
+    "dimension_label_group_by_keys": {
+      "Company.Company": "Company Key",
+      "Product.Product": "Product Key",
+      "Issue.Issue": "Issue Key",
+      "Geography.State": "Geography Key"
+    },
+    "selection_label_group_by_keys": {
+      "Review Selection.Company": "Company Key",
+      "Review Selection.Product": "Product Key",
+      "Review Selection.Issue": "Issue Key"
+    },
+    "month_label_sort_by": "Month Order",
+    "date_category": "Time",
+    "date_unique": true,
+    "parameter_metadata_preserved": true,
+    "partition_samples": [
+      "Complaint Cohorts",
+      "Review Selection",
+      "Date"
+    ],
+    "partition_mode": "Import",
+    "partition_source_type": "M",
+    "partition_state": "NoData"
+  },
+  "model_artifact_sha256": {
+    "reports/powerbi/F1.SemanticModel/definition.pbism": "c405f67472fd100bf36e56c0c262f193c837b35795fe5268cc6d0d8720f59e15",
+    "reports/powerbi/F1.SemanticModel/definition/database.tmdl": "71d54739753d39d31673527a7a1bdb949e93f8a766e6df61fa191b23d7e5ceb6",
+    "reports/powerbi/F1.SemanticModel/definition/expressions.tmdl": "8e8a225bd39ae364eac2f5a94985623593e405302b1ce40546830e9fa2048b28",
+    "reports/powerbi/F1.SemanticModel/definition/model.tmdl": "2d50a860b91cab8b9a38a5c053bfa8e7f27b788cf0eec325657dcf9682a76ccf",
+    "reports/powerbi/F1.SemanticModel/definition/relationships.tmdl": "9ceb7558185337d9b69b973ec0976b6d1ea1ae402d42bca29b3dbc116f7f6599",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Company.tmdl": "a4df6532fd904c89524ebf50a38ee9680397bb6160f33c7d8c8e407001d7e4d2",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Complaint Cohorts.tmdl": "d04de882e058d85dd2d0b02c9ce2f55036181265ec0c62a27d3aca97d9666173",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Date.tmdl": "ddc2b4c21f042fe6182d72daf870c17daf410938b9af258de434588ec31d0a1e",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Geography.tmdl": "7fc3c882fb08a5494bc79b75d28394d7d327c7d8950dab61c7753ca4ad3dd42e",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Issue.tmdl": "bb1956692b340423ce2b5eefc9bdcbf873ec21eb15b01f059ca88db163b48bf8",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Product.tmdl": "1a83eca9af1775820e3967950ae0a6953bc4e28e1b1fee60edb61641939db93e",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Review Minimum.tmdl": "bc58b52a0af59136d318c12b0bc2b42ea7b2eb5ba3ec98a4efa0a08a373a53cc",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Review Selection.tmdl": "2db9b5f8e164fbad3f24ce98a24fe20d5d9b2115e0ab54531c39631036b1daa3",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Review Window.tmdl": "60c2eff4aa205efd91e2c8ee9157ab4af61eeff1ada21a10784ae7c582e1325a",
+    "reports/powerbi/F1.SemanticModel/definition/tables/Sensitivity Minimum.tmdl": "212018d7934e29c9cdf120ede038bd8774af20094686cf5faabacbd856c4c738"
+  },
+  "implementation_sha256": {
+    "scripts/build_model.cjs": "5b80f4750b577749aaaeda2593a7c4385f2a159a1f75ef8973863e1aaf7a907d",
+    "scripts/model_definition.py": "a81a9bab2246828e3fbb21e5b46da8542082391272eb5c358f16af5659ad7388",
+    "scripts/rank_arithmetic.py": "9bc64133aa7ec618bde5b40320749729869c5f695483380da6bdbbe982307984",
+    "tests/test_build_model.test.cjs": "4bbd1ead0db96f9610db36c868a27e0a4900e44e4f80d6d7c98de09d9296f7b7",
+    "tests/test_model_definition.py": "7360a05d303c8271ca6d4b02921820b0803e94c7c319f499ae92fe698871fd5a",
+    "tests/test_rank_arithmetic.py": "5ddde8843ba5b5e0deb717d2f73218fcb4c0ffe635d8f80ad15002f7da0aaec7"
+  }
+}

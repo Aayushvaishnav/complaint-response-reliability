@@ -1,0 +1,49 @@
+{
+  "scope": "Standalone F1 exact pooled-gap comparator; no model authored",
+  "validation_date": "2026-10-23",
+  "source_limit": 9469257,
+  "base": 32768,
+  "input_domain": "Eight nonblank Whole number counts; 0<=No<=known; both known denominators positive; focal known + disjoint peer known <= source_limit for each tuple independently",
+  "maximum_numerator_magnitude": 22416707033012,
+  "maximum_denominator": 22416707033012,
+  "maximum_naive_cross_product": "502508754203889664057792144",
+  "naive_cross_product_magnitude_bits": 89,
+  "maximum_convolution_total_bound": 3221127168,
+  "dax_local_variables": 102,
+  "comparison_result": "-1, 0, or 1; no tolerance or rounded score",
+  "arithmetic_validation": {
+    "oracle": "fractions.Fraction",
+    "integer_emulation": "passed",
+    "all_binary64_emulation": "passed",
+    "exhaustive_small_domain_pairs": 38416,
+    "seeded_random_pairs": 10000,
+    "random_seed": 20261023,
+    "sign_extreme_unreduced_tie_pairs": 64,
+    "generated_text_python_harness_fixtures": 165,
+    "limb_boundary_and_carry_chain_checks": "passed",
+    "floating_cancellation_false_tie_fixture": "passed; exact comparator distinguishes the gaps",
+    "invalid_input_rejection": "passed"
+  },
+  "test_runs": [
+    {"command": ".venv/bin/python -m unittest discover -s tests -p test_rank_arithmetic.py -v", "tests": 6, "result": "passed"},
+    {"command": ".venv/bin/python -m unittest discover -s tests -p 'test_*contract.py' -v", "tests": 19, "result": "passed"},
+    {"command": ".venv/bin/python -O -m unittest discover -s tests -p test_rank_arithmetic.py -v", "tests": 6, "result": "passed"},
+    {"command": ".venv/bin/python -O -m unittest discover -s tests -p 'test_*contract.py' -v", "tests": 19, "result": "passed"}
+  ],
+  "microsoft_documentation_grounding": {
+    "method": "Official Microsoft Learn pages retrieved with available webfetch; Learn-specific tools were not registered",
+    "urls": [
+      "https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-data-types",
+      "https://learn.microsoft.com/en-us/dax/int-function-dax",
+      "https://learn.microsoft.com/en-us/dax/dax-operator-reference"
+    ]
+  },
+  "live_dax_engine_validation": "not performed",
+  "generated_text_harness_limitation": "Python arithmetic execution only; not a DAX parser or engine",
+  "unresolved": [
+    "Target DAX engine syntax and type verification",
+    "Actual model Whole number bindings and domain enforcement",
+    "Filter-context parity and dense equivalence-class rank integration",
+    "Queue-scale live-engine performance"
+  ]
+}

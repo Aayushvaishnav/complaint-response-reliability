@@ -1,0 +1,15 @@
+test_boundary_partial_august_and_scope (test_prepare_complaints.PreparationTests.test_boundary_partial_august_and_scope) ... ok
+test_duplicate_and_missing_ids_fail (test_prepare_complaints.PreparationTests.test_duplicate_and_missing_ids_fail) ... ok
+test_empty_and_all_unknown (test_prepare_complaints.PreparationTests.test_empty_and_all_unknown) ... ok
+test_except_all_detects_duplicate_multiplicity (test_prepare_complaints.PreparationTests.test_except_all_detects_duplicate_multiplicity) ... ok
+test_full_csv_reference_filters (test_prepare_complaints.PreparationTests.test_full_csv_reference_filters) ... ok
+test_invalid_received_blocks_validation (test_prepare_complaints.PreparationTests.test_invalid_received_blocks_validation) ... ok
+test_partition_guards_reject_hidden_extra_rows (test_prepare_complaints.PreparationTests.test_partition_guards_reject_hidden_extra_rows) ... ok
+test_raw_preservation_and_bucket_collision (test_prepare_complaints.PreparationTests.test_raw_preservation_and_bucket_collision) ... ok
+test_reference_median (test_prepare_complaints.PreparationTests.test_reference_median) ... ok
+test_routing_exceptions_and_flags (test_prepare_complaints.PreparationTests.test_routing_exceptions_and_flags) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.909s
+
+OK

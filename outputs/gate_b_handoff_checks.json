@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "gate_b_checks": 20,
+  "all_gate_b_checks_passed": true,
+  "current_small_artifact_hashes_match": true,
+  "stale": [],
+  "documentation_files": 11,
+  "missing_links": []
+}

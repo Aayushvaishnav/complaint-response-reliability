@@ -1,0 +1,637 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-23T12:24:17.877Z",
+  "scope": "offline_model_foundation",
+  "live_dax_refresh_rendering": "not_performed",
+  "blueprint": "projects\\f1-complaint-response-reliability\\outputs\\model_definition.json",
+  "operations": [
+    {
+      "tool": "database_operations",
+      "operation": "Create",
+      "response": []
+    },
+    {
+      "tool": "model_operations",
+      "operation": "Update",
+      "response": []
+    },
+    {
+      "tool": "named_expression_operations",
+      "operation": "CreateParameter",
+      "response": []
+    },
+    {
+      "tool": "table_operations",
+      "operation": "Create",
+      "response": []
+    },
+    {
+      "tool": "relationship_operations",
+      "operation": "Create",
+      "response": []
+    },
+    {
+      "tool": "table_operations",
+      "operation": "MarkAsDateTable",
+      "response": []
+    },
+    {
+      "tool": "measure_operations",
+      "operation": "Create",
+      "response": []
+    },
+    {
+      "tool": "table_operations",
+      "operation": "List",
+      "response": [
+        {
+          "message": "Found 10 tables",
+          "operation": "List",
+          "data": [
+            {
+              "columnCount": 11,
+              "measureCount": 16,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Complaint Cohorts",
+              "description": "Observed received-day/category/routing-lag bins; counts are frequencies, not complaints per row."
+            },
+            {
+              "columnCount": 7,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Date",
+              "description": "Contiguous received-date calendar, 2023 through 2025."
+            },
+            {
+              "columnCount": 5,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Company",
+              "description": "One raw source identity; SQL null, empty and literal labels have distinct keys."
+            },
+            {
+              "columnCount": 5,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Product",
+              "description": "One raw source identity; SQL null, empty and literal labels have distinct keys."
+            },
+            {
+              "columnCount": 5,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Issue",
+              "description": "One raw source identity; SQL null, empty and literal labels have distinct keys."
+            },
+            {
+              "columnCount": 5,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Geography",
+              "description": "One raw source identity; SQL null, empty and literal labels have distinct keys."
+            },
+            {
+              "columnCount": 1,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Review Minimum",
+              "description": "Disconnected analyst minimum choices: 50, 100, 200; foundation has no selection measures."
+            },
+            {
+              "columnCount": 1,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Sensitivity Minimum",
+              "description": "Disconnected analyst minimum choices: 50, 100, 200; foundation has no selection measures."
+            },
+            {
+              "columnCount": 3,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Review Window",
+              "description": "Disconnected potential ending months; does not filter received dates."
+            },
+            {
+              "columnCount": 15,
+              "partitionCount": 1,
+              "storageMode": "Import",
+              "name": "Review Selection",
+              "description": "Disconnected observed company/product/issue/month selectors; integer identities never derive from display labels."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tool": "relationship_operations",
+      "operation": "List",
+      "response": [
+        {
+          "message": "Found 5 relationships",
+          "operation": "LIST",
+          "data": [
+            {
+              "fromTable": "Complaint Cohorts",
+              "fromColumn": "Received Date",
+              "toTable": "Date",
+              "toColumn": "Date",
+              "isActive": true,
+              "crossFilteringBehavior": "OneDirection",
+              "fromCardinality": "Many",
+              "toCardinality": "One",
+              "name": "Complaint Cohorts to Date"
+            },
+            {
+              "fromTable": "Complaint Cohorts",
+              "fromColumn": "Company Key",
+              "toTable": "Company",
+              "toColumn": "Company Key",
+              "isActive": true,
+              "crossFilteringBehavior": "OneDirection",
+              "fromCardinality": "Many",
+              "toCardinality": "One",
+              "name": "Complaint Cohorts to Company"
+            },
+            {
+              "fromTable": "Complaint Cohorts",
+              "fromColumn": "Product Key",
+              "toTable": "Product",
+              "toColumn": "Product Key",
+              "isActive": true,
+              "crossFilteringBehavior": "OneDirection",
+              "fromCardinality": "Many",
+              "toCardinality": "One",
+              "name": "Complaint Cohorts to Product"
+            },
+            {
+              "fromTable": "Complaint Cohorts",
+              "fromColumn": "Issue Key",
+              "toTable": "Issue",
+              "toColumn": "Issue Key",
+              "isActive": true,
+              "crossFilteringBehavior": "OneDirection",
+              "fromCardinality": "Many",
+              "toCardinality": "One",
+              "name": "Complaint Cohorts to Issue"
+            },
+            {
+              "fromTable": "Complaint Cohorts",
+              "fromColumn": "Geography Key",
+              "toTable": "Geography",
+              "toColumn": "Geography Key",
+              "isActive": true,
+              "crossFilteringBehavior": "OneDirection",
+              "fromCardinality": "Many",
+              "toCardinality": "One",
+              "name": "Complaint Cohorts to Geography"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tool": "measure_operations",
+      "operation": "List",
+      "response": [
+        {
+          "message": "Found 16 measures across 1 tables",
+          "operation": "List",
+          "data": [
+            {
+              "tableName": "Complaint Cohorts",
+              "measures": [
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Complaint Count",
+                  "description": "Sum imported complaint frequencies in current context; empty is zero."
+                },
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Timely Yes Count",
+                  "description": "Sum imported complaint frequencies in current context; empty is zero."
+                },
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Untimely No Count",
+                  "description": "Sum imported complaint frequencies in current context; empty is zero."
+                },
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Unknown Flag Count",
+                  "description": "Sum imported complaint frequencies in current context; empty is zero."
+                },
+                {
+                  "displayFolder": "Counts",
+                  "formatString": "#,##0",
+                  "name": "Known Flag Count",
+                  "description": "Exact recorded Yes plus No flags; excludes unknown flags."
+                },
+                {
+                  "displayFolder": "Rates",
+                  "formatString": "0.00%",
+                  "name": "Timely Response Rate",
+                  "description": "Timely Yes Count divided by Known Flag Count; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Rates",
+                  "formatString": "0.00%",
+                  "name": "Untimely Share",
+                  "description": "Untimely No Count divided by Known Flag Count; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Rates",
+                  "formatString": "0.00%",
+                  "name": "Unknown Flag Rate",
+                  "description": "Unknown Flag Count divided by Complaint Count; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Routing",
+                  "formatString": "#,##0",
+                  "name": "Valid Routing Count",
+                  "description": "Frequency of nonnegative valid routing lags."
+                },
+                {
+                  "displayFolder": "Routing",
+                  "formatString": "#,##0",
+                  "name": "Invalid Routing Count",
+                  "description": "All complaints minus valid routing frequencies; includes missing and negative lags."
+                },
+                {
+                  "displayFolder": "Routing",
+                  "formatString": "#,##0.0",
+                  "name": "Median Routing Days",
+                  "description": "Frequency-weighted median of valid lags; averages both middle observations; empty is BLANK."
+                },
+                {
+                  "displayFolder": "Issue Mix",
+                  "formatString": "0.00%",
+                  "name": "Monthly Issue Share",
+                  "description": "Issue frequency divided by all issues in current month context; all other filters retained; undefined is BLANK."
+                },
+                {
+                  "displayFolder": "Peers",
+                  "formatString": "#,##0",
+                  "name": "Peer Complaint Count",
+                  "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained."
+                },
+                {
+                  "displayFolder": "Peers",
+                  "formatString": "#,##0",
+                  "name": "Peer Known Count",
+                  "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained."
+                },
+                {
+                  "displayFolder": "Peers",
+                  "formatString": "#,##0",
+                  "name": "Peer No Count",
+                  "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained."
+                },
+                {
+                  "displayFolder": "Peers",
+                  "formatString": "0.00%",
+                  "name": "Peer Untimely Share",
+                  "description": "Other-issue No flags divided by other-issue known flags; undefined is BLANK."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tool": "named_expression_operations",
+      "operation": "List",
+      "response": [
+        {
+          "message": "Found 1 named expressions in the model",
+          "operation": "List",
+          "data": [
+            {
+              "kind": "M",
+              "name": "Source Folder",
+              "description": "Single local folder containing validated Parquet projections."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tool": "database_operations",
+      "operation": "ExportToTmdlFolder",
+      "response": [
+        {
+          "databaseName": "F1",
+          "message": "Successfully exported database 'F1' to TMDL folder 'C:\\Users\\Aayush\\my_files\\da_projects\\projects\\f1-complaint-response-reliability\\reports\\powerbi\\F1.SemanticModel\\definition'",
+          "operation": "ExportToTmdlFolder",
+          "data": {
+            "folderPath": "C:\\Users\\Aayush\\my_files\\da_projects\\projects\\f1-complaint-response-reliability\\reports\\powerbi\\F1.SemanticModel\\definition",
+            "databaseName": "F1",
+            "filesCreated": [
+              "Company.tmdl",
+              "Complaint Cohorts.tmdl",
+              "database.tmdl",
+              "Date.tmdl",
+              "expressions.tmdl",
+              "Geography.tmdl",
+              "Issue.tmdl",
+              "model.tmdl",
+              "Product.tmdl",
+              "relationships.tmdl",
+              "Review Minimum.tmdl",
+              "Review Selection.tmdl",
+              "Review Window.tmdl",
+              "Sensitivity Minimum.tmdl"
+            ],
+            "fileCount": 14,
+            "serializedAt": "2026-10-23T12:24:19.3724803Z",
+            "message": "Successfully exported database 'F1' to TMDL folder"
+          }
+        }
+      ]
+    }
+  ],
+  "server": {
+    "name": "powerbi-authoring-local",
+    "title": "Power BI Authoring MCP Server (Local)",
+    "version": "1.0.0",
+    "description": "Author Power BI semantic models in Power BI Desktop, Microsoft Fabric workspaces, and local PBIP and TMDL files."
+  },
+  "inventory": {
+    "tables": [
+      {
+        "message": "Found 10 tables",
+        "operation": "List",
+        "data": [
+          {
+            "columnCount": 11,
+            "measureCount": 16,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Complaint Cohorts",
+            "description": "Observed received-day/category/routing-lag bins; counts are frequencies, not complaints per row."
+          },
+          {
+            "columnCount": 7,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Date",
+            "description": "Contiguous received-date calendar, 2023 through 2025."
+          },
+          {
+            "columnCount": 5,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Company",
+            "description": "One raw source identity; SQL null, empty and literal labels have distinct keys."
+          },
+          {
+            "columnCount": 5,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Product",
+            "description": "One raw source identity; SQL null, empty and literal labels have distinct keys."
+          },
+          {
+            "columnCount": 5,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Issue",
+            "description": "One raw source identity; SQL null, empty and literal labels have distinct keys."
+          },
+          {
+            "columnCount": 5,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Geography",
+            "description": "One raw source identity; SQL null, empty and literal labels have distinct keys."
+          },
+          {
+            "columnCount": 1,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Review Minimum",
+            "description": "Disconnected analyst minimum choices: 50, 100, 200; foundation has no selection measures."
+          },
+          {
+            "columnCount": 1,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Sensitivity Minimum",
+            "description": "Disconnected analyst minimum choices: 50, 100, 200; foundation has no selection measures."
+          },
+          {
+            "columnCount": 3,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Review Window",
+            "description": "Disconnected potential ending months; does not filter received dates."
+          },
+          {
+            "columnCount": 15,
+            "partitionCount": 1,
+            "storageMode": "Import",
+            "name": "Review Selection",
+            "description": "Disconnected observed company/product/issue/month selectors; integer identities never derive from display labels."
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "message": "Found 5 relationships",
+        "operation": "LIST",
+        "data": [
+          {
+            "fromTable": "Complaint Cohorts",
+            "fromColumn": "Received Date",
+            "toTable": "Date",
+            "toColumn": "Date",
+            "isActive": true,
+            "crossFilteringBehavior": "OneDirection",
+            "fromCardinality": "Many",
+            "toCardinality": "One",
+            "name": "Complaint Cohorts to Date"
+          },
+          {
+            "fromTable": "Complaint Cohorts",
+            "fromColumn": "Company Key",
+            "toTable": "Company",
+            "toColumn": "Company Key",
+            "isActive": true,
+            "crossFilteringBehavior": "OneDirection",
+            "fromCardinality": "Many",
+            "toCardinality": "One",
+            "name": "Complaint Cohorts to Company"
+          },
+          {
+            "fromTable": "Complaint Cohorts",
+            "fromColumn": "Product Key",
+            "toTable": "Product",
+            "toColumn": "Product Key",
+            "isActive": true,
+            "crossFilteringBehavior": "OneDirection",
+            "fromCardinality": "Many",
+            "toCardinality": "One",
+            "name": "Complaint Cohorts to Product"
+          },
+          {
+            "fromTable": "Complaint Cohorts",
+            "fromColumn": "Issue Key",
+            "toTable": "Issue",
+            "toColumn": "Issue Key",
+            "isActive": true,
+            "crossFilteringBehavior": "OneDirection",
+            "fromCardinality": "Many",
+            "toCardinality": "One",
+            "name": "Complaint Cohorts to Issue"
+          },
+          {
+            "fromTable": "Complaint Cohorts",
+            "fromColumn": "Geography Key",
+            "toTable": "Geography",
+            "toColumn": "Geography Key",
+            "isActive": true,
+            "crossFilteringBehavior": "OneDirection",
+            "fromCardinality": "Many",
+            "toCardinality": "One",
+            "name": "Complaint Cohorts to Geography"
+          }
+        ]
+      }
+    ],
+    "measures": [
+      {
+        "message": "Found 16 measures across 1 tables",
+        "operation": "List",
+        "data": [
+          {
+            "tableName": "Complaint Cohorts",
+            "measures": [
+              {
+                "displayFolder": "Counts",
+                "formatString": "#,##0",
+                "name": "Complaint Count",
+                "description": "Sum imported complaint frequencies in current context; empty is zero."
+              },
+              {
+                "displayFolder": "Counts",
+                "formatString": "#,##0",
+                "name": "Timely Yes Count",
+                "description": "Sum imported complaint frequencies in current context; empty is zero."
+              },
+              {
+                "displayFolder": "Counts",
+                "formatString": "#,##0",
+                "name": "Untimely No Count",
+                "description": "Sum imported complaint frequencies in current context; empty is zero."
+              },
+              {
+                "displayFolder": "Counts",
+                "formatString": "#,##0",
+                "name": "Unknown Flag Count",
+                "description": "Sum imported complaint frequencies in current context; empty is zero."
+              },
+              {
+                "displayFolder": "Counts",
+                "formatString": "#,##0",
+                "name": "Known Flag Count",
+                "description": "Exact recorded Yes plus No flags; excludes unknown flags."
+              },
+              {
+                "displayFolder": "Rates",
+                "formatString": "0.00%",
+                "name": "Timely Response Rate",
+                "description": "Timely Yes Count divided by Known Flag Count; undefined is BLANK."
+              },
+              {
+                "displayFolder": "Rates",
+                "formatString": "0.00%",
+                "name": "Untimely Share",
+                "description": "Untimely No Count divided by Known Flag Count; undefined is BLANK."
+              },
+              {
+                "displayFolder": "Rates",
+                "formatString": "0.00%",
+                "name": "Unknown Flag Rate",
+                "description": "Unknown Flag Count divided by Complaint Count; undefined is BLANK."
+              },
+              {
+                "displayFolder": "Routing",
+                "formatString": "#,##0",
+                "name": "Valid Routing Count",
+                "description": "Frequency of nonnegative valid routing lags."
+              },
+              {
+                "displayFolder": "Routing",
+                "formatString": "#,##0",
+                "name": "Invalid Routing Count",
+                "description": "All complaints minus valid routing frequencies; includes missing and negative lags."
+              },
+              {
+                "displayFolder": "Routing",
+                "formatString": "#,##0.0",
+                "name": "Median Routing Days",
+                "description": "Frequency-weighted median of valid lags; averages both middle observations; empty is BLANK."
+              },
+              {
+                "displayFolder": "Issue Mix",
+                "formatString": "0.00%",
+                "name": "Monthly Issue Share",
+                "description": "Issue frequency divided by all issues in current month context; all other filters retained; undefined is BLANK."
+              },
+              {
+                "displayFolder": "Peers",
+                "formatString": "#,##0",
+                "name": "Peer Complaint Count",
+                "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained."
+              },
+              {
+                "displayFolder": "Peers",
+                "formatString": "#,##0",
+                "name": "Peer Known Count",
+                "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained."
+              },
+              {
+                "displayFolder": "Peers",
+                "formatString": "#,##0",
+                "name": "Peer No Count",
+                "description": "Other issues: all-issue total minus current issue selection; company, product, date and geography retained."
+              },
+              {
+                "displayFolder": "Peers",
+                "formatString": "0.00%",
+                "name": "Peer Untimely Share",
+                "description": "Other-issue No flags divided by other-issue known flags; undefined is BLANK."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": [
+      {
+        "message": "Found 1 named expressions in the model",
+        "operation": "List",
+        "data": [
+          {
+            "kind": "M",
+            "name": "Source Folder",
+            "description": "Single local folder containing validated Parquet projections."
+          }
+        ]
+      }
+    ]
+  },
+  "export_path": "projects\\f1-complaint-response-reliability\\reports\\powerbi\\F1.SemanticModel\\definition",
+  "expected_counts": {
+    "tables": 10,
+    "relationships": 5,
+    "measures": 16
+  },
+  "finished_at_utc": "2026-10-23T12:24:19.377Z"
+}

@@ -1,0 +1,30 @@
+✔ CLI requires the installed platform-specific MCP entry instead of launching an unverified wrapper (88.378512ms)
+✔ MCP request IDs preserve concurrent responses and propagate RPC errors (72.059038ms)
+✔ offline build exports through MCP and records validation limits (98.187428ms)
+✔ MCP application error prevents export and persists failure evidence (77.498229ms)
+✔ batch item failure stops the build even when the MCP transport succeeds (74.066425ms)
+✔ existing model export is preserved instead of overwritten (0.801331ms)
+✔ exactly the approved pages and every visual stays within its canvas without overlaps (2.449911ms)
+✔ shared slicers have matching native sync groups and hidden identity projections (0.454276ms)
+✔ row focus reaches only evidence and sensitivity, preserving headline universe (0.253272ms)
+✔ bindings match the source model contract instead of an offline export (71.858864ms)
+✔ build is deterministic and defaults to the approved minimum (11.208468ms)
+✔ KPI units are unscaled, labels concise and automatic subtitles disabled (0.391363ms)
+✔ context and independent checks use native wrapping text with no totals (0.381039ms)
+✔ comparison palette and product axis retain readable identities (0.269773ms)
+✔ single-series charts use an unselected default color (0.276264ms)
+✔ priority queue is flat, retains all bindings and excludes hierarchy operations (0.344021ms)
+✔ paired KPIs reserve full-width vertical rows for exact denominator counts (0.194171ms)
+✔ reads text, embedded resource and structured MCP payloads (2.34733ms)
+✔ operation and batch failures cannot pass acceptance (0.31197ms)
+✔ successful mutating operations may acknowledge without content; require readback separately (0.16635ms)
+✔ reconciliation rejects count drift, truncated output and undefined rates converted to zero (0.311971ms)
+✔ queue parity compares identity sets and rejects duplicated or missing keys (0.352947ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 561.961539

@@ -1,0 +1,238 @@
+{
+  "status": "passed",
+  "checked_at_utc": "2026-10-23T10:17:28.118798+00:00",
+  "checks": {
+    "full_preparation_passed": true,
+    "scoped_population_preserved": true,
+    "raw_retained_excluded_conservation": true,
+    "raw_fields_preserved": true,
+    "frozen_csv_fields_preserved": true,
+    "typed_parquet_roundtrip": true,
+    "independent_four_scope_kpis": true,
+    "monthly_product_state_conservation": true,
+    "preparation_identity_inventory": true,
+    "current_artifact:scripts/prepare_complaints.py": true,
+    "current_artifact:sql/prepare_complaints.sql": true,
+    "current_artifact:config/source.json": true,
+    "current_artifact:outputs/source_validation.json": true,
+    "current_artifact:data/processed/complaints_typed.parquet": true,
+    "current_artifact:config/review_rule.json": true,
+    "current_frozen_csv_identity": true,
+    "parquet_field_names_and_types": true,
+    "approved_review_rule": true,
+    "behavior_tests": true,
+    "optimized_behavior_tests": true
+  },
+  "artifact_sha256": {
+    "scripts/prepare_complaints.py": "3c6fbdaba7d4199294b9ce8aa3566d6396aa1a4169c9ef1c7ed2c0c3201dbec7",
+    "sql/prepare_complaints.sql": "9cbc93b26fad2bd3304a582aa9cdffbe050b1d9ac38ecb6bbed0fba502e649ed",
+    "config/source.json": "6e11ae997297c8e3277650ca4edf92d6f59c2cb1bdfe485bce96c04d66abc40d",
+    "outputs/source_validation.json": "51fcf58167c97fae0b3ef096a1685e73464139b685dd1db7252b64925ae29beb",
+    "data/processed/complaints_typed.parquet": "6868323834e311a1000fdb0768348c36fd86c9fe1a0c9650aee85f3511405646",
+    "config/review_rule.json": "4ee113188aba8d565676dae03d471c43bcfe1fc0019bd07e2018f9c344fba764",
+    "data/processed/complaints_2023_2025.csv": "15680a5a1a8f8eaed17fe9b9f5ce0c1297e21e69fd2088a7cdb860a7037cb9f8",
+    "outputs/gate_b_tests.txt": "d00076d7ccb9ca0304bf8692dba2ec8aae6128e7b5bff663bdfee4725f1fcf49",
+    "outputs/gate_b_tests_optimized.txt": "76ce7564ada8f99ab6a951a18233950557f38bf3170690c92a5738e88183a5f0",
+    "scripts/review_contract.py": "f62ee712225ed24dd7bdd7a6b5b8c0d6c4e00c01d179484749121836b4996887",
+    "sql/longitudinal_contract.sql": "a9c2f9e1fd912ca07444c2bcdf1ad259710c9d2c8da269d4503f79f1235b311e",
+    "tests/test_prepare_complaints.py": "f322431c4032bc7e2774862be3845aec168291c885ab1b6c09ad5e04016c329b",
+    "tests/test_review_contract.py": "7f2e85338e66b255fd362bd7fed73c3d768af00d811c47e4d233475ec65140d4",
+    "tests/test_review_reference.py": "d6106be903a9b177e9c54f05f616f130710ba92745c000b6935a673648cc8b00",
+    "tests/test_gate_b_acceptance.py": "4c223850803d19023826706352e0b9521ab7d5aaa5f7be82fd2cfdc4b2aaf191",
+    "outputs/review_reference_checks.json": "66546a370ad4e63dd0b011287525c0b42a73f80a8eaace6df9d5ea57ccef72f4",
+    "scripts/validate_gate_b.py": "7da9bd2f03f1e845ca5d26b2e5bab8ff3bc41a7f468249f02788f86361b200af",
+    "metric_dictionary.md": "374d7aebd81a5d68291ad1e56265355e564cfef31052cd35bc027bf532d713e9",
+    "data_dictionary.md": "52f039bd74750475cc4df8f9e86e44b9a6a4ece9850a88d947ddb186291b3c13",
+    "business_requirements.md": "d4726254d9853c03d6796aa0713b6279afb5cdfd137a168e01db5fb71ebf8bf7",
+    "outputs/typed_preparation_validation.json": "9e9826d7492a8afd8d774242699f3e2dddd780f988d4ab828cdcf924e5166d36"
+  },
+  "scope": "Gate B preparation and synthetic contract mechanics; no full-population priority findings or Power BI acceptance",
+  "gate_d_signoff": "not_granted",
+  "final_cv_measurement": "not_permitted",
+  "typed_schema": [
+    [
+      "Date received",
+      "VARCHAR"
+    ],
+    [
+      "Product",
+      "VARCHAR"
+    ],
+    [
+      "Sub-product",
+      "VARCHAR"
+    ],
+    [
+      "Issue",
+      "VARCHAR"
+    ],
+    [
+      "Sub-issue",
+      "VARCHAR"
+    ],
+    [
+      "Company public response",
+      "VARCHAR"
+    ],
+    [
+      "Company",
+      "VARCHAR"
+    ],
+    [
+      "State",
+      "VARCHAR"
+    ],
+    [
+      "ZIP code",
+      "VARCHAR"
+    ],
+    [
+      "Tags",
+      "VARCHAR"
+    ],
+    [
+      "Submitted via",
+      "VARCHAR"
+    ],
+    [
+      "Date sent to company",
+      "VARCHAR"
+    ],
+    [
+      "Company response to consumer",
+      "VARCHAR"
+    ],
+    [
+      "Timely response?",
+      "VARCHAR"
+    ],
+    [
+      "Complaint ID",
+      "VARCHAR"
+    ],
+    [
+      "received_date",
+      "DATE"
+    ],
+    [
+      "sent_date",
+      "DATE"
+    ],
+    [
+      "complaint_id",
+      "VARCHAR"
+    ],
+    [
+      "timely_response_status",
+      "VARCHAR"
+    ],
+    [
+      "routing_status",
+      "VARCHAR"
+    ],
+    [
+      "routing_days",
+      "BIGINT"
+    ],
+    [
+      "received_month",
+      "DATE"
+    ],
+    [
+      "taxonomy_era",
+      "VARCHAR"
+    ],
+    [
+      "longitudinal_eligible",
+      "BOOLEAN"
+    ],
+    [
+      "product_missing",
+      "BOOLEAN"
+    ],
+    [
+      "product_bucket",
+      "VARCHAR"
+    ],
+    [
+      "sub_product_missing",
+      "BOOLEAN"
+    ],
+    [
+      "sub_product_bucket",
+      "VARCHAR"
+    ],
+    [
+      "issue_missing",
+      "BOOLEAN"
+    ],
+    [
+      "issue_bucket",
+      "VARCHAR"
+    ],
+    [
+      "sub_issue_missing",
+      "BOOLEAN"
+    ],
+    [
+      "sub_issue_bucket",
+      "VARCHAR"
+    ],
+    [
+      "public_response_missing",
+      "BOOLEAN"
+    ],
+    [
+      "public_response_bucket",
+      "VARCHAR"
+    ],
+    [
+      "company_missing",
+      "BOOLEAN"
+    ],
+    [
+      "company_bucket",
+      "VARCHAR"
+    ],
+    [
+      "state_missing",
+      "BOOLEAN"
+    ],
+    [
+      "state_bucket",
+      "VARCHAR"
+    ],
+    [
+      "zip_missing",
+      "BOOLEAN"
+    ],
+    [
+      "zip_bucket",
+      "VARCHAR"
+    ],
+    [
+      "tags_missing",
+      "BOOLEAN"
+    ],
+    [
+      "tags_bucket",
+      "VARCHAR"
+    ],
+    [
+      "submitted_via_missing",
+      "BOOLEAN"
+    ],
+    [
+      "submitted_via_bucket",
+      "VARCHAR"
+    ],
+    [
+      "response_missing",
+      "BOOLEAN"
+    ],
+    [
+      "response_bucket",
+      "VARCHAR"
+    ]
+  ]
+}

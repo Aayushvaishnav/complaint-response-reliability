@@ -1,0 +1,110 @@
+{
+  "status": "expectations_generated",
+  "created_at_utc": "2026-10-23T15:38:29.250896+00:00",
+  "source_sha256": "6868323834e311a1000fdb0768348c36fd86c9fe1a0c9650aee85f3511405646",
+  "scope": "Independent SQL expectations; DAX execution not performed by this script",
+  "cases": [
+    {
+      "id": "all",
+      "query": "EVALUATE ROW(\"complaints\", [Complaint Count], \"yes\", [Timely Yes Count], \"no\", [Untimely No Count], \"unknown\", [Unknown Flag Count], \"known\", [Known Flag Count], \"timely_rate\", [Timely Response Rate], \"untimely_share\", [Untimely Share], \"unknown_rate\", [Unknown Flag Rate], \"valid_routing\", [Valid Routing Count], \"invalid_routing\", [Invalid Routing Count], \"median_routing_days\", [Median Routing Days])",
+      "expected": {
+        "complaints": 9469257,
+        "yes": 9431474,
+        "no": 37783,
+        "unknown": 0,
+        "known": 9469257,
+        "valid_routing": 9469257,
+        "invalid_routing": 0,
+        "median_routing_days": 0.0,
+        "timely_rate": 0.9960099298181473,
+        "untimely_share": 0.003990070181852705,
+        "unknown_rate": 0.0
+      }
+    },
+    {
+      "id": "received_2023",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"complaints\", [Complaint Count], \"yes\", [Timely Yes Count], \"no\", [Untimely No Count], \"unknown\", [Unknown Flag Count], \"known\", [Known Flag Count], \"timely_rate\", [Timely Response Rate], \"untimely_share\", [Untimely Share], \"unknown_rate\", [Unknown Flag Rate], \"valid_routing\", [Valid Routing Count], \"invalid_routing\", [Invalid Routing Count], \"median_routing_days\", [Median Routing Days]), 'Date'[Year] = 2023)",
+      "expected": {
+        "complaints": 1292048,
+        "yes": 1286528,
+        "no": 5520,
+        "unknown": 0,
+        "known": 1292048,
+        "valid_routing": 1292048,
+        "invalid_routing": 0,
+        "median_routing_days": 0.0,
+        "timely_rate": 0.995727712902307,
+        "untimely_share": 0.004272287097692965,
+        "unknown_rate": 0.0
+      }
+    },
+    {
+      "id": "debt_collection",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"complaints\", [Complaint Count], \"yes\", [Timely Yes Count], \"no\", [Untimely No Count], \"unknown\", [Unknown Flag Count], \"known\", [Known Flag Count], \"timely_rate\", [Timely Response Rate], \"untimely_share\", [Untimely Share], \"unknown_rate\", [Unknown Flag Rate], \"valid_routing\", [Valid Routing Count], \"invalid_routing\", [Invalid Routing Count], \"median_routing_days\", [Median Routing Days]), FILTER(ALL('Product'), 'Product'[Product] = \"Debt collection\"))",
+      "expected": {
+        "complaints": 507204,
+        "yes": 494729,
+        "no": 12475,
+        "unknown": 0,
+        "known": 507204,
+        "valid_routing": 507204,
+        "invalid_routing": 0,
+        "median_routing_days": 0.0,
+        "timely_rate": 0.9754043737825412,
+        "untimely_share": 0.024595626217458852,
+        "unknown_rate": 0.0
+      }
+    },
+    {
+      "id": "california",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"complaints\", [Complaint Count], \"yes\", [Timely Yes Count], \"no\", [Untimely No Count], \"unknown\", [Unknown Flag Count], \"known\", [Known Flag Count], \"timely_rate\", [Timely Response Rate], \"untimely_share\", [Untimely Share], \"unknown_rate\", [Unknown Flag Rate], \"valid_routing\", [Valid Routing Count], \"invalid_routing\", [Invalid Routing Count], \"median_routing_days\", [Median Routing Days]), FILTER(ALL('Geography'), 'Geography'[State] = \"CA\"))",
+      "expected": {
+        "complaints": 906980,
+        "yes": 903279,
+        "no": 3701,
+        "unknown": 0,
+        "known": 906980,
+        "valid_routing": 906980,
+        "invalid_routing": 0,
+        "median_routing_days": 0.0,
+        "timely_rate": 0.9959194249046286,
+        "untimely_share": 0.004080575095371452,
+        "unknown_rate": 0.0
+      }
+    },
+    {
+      "id": "partial_months",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"complaints\", [Complaint Count], \"yes\", [Timely Yes Count], \"no\", [Untimely No Count], \"unknown\", [Unknown Flag Count], \"known\", [Known Flag Count], \"timely_rate\", [Timely Response Rate], \"untimely_share\", [Untimely Share], \"unknown_rate\", [Unknown Flag Rate], \"valid_routing\", [Valid Routing Count], \"invalid_routing\", [Invalid Routing Count], \"median_routing_days\", [Median Routing Days]), 'Date'[Date] >= DATE(2025, 10, 15), 'Date'[Date] <= DATE(2025, 12, 15))",
+      "expected": {
+        "complaints": 1054845,
+        "yes": 1050595,
+        "no": 4250,
+        "unknown": 0,
+        "known": 1054845,
+        "valid_routing": 1054845,
+        "invalid_routing": 0,
+        "median_routing_days": 0.0,
+        "timely_rate": 0.9959709720385459,
+        "untimely_share": 0.004029027961454053,
+        "unknown_rate": 0.0
+      }
+    },
+    {
+      "id": "empty",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"complaints\", [Complaint Count], \"yes\", [Timely Yes Count], \"no\", [Untimely No Count], \"unknown\", [Unknown Flag Count], \"known\", [Known Flag Count], \"timely_rate\", [Timely Response Rate], \"untimely_share\", [Untimely Share], \"unknown_rate\", [Unknown Flag Rate], \"valid_routing\", [Valid Routing Count], \"invalid_routing\", [Invalid Routing Count], \"median_routing_days\", [Median Routing Days]), 'Date'[Date] < DATE(2023, 1, 1))",
+      "expected": {
+        "complaints": 0,
+        "yes": 0,
+        "no": 0,
+        "unknown": 0,
+        "known": 0,
+        "valid_routing": 0,
+        "invalid_routing": 0,
+        "median_routing_days": null,
+        "timely_rate": null,
+        "untimely_share": null,
+        "unknown_rate": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "gate": "E",
+  "signed_at_utc": "2026-10-28T09:40:21.312729+00:00",
+  "claim_states": {
+    "F1-01": "CV-ready",
+    "F1-02": "CV-ready",
+    "F1-03": "CV-ready"
+  },
+  "state_history": [
+    "Measured after Gate D",
+    "Verified by full-CSV/exact reference and separate focal audit",
+    "CV-ready after independent final wording review"
+  ],
+  "frozen_artifacts_unchanged": 138,
+  "final_tests": {
+    "normal_python": 122,
+    "optimized_python": 122,
+    "node": 22
+  },
+  "independent_review": {
+    "decision": "approve all three claims without numerical or wording corrections",
+    "reviewer": "Independent delegated general-purpose review",
+    "checks": [
+      "Gate D precedes final measurement by about107seconds",
+      "Sign-off-to-measurement and measurement-to-audit SHA256 bindings match",
+      "All138 frozen artifacts independently rehashed; zero mismatches",
+      "Reconciliation45operations2194fields independently summed",
+      "MOHELA focal monthly counts independently queried from complaint-grain Parquet",
+      "Fraction gap129775/27459pp verified; min100passes and min200peer volume fails",
+      "Five targeted Gate E tests pass"
+    ],
+    "not_performed_by_reviewer": [
+      "Full screening-reference replay; retained results and reference code reviewed instead",
+      "New Desktop UI validation; owner acceptance remains user-reported"
+    ]
+  },
+  "artifact_sha256": {
+    "outputs/gate_d_signoff_20261028.json": "01ccff76717c2893f5f820e3f5f72fa5d386a7ed1502ca7f428ddebf63781f70",
+    "outputs/final_claim_measurements_20261028.json": "8a8e7f59c195317c57acb05a85b560980ceb27feca699d5398b452515fbf3064",
+    "outputs/final_claim_audit_20261028.json": "7bd9d1ba12809d354d579847d68faa6e4c38605177783acb8650d1519f6d97c8",
+    "outputs/final_build_acceptance_20261028.json": "0c1f03918ade002cee89477521c6a01e8afd4feab020b93d2934b8c33ed3a3ed",
+    "outputs/final_contrast_20261028.json": "f2557842a9e21550e521cf8a02e51b07f2de7f1c92e408d77df1396e4f2d4c17",
+    "outputs/clean_refresh_reconciliation_20261028.json": "ef7d67519f63bfa187a236af7dfc1caa02af690b7ffb0049c8fe39118f6bb4c2",
+    "outputs/gate_e_tests_20261028.txt": "4e93240019a5591d4856cb4c9b9fde4547bab1bc485d18e027596591c21423c9",
+    "outputs/gate_e_tests_optimized_20261028.txt": "8b2620df5abb75b6fb68483ab0a397308b8ac3543b7e229fbd7bba750a1490a3",
+    "outputs/gate_e_node_tests_20261028.txt": "a97349002da13a5b63968976a471520fb266c4fca2c722f49be56073d4ddee7c",
+    "scripts/measure_final_claims.py": "6a60f52aca2506aa0e84972eb58506fe8590cc1e20f3e9f550dec909b2a24646",
+    "scripts/audit_final_claims.py": "76441a21248734f7379d20bcd6e7aaee35f96540911a8f006833f66bf59e7b04",
+    "tests/test_final_measurements.py": "34e94dca1450a60072668d10666d8adca8a63734dd2fc1b4416305d8ed704d6f",
+    "tests/test_final_claim_audit.py": "885e2247cfe41abf9b31b5aab339d9c930f0e2b7ce77970bc1ac14d588c4bb2c",
+    "evidence_register.md": "44f22d809634c807c5e71d10c5b6dc5c4aef8e9075414530938363d53994e617",
+    "cv_bullets.md": "321ae28ab4180c22f08647310512c3cacc95cb882ff5d95249329865a0b19f2e"
+  },
+  "source_scope": "Received2023-01-01 through2025-12-31; all14 raw products; frozen supplied historical snapshot",
+  "limits": [
+    "Original download metadata and current official-export identity unverified",
+    "Full raw source not freshly rehashed at Gate E; scoped CSV and typed Parquet were",
+    "Overlapping windows are screening opportunities, not independent events",
+    "No exposure adjustment, misconduct finding, causal explanation or achieved improvement",
+    "Local Import model only; cloud publication not requested or performed",
+    "Historical queue latency and horizontal-scroll/label limits remain documented"
+  ]
+}

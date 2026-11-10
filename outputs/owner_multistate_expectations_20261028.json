@@ -1,0 +1,70 @@
+{
+  "status": "expectations_generated",
+  "created_at_utc": "2026-10-28T09:11:11.030726+00:00",
+  "source_sha256": "6868323834e311a1000fdb0768348c36fd86c9fe1a0c9650aee85f3511405646",
+  "states": [
+    "CA",
+    "NY"
+  ],
+  "overview": [
+    {
+      "id": "CA_NY",
+      "query": "EVALUATE CALCULATETABLE(ROW(\"complaints\", [Complaint Count], \"yes\", [Timely Yes Count], \"no\", [Untimely No Count], \"unknown\", [Unknown Flag Count], \"known\", [Known Flag Count], \"timely_rate\", [Timely Response Rate], \"untimely_share\", [Untimely Share], \"unknown_rate\", [Unknown Flag Rate], \"valid_routing\", [Valid Routing Count], \"invalid_routing\", [Invalid Routing Count], \"median_routing_days\", [Median Routing Days]), FILTER(ALL('Geography'), 'Geography'[State] IN {\"CA\", \"NY\"}))",
+      "expected": {
+        "complaints": 1468258,
+        "yes": 1462855,
+        "no": 5403,
+        "unknown": 0,
+        "known": 1468258,
+        "valid_routing": 1468258,
+        "invalid_routing": 0,
+        "median_routing_days": 0.0,
+        "timely_rate": 0.9963201290236458,
+        "untimely_share": 0.003679870976354292,
+        "unknown_rate": 0.0
+      }
+    }
+  ],
+  "priorities": [
+    {
+      "id": "CA_NY_50",
+      "scope": "CA_NY",
+      "minimum": 50,
+      "expected": {
+        "eligible_windows": 542,
+        "qualifying_windows": 2,
+        "qualifying_segments": 2,
+        "stable_windows": 0
+      },
+      "sql_seconds": 1.0192167100000233,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 50, FILTER(ALL('Geography'), 'Geography'[State] IN {\"CA\", \"NY\"}))"
+    },
+    {
+      "id": "CA_NY_100",
+      "scope": "CA_NY",
+      "minimum": 100,
+      "expected": {
+        "eligible_windows": 291,
+        "qualifying_windows": 0,
+        "qualifying_segments": 0,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.7929289310000058,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 100, FILTER(ALL('Geography'), 'Geography'[State] IN {\"CA\", \"NY\"}))"
+    },
+    {
+      "id": "CA_NY_200",
+      "scope": "CA_NY",
+      "minimum": 200,
+      "expected": {
+        "eligible_windows": 279,
+        "qualifying_windows": 0,
+        "qualifying_segments": 0,
+        "stable_windows": 0
+      },
+      "sql_seconds": 0.7485935529999779,
+      "query": "EVALUATE CALCULATETABLE(ROW(\"eligible_windows\", [Eligible Window Count], \"qualifying_windows\", [Qualifying Window Count], \"qualifying_segments\", [Qualifying Segment Count], \"stable_windows\", [Stable Window Count]), 'Review Minimum'[Minimum] = 200, FILTER(ALL('Geography'), 'Geography'[State] IN {\"CA\", \"NY\"}))"
+    }
+  ],
+  "scope": "Independent SQL expectations; UI acceptance and live DAX remain separate"
+}

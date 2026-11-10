@@ -1,0 +1,1 @@
+{"error":{"code":"HOST_UNAVAILABLE","message":"No Power BI Desktop instance is running.","hint":"Open this report's .pbip in Power BI Desktop before previewing.","retryable":false,"details":{"runningInstances":[]}}}

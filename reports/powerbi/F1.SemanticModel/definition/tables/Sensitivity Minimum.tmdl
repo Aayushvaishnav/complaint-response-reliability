@@ -1,0 +1,20 @@
+/// Disconnected analyst minimum choices: 50, 100, 200; foundation has no selection measures.
+table 'Sensitivity Minimum'
+	lineageTag: 4e1e8c34-e057-479d-85bf-826a8dcb0418
+
+	/// Imported minimum; preserves projection identity and meaning.
+	column Minimum
+		dataType: int64
+		lineageTag: 3125ad76-2515-4681-9a2c-979792a13f64
+		summarizeBy: none
+		sourceColumn: minimum
+
+	partition 'Sensitivity Minimum' = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents(#"Source Folder" & "/sensitivity_minimum.parquet")),
+				    Typed = Table.TransformColumnTypes(Source, {{"minimum", Int64.Type}})
+				in
+				    Typed
+

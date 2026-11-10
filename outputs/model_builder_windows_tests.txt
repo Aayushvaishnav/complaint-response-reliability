@@ -1,0 +1,14 @@
+✔ CLI requires the installed platform-specific MCP entry instead of launching an unverified wrapper (62.2253ms)
+✔ MCP request IDs preserve concurrent responses and propagate RPC errors (50.2059ms)
+✔ offline build exports through MCP and records validation limits (63.6664ms)
+✔ MCP application error prevents export and persists failure evidence (51.32ms)
+✔ batch item failure stops the build even when the MCP transport succeeds (56.7722ms)
+✔ existing model export is preserved instead of overwritten (5.1146ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 356.2479

@@ -1,0 +1,15 @@
+test_bom_and_special_text_survive_export (test_validate_source.SourceValidationTests.test_bom_and_special_text_survive_export) ... ok
+test_date_boundaries_unknowns_negative_lags_and_raw_values (test_validate_source.SourceValidationTests.test_date_boundaries_unknowns_negative_lags_and_raw_values) ... ok
+test_different_existing_snapshot_is_preserved (test_validate_source.SourceValidationTests.test_different_existing_snapshot_is_preserved) ... ok
+test_duplicate_ids_block_export_instead_of_silent_deduplication (test_validate_source.SourceValidationTests.test_duplicate_ids_block_export_instead_of_silent_deduplication) ... ok
+test_empty_date_cohort_blocks_export (test_validate_source.SourceValidationTests.test_empty_date_cohort_blocks_export) ... ok
+test_invalid_received_dates_block_export (test_validate_source.SourceValidationTests.test_invalid_received_dates_block_export) ... ok
+test_malformed_records_fail_strict_import (test_validate_source.SourceValidationTests.test_malformed_records_fail_strict_import) ... ok
+test_non_numeric_or_missing_ids_block_export (test_validate_source.SourceValidationTests.test_non_numeric_or_missing_ids_block_export) ... ok
+test_rerun_reconciles_the_same_source (test_validate_source.SourceValidationTests.test_rerun_reconciles_the_same_source) ... ok
+test_schema_drift_is_rejected (test_validate_source.SourceValidationTests.test_schema_drift_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.850s
+
+OK

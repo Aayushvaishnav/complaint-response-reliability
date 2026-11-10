@@ -1,0 +1,34 @@
+{
+  "contract_version": 1,
+  "raw_snapshot": "data/raw/complaints.csv",
+  "staging_database": "data/processed/source_validation.duckdb",
+  "source_sha256": "ef4494d4ea9787db5dc87e3de659e07ffaecb6e19ee3df97c7c15e14d54a74d9",
+  "source_rows": 18590360,
+  "scope_rows": 9469257,
+  "provenance": {
+    "origin_state": "user_confirmed_official_cfpb_download",
+    "confirmed_on": "2026-10-23",
+    "confirmation": "Official CFPB download",
+    "original_download_url_state": "not_recorded",
+    "original_download_date_state": "not_recorded",
+    "fresh_official_file_comparison_state": "not_performed"
+  },
+  "scope": {
+    "received_from_inclusive": "2023-01-01",
+    "received_until_exclusive": "2026-01-01",
+    "product_selection": "all_original_product_labels",
+    "category_policy": "preserve_original_labels_without_harmonisation",
+    "historical_category_boundary": "2023-08-24",
+    "longitudinal_comparability_rule_state": "pending_gate_b"
+  },
+  "sample": {
+    "purpose": "feasibility_only_not_representative",
+    "selection": "lowest_text_ids_per_received_month_product_timely_flag",
+    "rows_per_stratum": 3
+  },
+  "review_parameters": {
+    "minimum_segment_complaints": 100,
+    "sensitivity_minima": [50, 100, 200],
+    "complete_priority_rule_state": "pending_gate_b"
+  }
+}

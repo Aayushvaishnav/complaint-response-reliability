@@ -1,0 +1,28 @@
+{
+  "scope": "Synthetic only; no real-source rankings or full-population claims",
+  "oracle": "Python stdlib collections/date/Fraction; DuckDB used only to execute implementation under test",
+  "seed": 470123,
+  "command": ".venv/bin/python -m unittest discover -s tests -p test_review_reference.py -v",
+  "result": "PASS",
+  "tests": 2,
+  "last_runtime_seconds": 2.396,
+  "randomized_contexts": [
+    {"start_date":"2023-05-01","end_date":"2024-04-01","companies":["A",null],"products":["P"],"states":["CA",null],"issues":"unrestricted"},
+    {"start_date":"2023-06-16","end_date":"2024-03-17","companies":["B"],"products":["Q"],"states":["NY"],"issues":[null,""," ","target"]}
+  ],
+  "minima": [50,100,200],
+  "randomized_segment_month_comparisons": 516,
+  "targeted_segment_month_comparisons": 18,
+  "checks": ["monthly segment and peer total/known/No counts", "issue share and immediately prior calendar share/change", "eligible monthly exact inclusive one-pp elevation", "partial boundaries, August exclusion and taxonomy eras", "missing issue/month and entirely missing parent month", "three-month eligibility, elevated months and persistence", "exact Fraction dense ranks and persistent pooled excess", "raw null/empty/literal unknown/single-space/double-space issue identity", "issue selection display-only with unchanged peer denominators"],
+  "comparison_policy": "Counts, flags, eligibility and ranks exact; displayed floating rates compared to Fraction oracle to 11 decimal places",
+  "bug_reproduced_before_parent_fix": {
+    "description": "Binary float pooled-rate differences split mathematically identical ranking tuples and shifted lower dense ranks",
+    "evidence": "outputs/gate_b_reference_regression_before.txt",
+    "fixture": "Each of three months: both target totals 200 and No 6; tie-a known 10, peers No 42/known 165; tie-b known 11, peers No 2/known 10; peer totals 200; unknown flags fill totals",
+    "exact_excess": "19/55",
+    "expected": "Both targets rank 1; inclusive one-pp fixture ranks 2",
+    "pre_fix_failures": ["tie-b priority_rank", "inclusive priority_rank"],
+    "post_fix": "Targeted tie regression and randomized oracle both pass"
+  },
+  "limitations": ["No source population acceptance or performance benchmark", "Exact pairwise distinct-key ranking has quadratic candidate-key comparison cost; Gate C needs full-scale benchmark", "No additional dependencies installed"]
+}

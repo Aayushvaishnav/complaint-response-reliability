@@ -1,0 +1,135 @@
+{
+  "validated_at_utc": "2026-10-23T05:13:52.225835+00:00",
+  "status": "passed",
+  "scope": {
+    "received_from_inclusive": "2023-01-01",
+    "received_until_exclusive": "2026-01-01",
+    "products": "all",
+    "field_values": "preserved; no deduplication or imputation"
+  },
+  "source": {
+    "supplied_path": "/mnt/c/Users/Aayush/my_files/da_projects/complaints/complaints.csv",
+    "snapshot_path": "data/raw/complaints.csv",
+    "bytes": 5635795886,
+    "sha256": "ef4494d4ea9787db5dc87e3de659e07ffaecb6e19ee3df97c7c15e14d54a74d9",
+    "source_modified_utc": "2026-10-23T04:59:02.182287+00:00",
+    "origin_verification": "user-supplied; official-download byte identity unverified"
+  },
+  "environment": {
+    "python": "3.14.7",
+    "duckdb": "2.0.0"
+  },
+  "columns": [
+    "Date received",
+    "Product",
+    "Sub-product",
+    "Issue",
+    "Sub-issue",
+    "Company public response",
+    "Company",
+    "State",
+    "ZIP code",
+    "Tags",
+    "Submitted via",
+    "Date sent to company",
+    "Company response to consumer",
+    "Timely response?",
+    "Complaint ID"
+  ],
+  "full": {
+    "rows": 18590360,
+    "distinct_complaint_ids": 18590360,
+    "missing_ids": 0,
+    "non_numeric_ids": 0,
+    "invalid_or_missing_received_dates": 0,
+    "invalid_or_missing_sent_dates": 0,
+    "negative_routing_lags": 7050,
+    "future_received_dates": 0,
+    "future_sent_dates": 0,
+    "unknown_timely_flags": 0,
+    "min_received_date": "2011-12-01",
+    "max_received_date": "2026-10-22",
+    "duplicate_id_groups": 0,
+    "duplicate_extra_rows": 0,
+    "blank_fields": {
+      "Date received": 0,
+      "Product": 0,
+      "Sub-product": 235275,
+      "Issue": 6,
+      "Sub-issue": 943881,
+      "Company public response": 8341251,
+      "Company": 0,
+      "State": 63421,
+      "ZIP code": 3253,
+      "Tags": 17765550,
+      "Submitted via": 0,
+      "Date sent to company": 0,
+      "Company response to consumer": 21,
+      "Timely response?": 0,
+      "Complaint ID": 0
+    }
+  },
+  "scoped": {
+    "rows": 9469257,
+    "distinct_complaint_ids": 9469257,
+    "missing_ids": 0,
+    "non_numeric_ids": 0,
+    "invalid_or_missing_received_dates": 0,
+    "invalid_or_missing_sent_dates": 0,
+    "negative_routing_lags": 0,
+    "future_received_dates": 0,
+    "future_sent_dates": 0,
+    "unknown_timely_flags": 0,
+    "min_received_date": "2023-01-01",
+    "max_received_date": "2025-12-31",
+    "duplicate_id_groups": 0,
+    "duplicate_extra_rows": 0,
+    "blank_fields": {
+      "Date received": 0,
+      "Product": 0,
+      "Sub-product": 5,
+      "Issue": 6,
+      "Sub-issue": 193762,
+      "Company public response": 3859425,
+      "Company": 0,
+      "State": 17967,
+      "ZIP code": 0,
+      "Tags": 9131385,
+      "Submitted via": 0,
+      "Date sent to company": 0,
+      "Company response to consumer": 19,
+      "Timely response?": 0,
+      "Complaint ID": 0
+    }
+  },
+  "dispositions": [
+    {
+      "disposition": "after_2025",
+      "rows": 5908002
+    },
+    {
+      "disposition": "before_2023",
+      "rows": 3213101
+    },
+    {
+      "disposition": "retained_2023_2025",
+      "rows": 9469257
+    }
+  ],
+  "checks": {
+    "all_records_accounted_for": true,
+    "retained_count_matches_disposition": true,
+    "unique_nonblank_numeric_source_ids": true,
+    "all_received_dates_parse": true,
+    "nonempty_date_cohort": true,
+    "export_count_matches_scope": true,
+    "export_values_match_scope": true
+  },
+  "export": {
+    "path": "data/processed/complaints_2023_2025.csv",
+    "rows": 9469257,
+    "bytes": 2969678291,
+    "sha256": "15680a5a1a8f8eaed17fe9b9f5ce0c1297e21e69fd2088a7cdb860a7037cb9f8",
+    "value_difference_rows": 0
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-23T10:08:57.425179+00:00",
+  "gate_signoff": "not_performed",
+  "joins": "none",
+  "taxonomy_limit": "Timing proxy only; not certified schema; August 2023 excluded only from longitudinal comparisons; no crosswalk",
+  "provenance_limit": "Scoped CSV fully hashed against prior evidence; full raw CSV and staging database not rehashed; source/config identity is metadata linkage plus full scoped field equivalence, not fresh official-source verification",
+  "identity": {
+    "config_sha256": "6e11ae997297c8e3277650ca4edf92d6f59c2cb1bdfe485bce96c04d66abc40d",
+    "source_evidence_sha256": "51fcf58167c97fae0b3ef096a1685e73464139b685dd1db7252b64925ae29beb",
+    "sql_sha256": "9cbc93b26fad2bd3304a582aa9cdffbe050b1d9ac38ecb6bbed0fba502e649ed"
+  },
+  "scoped_csv_sha256": "15680a5a1a8f8eaed17fe9b9f5ce0c1297e21e69fd2088a7cdb860a7037cb9f8",
+  "independent": {
+    "all": {
+      "rows": 9469257,
+      "yes": 9431474,
+      "no": 37783,
+      "unknown": 0,
+      "known": 9469257,
+      "timely_rate": 0.9960099298181473,
+      "untimely_rate": 0.003990070181852705,
+      "unknown_rate": 0.0,
+      "valid_lags": 9469257,
+      "median_routing_days": 0.0,
+      "routing": {
+        "valid": 9469257
+      }
+    },
+    "2023": {
+      "rows": 1292048,
+      "yes": 1286528,
+      "no": 5520,
+      "unknown": 0,
+      "known": 1292048,
+      "timely_rate": 0.995727712902307,
+      "untimely_rate": 0.004272287097692965,
+      "unknown_rate": 0.0,
+      "valid_lags": 1292048,
+      "median_routing_days": 0.0,
+      "routing": {
+        "valid": 1292048
+      }
+    },
+    "Debt collection": {
+      "rows": 507204,
+      "yes": 494729,
+      "no": 12475,
+      "unknown": 0,
+      "known": 507204,
+      "timely_rate": 0.9754043737825412,
+      "untimely_rate": 0.024595626217458852,
+      "unknown_rate": 0.0,
+      "valid_lags": 507204,
+      "median_routing_days": 0.0,
+      "routing": {
+        "valid": 507204
+      }
+    },
+    "CA": {
+      "rows": 906980,
+      "yes": 903279,
+      "no": 3701,
+      "unknown": 0,
+      "known": 906980,
+      "timely_rate": 0.9959194249046286,
+      "untimely_rate": 0.004080575095371452,
+      "unknown_rate": 0.0,
+      "valid_lags": 906980,
+      "median_routing_days": 0.0,
+      "routing": {
+        "valid": 906980
+      }
+    }
+  },
+  "staging_conservation": {
+    "raw_rows": 18590360,
+    "scoped_rows": 9469257,
+    "excluded_rows": 9121103,
+    "reconciled": true
+  },
+  "source_projection_difference_rows": 0,
+  "frozen_csv_projection_difference_rows": 0,
+  "sql_metrics": {
+    "all": {
+      "rows": 9469257,
+      "yes": 9431474,
+      "no": 37783,
+      "unknown": 0,
+      "known": 9469257,
+      "timely_rate": 0.9960099298181473,
+      "untimely_rate": 0.003990070181852705,
+      "unknown_rate": 0.0,
+      "valid_lags": 9469257,
+      "median_routing_days": 0.0,
+      "routing": {
+        "valid": 9469257
+      }
+    },
+    "2023": {
+      "rows": 1292048,
+      "yes": 1286528,
+      "no": 5520,
+      "unknown": 0,
+      "known": 1292048,
+      "timely_rate": 0.995727712902307,
+      "untimely_rate": 0.004272287097692965,
+      "unknown_rate": 0.0,
+      "valid_lags": 1292048,
+      "median_routing_days": 0.0,
+      "routing": {
+        "valid": 1292048
+      }
+    },
+    "Debt collection": {
+      "rows": 507204,
+      "yes": 494729,
+      "no": 12475,
+      "unknown": 0,
+      "known": 507204,
+      "timely_rate": 0.9754043737825412,
+      "untimely_rate": 0.024595626217458852,
+      "unknown_rate": 0.0,
+      "valid_lags": 507204,
+      "median_routing_days": 0.0,
+      "routing": {
+        "valid": 507204
+      }
+    },
+    "CA": {
+      "rows": 906980,
+      "yes": 903279,
+      "no": 3701,
+      "unknown": 0,
+      "known": 906980,
+      "timely_rate": 0.9959194249046286,
+      "untimely_rate": 0.004080575095371452,
+      "unknown_rate": 0.0,
+      "valid_lags": 906980,
+      "median_routing_days": 0.0,
+      "routing": {
+        "valid": 906980
+      }
+    }
+  },
+  "group_conservation": {
+    "month": {
+      "groups": 36,
+      "rows": 9469257,
+      "full_csv_match": true
+    },
+    "product": {
+      "groups": 14,
+      "rows": 9469257,
+      "full_csv_match": true
+    },
+    "state": {
+      "groups": 63,
+      "rows": 9469257,
+      "full_csv_match": true
+    }
+  },
+  "diagnostics": {
+    "taxonomy_era": {
+      "post_2023_08_24": 8674153,
+      "pre_2023_08_24": 795104
+    },
+    "longitudinal_eligible": {
+      "true": 9349546,
+      "false": 119711
+    },
+    "routing_status": {
+      "valid": 9469257
+    },
+    "issue_missing": {
+      "false": 9469251,
+      "true": 6
+    },
+    "state_missing": {
+      "false": 9451290,
+      "true": 17967
+    },
+    "response_missing": {
+      "false": 9469238,
+      "true": 19
+    }
+  },
+  "parquet_difference_rows": 0,
+  "rows": 9469257,
+  "duckdb_version": "2.0.0",
+  "artifact_sha256": {
+    "scripts/prepare_complaints.py": "3c6fbdaba7d4199294b9ce8aa3566d6396aa1a4169c9ef1c7ed2c0c3201dbec7",
+    "sql/prepare_complaints.sql": "9cbc93b26fad2bd3304a582aa9cdffbe050b1d9ac38ecb6bbed0fba502e649ed",
+    "config/source.json": "6e11ae997297c8e3277650ca4edf92d6f59c2cb1bdfe485bce96c04d66abc40d",
+    "outputs/source_validation.json": "51fcf58167c97fae0b3ef096a1685e73464139b685dd1db7252b64925ae29beb",
+    "data/processed/complaints_typed.parquet": "6868323834e311a1000fdb0768348c36fd86c9fe1a0c9650aee85f3511405646",
+    "config/review_rule.json": "4ee113188aba8d565676dae03d471c43bcfe1fc0019bd07e2018f9c344fba764"
+  },
+  "equality_method": "Full-field bidirectional EXCEPT ALL partitioned by raw received YYYY-MM; every scoped record is in exactly one partition; no hash-based field comparison",
+  "finished_at_utc": "2026-10-23T10:15:29.041271+00:00"
+}

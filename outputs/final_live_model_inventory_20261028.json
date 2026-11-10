@@ -1,0 +1,15 @@
+{
+  "status": "verified_live_readback",
+  "checked_at_utc": "2026-10-28",
+  "operation": "model_operations.GetStats",
+  "target": "isolated F1 refresh copy, identified by CLI launch path and live Source Folder parameter",
+  "model_name": "F1",
+  "compatibility_level": 1702,
+  "tables": 10,
+  "measures": 53,
+  "columns": 68,
+  "partitions": 10,
+  "relationships": 5,
+  "roles": 0,
+  "limits": "Local Import model only; no cloud deployment or scheduled refresh certification"
+}

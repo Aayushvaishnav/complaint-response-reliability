@@ -1,0 +1,402 @@
+{
+  "status": "passed",
+  "started_at_utc": "2026-10-28T09:20:39.314Z",
+  "operations": [
+    {
+      "id": "connect",
+      "tool": "connection_operations",
+      "operation": "Connect",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"Connection \\u0027PBIDesktop-F1-64562\\u0027 established successfully\",\"operation\":\"Connect\",\"data\":\"PBIDesktop-F1-64562\"}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "connection_operations.connect",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "Connection 'PBIDesktop-F1-64562' established successfully",
+          "operation": "Connect",
+          "data": "PBIDesktop-F1-64562"
+        }
+      ],
+      "duration_ms": 449.4695999999999
+    },
+    {
+      "id": "CA_NY",
+      "tool": "dax_query_operations",
+      "operation": "Execute",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"DAX query executed successfully, returned 1 rows in 56ms\",\"operation\":\"Execute\",\"data\":{\"rowCount\":1,\"isTruncated\":false,\"columns\":[{\"name\":\"[complaints]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":0},{\"name\":\"[yes]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":1},{\"name\":\"[no]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":2},{\"name\":\"[unknown]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":3},{\"name\":\"[known]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":4},{\"name\":\"[timely_rate]\",\"dataType\":\"Double\",\"isNullable\":true,\"ordinal\":5},{\"name\":\"[untimely_share]\",\"dataType\":\"Double\",\"isNullable\":true,\"ordinal\":6},{\"name\":\"[unknown_rate]\",\"dataType\":\"Double\",\"isNullable\":true,\"ordinal\":7},{\"name\":\"[valid_routing]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":8},{\"name\":\"[invalid_routing]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":9},{\"name\":\"[median_routing_days]\",\"dataType\":\"Double\",\"isNullable\":true,\"ordinal\":10}],\"rows\":[{\"[complaints]\":1468258,\"[yes]\":1462855,\"[no]\":5403,\"[unknown]\":0,\"[known]\":1468258,\"[timely_rate]\":0.9963201290236458,\"[untimely_share]\":0.003679870976354292,\"[unknown_rate]\":0,\"[valid_routing]\":1468258,\"[invalid_routing]\":0,\"[median_routing_days]\":0}],\"executionTimeMs\":56}}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "dax_query_operations.execute",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "DAX query executed successfully, returned 1 rows in 56ms",
+          "operation": "Execute",
+          "data": {
+            "rowCount": 1,
+            "isTruncated": false,
+            "columns": [
+              {
+                "name": "[complaints]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 0
+              },
+              {
+                "name": "[yes]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 1
+              },
+              {
+                "name": "[no]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 2
+              },
+              {
+                "name": "[unknown]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 3
+              },
+              {
+                "name": "[known]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 4
+              },
+              {
+                "name": "[timely_rate]",
+                "dataType": "Double",
+                "isNullable": true,
+                "ordinal": 5
+              },
+              {
+                "name": "[untimely_share]",
+                "dataType": "Double",
+                "isNullable": true,
+                "ordinal": 6
+              },
+              {
+                "name": "[unknown_rate]",
+                "dataType": "Double",
+                "isNullable": true,
+                "ordinal": 7
+              },
+              {
+                "name": "[valid_routing]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 8
+              },
+              {
+                "name": "[invalid_routing]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 9
+              },
+              {
+                "name": "[median_routing_days]",
+                "dataType": "Double",
+                "isNullable": true,
+                "ordinal": 10
+              }
+            ],
+            "rows": [
+              {
+                "[complaints]": 1468258,
+                "[yes]": 1462855,
+                "[no]": 5403,
+                "[unknown]": 0,
+                "[known]": 1468258,
+                "[timely_rate]": 0.9963201290236458,
+                "[untimely_share]": 0.003679870976354292,
+                "[unknown_rate]": 0,
+                "[valid_routing]": 1468258,
+                "[invalid_routing]": 0,
+                "[median_routing_days]": 0
+              }
+            ],
+            "executionTimeMs": 56
+          }
+        }
+      ],
+      "duration_ms": 99.80840000000012,
+      "reconciliation": {
+        "fields": 11,
+        "actual": {
+          "[complaints]": 1468258,
+          "[yes]": 1462855,
+          "[no]": 5403,
+          "[unknown]": 0,
+          "[known]": 1468258,
+          "[timely_rate]": 0.9963201290236458,
+          "[untimely_share]": 0.003679870976354292,
+          "[unknown_rate]": 0,
+          "[valid_routing]": 1468258,
+          "[invalid_routing]": 0,
+          "[median_routing_days]": 0
+        }
+      }
+    },
+    {
+      "id": "CA_NY_50",
+      "tool": "dax_query_operations",
+      "operation": "Execute",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"DAX query executed successfully, returned 1 rows in 5130ms\",\"operation\":\"Execute\",\"data\":{\"rowCount\":1,\"isTruncated\":false,\"columns\":[{\"name\":\"[eligible_windows]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":0},{\"name\":\"[qualifying_windows]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":1},{\"name\":\"[qualifying_segments]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":2},{\"name\":\"[stable_windows]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":3}],\"rows\":[{\"[eligible_windows]\":542,\"[qualifying_windows]\":2,\"[qualifying_segments]\":2,\"[stable_windows]\":0}],\"executionTimeMs\":5130}}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "dax_query_operations.execute",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "DAX query executed successfully, returned 1 rows in 5130ms",
+          "operation": "Execute",
+          "data": {
+            "rowCount": 1,
+            "isTruncated": false,
+            "columns": [
+              {
+                "name": "[eligible_windows]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 0
+              },
+              {
+                "name": "[qualifying_windows]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 1
+              },
+              {
+                "name": "[qualifying_segments]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 2
+              },
+              {
+                "name": "[stable_windows]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 3
+              }
+            ],
+            "rows": [
+              {
+                "[eligible_windows]": 542,
+                "[qualifying_windows]": 2,
+                "[qualifying_segments]": 2,
+                "[stable_windows]": 0
+              }
+            ],
+            "executionTimeMs": 5130
+          }
+        }
+      ],
+      "duration_ms": 5133.3643,
+      "reconciliation": {
+        "fields": 4,
+        "actual": {
+          "[eligible_windows]": 542,
+          "[qualifying_windows]": 2,
+          "[qualifying_segments]": 2,
+          "[stable_windows]": 0
+        }
+      }
+    },
+    {
+      "id": "CA_NY_100",
+      "tool": "dax_query_operations",
+      "operation": "Execute",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"DAX query executed successfully, returned 1 rows in 4831ms\",\"operation\":\"Execute\",\"data\":{\"rowCount\":1,\"isTruncated\":false,\"columns\":[{\"name\":\"[eligible_windows]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":0},{\"name\":\"[qualifying_windows]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":1},{\"name\":\"[qualifying_segments]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":2},{\"name\":\"[stable_windows]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":3}],\"rows\":[{\"[eligible_windows]\":291,\"[qualifying_windows]\":0,\"[qualifying_segments]\":0,\"[stable_windows]\":0}],\"executionTimeMs\":4831}}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "dax_query_operations.execute",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "DAX query executed successfully, returned 1 rows in 4831ms",
+          "operation": "Execute",
+          "data": {
+            "rowCount": 1,
+            "isTruncated": false,
+            "columns": [
+              {
+                "name": "[eligible_windows]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 0
+              },
+              {
+                "name": "[qualifying_windows]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 1
+              },
+              {
+                "name": "[qualifying_segments]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 2
+              },
+              {
+                "name": "[stable_windows]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 3
+              }
+            ],
+            "rows": [
+              {
+                "[eligible_windows]": 291,
+                "[qualifying_windows]": 0,
+                "[qualifying_segments]": 0,
+                "[stable_windows]": 0
+              }
+            ],
+            "executionTimeMs": 4831
+          }
+        }
+      ],
+      "duration_ms": 4834.0303,
+      "reconciliation": {
+        "fields": 4,
+        "actual": {
+          "[eligible_windows]": 291,
+          "[qualifying_windows]": 0,
+          "[qualifying_segments]": 0,
+          "[stable_windows]": 0
+        }
+      }
+    },
+    {
+      "id": "CA_NY_200",
+      "tool": "dax_query_operations",
+      "operation": "Execute",
+      "status": "passed",
+      "raw": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"message\":\"DAX query executed successfully, returned 1 rows in 4848ms\",\"operation\":\"Execute\",\"data\":{\"rowCount\":1,\"isTruncated\":false,\"columns\":[{\"name\":\"[eligible_windows]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":0},{\"name\":\"[qualifying_windows]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":1},{\"name\":\"[qualifying_segments]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":2},{\"name\":\"[stable_windows]\",\"dataType\":\"Int64\",\"isNullable\":true,\"ordinal\":3}],\"rows\":[{\"[eligible_windows]\":279,\"[qualifying_windows]\":0,\"[qualifying_segments]\":0,\"[stable_windows]\":0}],\"executionTimeMs\":4848}}"
+          }
+        ],
+        "isError": false,
+        "_meta": {
+          "annotations": {
+            "title": "dax_query_operations.execute",
+            "readOnlyHint": true
+          }
+        }
+      },
+      "payloads": [
+        {
+          "message": "DAX query executed successfully, returned 1 rows in 4848ms",
+          "operation": "Execute",
+          "data": {
+            "rowCount": 1,
+            "isTruncated": false,
+            "columns": [
+              {
+                "name": "[eligible_windows]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 0
+              },
+              {
+                "name": "[qualifying_windows]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 1
+              },
+              {
+                "name": "[qualifying_segments]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 2
+              },
+              {
+                "name": "[stable_windows]",
+                "dataType": "Int64",
+                "isNullable": true,
+                "ordinal": 3
+              }
+            ],
+            "rows": [
+              {
+                "[eligible_windows]": 279,
+                "[qualifying_windows]": 0,
+                "[qualifying_segments]": 0,
+                "[stable_windows]": 0
+              }
+            ],
+            "executionTimeMs": 4848
+          }
+        }
+      ],
+      "duration_ms": 4850.7592,
+      "reconciliation": {
+        "fields": 4,
+        "actual": {
+          "[eligible_windows]": 279,
+          "[qualifying_windows]": 0,
+          "[qualifying_segments]": 0,
+          "[stable_windows]": 0
+        }
+      }
+    }
+  ],
+  "server": {
+    "name": "powerbi-authoring-local",
+    "title": "Power BI Authoring MCP Server (Local)",
+    "version": "1.0.0",
+    "description": "Author Power BI semantic models in Power BI Desktop, Microsoft Fabric workspaces, and local PBIP and TMDL files."
+  },
+  "finished_at_utc": "2026-10-28T09:20:55.617Z"
+}

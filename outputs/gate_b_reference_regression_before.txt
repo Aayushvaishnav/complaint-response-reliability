@@ -1,0 +1,27 @@
+test_exact_tie_and_inclusive_gap (test_review_reference.ReferenceChecks.test_exact_tie_and_inclusive_gap) ... 
+  test_exact_tie_and_inclusive_gap (test_review_reference.ReferenceChecks.test_exact_tie_and_inclusive_gap) (key=('inclusive', 'P', 'target', datetime.date(2024, 3, 1)), field='priority_rank') ... FAIL
+  test_exact_tie_and_inclusive_gap (test_review_reference.ReferenceChecks.test_exact_tie_and_inclusive_gap) (key=('tie-b', 'P', 'target', datetime.date(2024, 3, 1)), field='priority_rank') ... FAIL
+test_seeded_contexts (test_review_reference.ReferenceChecks.test_seeded_contexts) ... ok
+
+======================================================================
+FAIL: test_exact_tie_and_inclusive_gap (test_review_reference.ReferenceChecks.test_exact_tie_and_inclusive_gap) (key=('inclusive', 'P', 'target', datetime.date(2024, 3, 1)), field='priority_rank')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/tests/test_review_reference.py", line 106, in compare
+    self.assertEqual(actual[key][field], value)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3 != 2
+
+======================================================================
+FAIL: test_exact_tie_and_inclusive_gap (test_review_reference.ReferenceChecks.test_exact_tie_and_inclusive_gap) (key=('tie-b', 'P', 'target', datetime.date(2024, 3, 1)), field='priority_rank')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/Aayush/my_files/da_projects/projects/f1-complaint-response-reliability/tests/test_review_reference.py", line 106, in compare
+    self.assertEqual(actual[key][field], value)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 2 tests in 373.736s
+
+FAILED (failures=2)
